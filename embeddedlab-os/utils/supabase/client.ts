@@ -1,12 +1,5 @@
-import { createBrowserClient } from "@supabase/ssr";
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseKey =
-  process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ||
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-export const createClient = () =>
-  createBrowserClient(
-    supabaseUrl!,
-    supabaseKey!
-  );
+/**
+ * EmbeddedLab OS — utils/supabase/client.ts
+ * Re-exports the browser client singleton from lib/supabase/client.
+ */
+export { createClient } from "@/lib/supabase/client";

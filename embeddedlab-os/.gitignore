@@ -11,7 +11,7 @@ node_modules/
 # testing & coverage
 coverage/
 
-# Next.js build output & turbopack cache
+# Next.js build output & Turbopack cache
 .next/
 out/
 build/
@@ -28,7 +28,6 @@ dist/
 # Vercel & IDE
 .vercel/
 .idea/
-.vscode/
 *.swp
 *.swo
 

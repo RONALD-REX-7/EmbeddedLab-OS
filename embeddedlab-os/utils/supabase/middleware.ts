@@ -1,12 +1,10 @@
 import { createServerClient } from "@supabase/ssr";
 import { type NextRequest, NextResponse } from "next/server";
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseKey =
-  process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ||
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+import { getSupabaseEnv } from "@/lib/supabase/config";
 
 export const createClient = (request: NextRequest) => {
+  const { url, anonKey } = getSupabaseEnv();
+
   // Create an unmodified response
   let supabaseResponse = NextResponse.next({
     request: {
@@ -15,8 +13,8 @@ export const createClient = (request: NextRequest) => {
   });
 
   const supabase = createServerClient(
-    supabaseUrl!,
-    supabaseKey!,
+    url,
+    anonKey,
     {
       cookies: {
         getAll() {
