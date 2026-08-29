@@ -8,12 +8,14 @@ export function useGPIOState() {
   const gpio = useSimulatorStore((state) => state.mcuState.gpio);
   const setPinMode = useSimulatorStore((state) => state.gpioSetPinMode);
   const setPinLevel = useSimulatorStore((state) => state.gpioSetPinLevel);
+  const setInputLevel = useSimulatorStore((state) => state.gpioSetInputLevel);
   const togglePin = useSimulatorStore((state) => state.gpioTogglePin);
 
   return {
     pins: gpio.pins,
     setPinMode,
     setPinLevel,
+    setInputLevel,
     togglePin,
   };
 }

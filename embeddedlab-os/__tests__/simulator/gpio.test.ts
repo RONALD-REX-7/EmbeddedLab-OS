@@ -6,6 +6,7 @@ import {
   createDefaultGPIOState,
   setPinMode,
   setPinLevel,
+  setInputPinLevel,
   togglePin,
 } from "@/lib/simulator/gpio";
 
@@ -107,6 +108,24 @@ describe("GPIO state transitions", () => {
     it("throws when toggling an INPUT pin", () => {
       const state = createDefaultGPIOState();
       expect(() => togglePin(state, 0)).toThrow(/not in OUTPUT mode/);
+    });
+  });
+
+  describe("setInputPinLevel", () => {
+    it("simulates input stimulus on an INPUT_PULLUP pin (e.g. button pressed -> LOW)", () => {
+      let state = createDefaultGPIOState();
+      ({ state } = setPinMode(state, 0, "INPUT_PULLUP"));
+      expect(state.pins[0]!.level).toBe("HIGH");
+
+      const { state: pressedState, event } = setInputPinLevel(state, 0, "LOW");
+      expect(pressedState.pins[0]!.level).toBe("LOW");
+      expect(event.type).toBe("pin_input_changed");
+      expect(event.severity).toBe("INFO");
+    });
+
+    it("throws on invalid pin id", () => {
+      const state = createDefaultGPIOState();
+      expect(() => setInputPinLevel(state, 100, "LOW")).toThrow(/Invalid pin id/);
     });
   });
 

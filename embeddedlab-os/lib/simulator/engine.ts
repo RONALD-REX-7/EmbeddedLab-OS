@@ -20,6 +20,7 @@ import type {
 import {
   createDefaultGPIOState,
   resetGPIOState,
+  setInputPinLevel,
   setPinLevel,
   setPinMode,
   togglePin,
@@ -135,6 +136,12 @@ export class SimulationEngine {
 
   gpioSetPinLevel(pinId: number, level: LogicLevel): void {
     const { state, event } = setPinLevel(this._state.gpio, pinId, level);
+    this._state = { ...this._state, gpio: state };
+    this._appendEvent(event);
+  }
+
+  gpioSetInputLevel(pinId: number, level: LogicLevel): void {
+    const { state, event } = setInputPinLevel(this._state.gpio, pinId, level);
     this._state = { ...this._state, gpio: state };
     this._appendEvent(event);
   }

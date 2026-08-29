@@ -10,6 +10,7 @@ export function useUARTState() {
   const uartState = useSimulatorStore((state) => state.mcuState.uart);
   const setTransmitterConfig = useSimulatorStore((state) => state.uartSetTransmitterConfig);
   const setReceiverConfig = useSimulatorStore((state) => state.uartSetReceiverConfig);
+  const uartTransmit = useSimulatorStore((state) => state.uartTransmit);
 
   const txDerived = calculateUARTDerivedValues(uartState.transmitter);
   const rxDerived = calculateUARTDerivedValues(uartState.receiver);
@@ -24,5 +25,6 @@ export function useUARTState() {
     rxDerived,
     setTransmitterConfig: (cfg: Partial<UARTConfig>) => setTransmitterConfig(cfg),
     setReceiverConfig: (cfg: Partial<UARTConfig>) => setReceiverConfig(cfg),
+    transmit: (msg: string) => uartTransmit(msg),
   };
 }

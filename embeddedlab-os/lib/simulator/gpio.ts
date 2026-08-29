@@ -139,6 +139,36 @@ export function togglePin(
 }
 
 /**
+ * Simulate an external hardware stimulus on an INPUT pin (e.g. button press / voltage applied).
+ */
+export function setInputPinLevel(
+  state: GPIOState,
+  pinId: number,
+  level: LogicLevel
+): { state: GPIOState; event: SimulationEvent } {
+  const pin = state.pins[pinId];
+  if (!pin) {
+    throw new Error(`GPIO: Invalid pin id ${pinId}`);
+  }
+
+  const newPins = state.pins.map((p) =>
+    p.id === pinId ? { ...p, level } : p
+  );
+
+  const event: SimulationEvent = {
+    id: generateEventId(),
+    timestamp: Date.now(),
+    severity: "INFO",
+    labId: "gpio",
+    type: "pin_input_changed",
+    message: `${pin.label}: external input stimulus → ${level}`,
+    payload: { pinId, level },
+  };
+
+  return { state: { ...state, pins: newPins }, event };
+}
+
+/**
  * Reset all pins to their default (INPUT, FLOATING) state.
  */
 export function resetGPIOState(): GPIOState {

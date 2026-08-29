@@ -1,23 +1,32 @@
-import { NextResponse } from "next/server";
+import { type NextRequest } from "next/server";
+import { createClient } from "@/utils/supabase/middleware";
 
-/**
- * EmbeddedLab OS — proxy.ts
- * Passthrough server proxy stub (Next.js 16+ convention).
- * Authentication protection and session checks will be implemented in Phase 10.
- */
-export function proxy() {
-  return NextResponse.next();
+export async function proxy(request: NextRequest) {
+  const { supabase, response } = createClient(request);
+  // Refresh user session on incoming navigation requests
+  if (
+    process.env.NEXT_PUBLIC_SUPABASE_URL &&
+    (process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ||
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY)
+  ) {
+    try {
+      await supabase.auth.getUser();
+    } catch {
+      // Graceful fallback for offline demo mode
+    }
+  }
+  return response;
 }
 
 export const config = {
   matcher: [
     /*
-     * Match all request paths except for the ones starting with:
-     * - api (API routes)
+     * Match all request paths except for:
      * - _next/static (static files)
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
+     * - public asset extensions (svg, png, jpg, etc.)
      */
-    "/((?!api|_next/static|_next/image|favicon.ico).*)",
+    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
   ],
 };

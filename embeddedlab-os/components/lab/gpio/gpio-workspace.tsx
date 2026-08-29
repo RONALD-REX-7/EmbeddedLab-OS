@@ -37,7 +37,7 @@ export function GPIOWorkspace() {
   const [selectedPinId, setSelectedPinId] = useState<number>(5); // Default PA5 (LED)
 
   // Engine state & actions
-  const { pins, setPinMode, setPinLevel, togglePin } = useGPIOState();
+  const { pins, setPinMode, setPinLevel, setInputLevel, togglePin } = useGPIOState();
   const { events } = useEventLog("gpio");
   const resetStore = useSimulatorStore((state) => state.reset);
   const mcuState = useSimulatorStore((state) => state.mcuState);
@@ -52,11 +52,11 @@ export function GPIOWorkspace() {
     const pa0 = pins[0];
     if (!pa0) return;
     if (pa0.mode === "INPUT_PULLUP") {
-      setPinLevel(0, pressed ? "LOW" : "HIGH");
+      setInputLevel(0, pressed ? "LOW" : "HIGH");
     } else if (pa0.mode === "INPUT_PULLDOWN") {
-      setPinLevel(0, pressed ? "HIGH" : "LOW");
+      setInputLevel(0, pressed ? "HIGH" : "LOW");
     } else {
-      setPinLevel(0, pressed ? "HIGH" : "LOW");
+      setInputLevel(0, pressed ? "HIGH" : "LOW");
     }
   };
 

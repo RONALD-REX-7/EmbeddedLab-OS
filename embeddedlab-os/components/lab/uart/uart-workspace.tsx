@@ -48,6 +48,7 @@ export function UARTWorkspace() {
     txDerived,
     setTransmitterConfig,
     setReceiverConfig,
+    transmit,
   } = useUARTState();
   const { events } = useEventLog("uart");
   const resetStore = useSimulatorStore((state) => state.reset);
@@ -58,11 +59,7 @@ export function UARTWorkspace() {
     if (e) e.preventDefault();
     if (!messageInput.trim()) return;
 
-    useSimulatorStore.getState().engine.uartTransmit(messageInput.trim());
-    useSimulatorStore.setState({
-      mcuState: useSimulatorStore.getState().engine.state,
-      events: [...useSimulatorStore.getState().engine.events],
-    });
+    transmit(messageInput.trim());
   };
 
   const handleReset = () => {

@@ -32,6 +32,7 @@ interface SimulatorStoreState {
   // -------------------------------------------------------------------------
   gpioSetPinMode: (pinId: number, mode: PinMode) => void;
   gpioSetPinLevel: (pinId: number, level: LogicLevel) => void;
+  gpioSetInputLevel: (pinId: number, level: LogicLevel) => void;
   gpioTogglePin: (pinId: number) => void;
 
   // -------------------------------------------------------------------------
@@ -54,6 +55,7 @@ interface SimulatorStoreState {
   // -------------------------------------------------------------------------
   uartSetTransmitterConfig: (config: Partial<UARTConfig>) => void;
   uartSetReceiverConfig: (config: Partial<UARTConfig>) => void;
+  uartTransmit: (message: string) => void;
 
   // -------------------------------------------------------------------------
   // Actions — Engine Reset & Snapshot
@@ -81,6 +83,12 @@ export const useSimulatorStore = create<SimulatorStoreState>((set, get) => ({
   gpioSetPinLevel: (pinId, level) => {
     const { engine } = get();
     engine.gpioSetPinLevel(pinId, level);
+    set({ mcuState: engine.state, events: [...engine.events] });
+  },
+
+  gpioSetInputLevel: (pinId, level) => {
+    const { engine } = get();
+    engine.gpioSetInputLevel(pinId, level);
     set({ mcuState: engine.state, events: [...engine.events] });
   },
 
@@ -150,6 +158,12 @@ export const useSimulatorStore = create<SimulatorStoreState>((set, get) => ({
   uartSetReceiverConfig: (config) => {
     const { engine } = get();
     engine.uartSetReceiverConfig(config);
+    set({ mcuState: engine.state, events: [...engine.events] });
+  },
+
+  uartTransmit: (message) => {
+    const { engine } = get();
+    engine.uartTransmit(message);
     set({ mcuState: engine.state, events: [...engine.events] });
   },
 

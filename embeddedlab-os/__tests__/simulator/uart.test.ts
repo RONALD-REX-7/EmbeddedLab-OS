@@ -8,6 +8,7 @@ import {
   createDefaultUARTState,
   setTransmitterConfig,
   setReceiverConfig,
+  uartTransmit,
 } from "@/lib/simulator/uart";
 import type { UARTConfig } from "@/types/simulator";
 
@@ -122,5 +123,26 @@ describe("UART state transitions", () => {
     const state = createDefaultUARTState();
     const { event } = setTransmitterConfig(state, { baudRate: 9600 });
     expect(event.severity).toBe("INFO");
+  });
+
+  describe("uartTransmit", () => {
+    it("successfully transmits and receives payload when configurations are compatible", () => {
+      const state = createDefaultUARTState();
+      const { state: newState, event } = uartTransmit(state, "HELLO");
+      expect(newState.txBuffer).toEqual(["HELLO"]);
+      expect(newState.rxBuffer).toEqual(["HELLO"]);
+      expect(event.type).toBe("uart_tx_success");
+      expect(event.severity).toBe("SUCCESS");
+    });
+
+    it("records framing/baud error in RX buffer when configurations are incompatible", () => {
+      let state = createDefaultUARTState();
+      ({ state } = setTransmitterConfig(state, { baudRate: 115200 }));
+      const { state: newState, event } = uartTransmit(state, "DATA");
+      expect(newState.txBuffer).toEqual(["DATA"]);
+      expect(newState.rxBuffer[0]).toContain("FRAMING/BAUD ERROR");
+      expect(event.type).toBe("uart_tx_framing_mismatch");
+      expect(event.severity).toBe("ERROR");
+    });
   });
 });

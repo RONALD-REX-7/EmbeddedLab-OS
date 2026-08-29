@@ -1,16 +1,27 @@
 /**
  * EmbeddedLab OS — lib/supabase/client.ts
- * Browser Supabase client instantiation. Safe fallback if missing credentials.
+ * Browser Supabase client singleton instantiation. Safe fallback if missing credentials.
  */
 import { createBrowserClient } from "@supabase/ssr";
+import type { SupabaseClient } from "@supabase/supabase-js";
 import { getSupabaseEnv } from "./config";
 
-export function createClient() {
+let browserClient: SupabaseClient | null = null;
+
+export function createClient(): SupabaseClient | null {
   const { url, anonKey, isConfigured } = getSupabaseEnv();
 
   if (!isConfigured) {
     return null;
   }
 
-  return createBrowserClient(url, anonKey);
+  if (typeof window === "undefined") {
+    return createBrowserClient(url, anonKey);
+  }
+
+  if (!browserClient) {
+    browserClient = createBrowserClient(url, anonKey);
+  }
+
+  return browserClient;
 }

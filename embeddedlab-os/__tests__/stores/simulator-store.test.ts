@@ -122,6 +122,27 @@ describe("useSimulatorStore — State Management Integration", () => {
     expect(state.mcuState.gpio.pins[0].level).toBe("FLOATING");
   });
 
+  it("should handle external input stimulus on INPUT pin without error", () => {
+    const store = useSimulatorStore.getState();
+
+    // Default pin 0 is INPUT
+    store.gpioSetInputLevel(0, "HIGH");
+
+    const state = useSimulatorStore.getState();
+    expect(state.mcuState.gpio.pins[0].level).toBe("HIGH");
+    expect(state.events[0].type).toBe("pin_input_changed");
+  });
+
+  it("should handle UART message transmission", () => {
+    const store = useSimulatorStore.getState();
+
+    store.uartTransmit("TEST TRANSMISSION");
+
+    const state = useSimulatorStore.getState();
+    expect(state.mcuState.uart.txBuffer).toEqual(["TEST TRANSMISSION"]);
+    expect(state.mcuState.uart.rxBuffer).toEqual(["TEST TRANSMISSION"]);
+  });
+
   it("should export full SimulationState snapshot", () => {
     const store = useSimulatorStore.getState();
     const simState = store.getSimulationState();
