@@ -1,6 +1,6 @@
 /**
  * EmbeddedLab OS — app/(auth)/signup/page.tsx
- * Student signup page with Supabase Auth.
+ * Student registration portal.
  */
 "use client";
 
@@ -47,44 +47,48 @@ export default function SignupPage() {
     }
   };
 
+  const inputClasses = "w-full bg-[var(--surface-console)] border border-[var(--border-subtle)] rounded px-3 py-2 text-foreground text-[10px] font-mono focus:outline-none focus:border-primary placeholder:text-muted-foreground/40 transition-colors";
+
   return (
-    <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4">
-      <div className="w-full max-w-md space-y-6">
-        {/* Header Logo & Title */}
-        <div className="text-center space-y-2">
-          <div className="inline-flex items-center justify-center w-12 h-12 rounded-lg bg-primary/10 border border-primary/30 text-primary mb-2">
-            <Cpu className="h-6 w-6" />
+    <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4 relative">
+      <div className="absolute inset-0 bg-oscilloscope-grid opacity-20 pointer-events-none" />
+
+      <div className="w-full max-w-sm space-y-5 relative">
+        {/* Header */}
+        <div className="text-center space-y-1.5">
+          <div className="inline-flex items-center justify-center w-10 h-10 rounded bg-primary/10 border border-primary/20 text-primary mb-2">
+            <Cpu className="h-5 w-5" strokeWidth={2} />
           </div>
-          <h1 className="text-2xl font-bold text-foreground tracking-tight">
+          <h1 className="text-xl font-bold text-foreground tracking-tight font-sans">
             EmbeddedLab OS
           </h1>
-          <p className="text-xs text-muted-foreground font-mono">
-            Interactive Virtual Microcontroller Laboratory
+          <p className="text-[9px] text-muted-foreground font-mono uppercase tracking-wider font-bold">
+            Create Student Account
           </p>
         </div>
 
-        {/* Signup Form Panel */}
-        <div className="rounded-lg border border-border bg-card p-6 space-y-5 shadow-xl">
-          <div className="border-b border-border pb-3">
-            <h2 className="text-sm font-bold text-foreground uppercase tracking-wider font-mono">
-              Create Student Account
+        {/* Signup Panel */}
+        <div className="rounded border border-[var(--border-default)] bg-[var(--surface-panel)] p-5 space-y-4 shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
+          <div className="border-b border-[var(--border-subtle)] pb-2.5">
+            <h2 className="text-[10px] font-bold text-foreground uppercase tracking-wider font-mono">
+              Account Registration
             </h2>
-            <p className="text-xs text-muted-foreground mt-0.5">
-              Register to save progress and track challenge scores.
+            <p className="text-[9px] text-muted-foreground mt-0.5 font-mono">
+              Register to save progress and track scores.
             </p>
           </div>
 
           {errorMsg && (
-            <div className="p-3 rounded border border-red-500/30 bg-red-500/10 text-red-400 text-xs font-mono flex items-center gap-2">
-              <AlertCircle className="h-4 w-4 shrink-0" />
+            <div className="p-2 rounded border border-red-500/30 bg-red-500/10 text-red-400 text-[10px] font-mono flex items-center gap-1.5">
+              <AlertCircle className="h-3.5 w-3.5 shrink-0" />
               <span>{errorMsg}</span>
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-3.5 text-xs font-mono">
-            <div className="space-y-1.5">
-              <label className="text-muted-foreground flex items-center gap-1.5 font-medium">
-                <User className="h-3.5 w-3.5 text-primary" />
+          <form onSubmit={handleSubmit} className="space-y-2.5 text-[10px] font-mono">
+            <div className="space-y-1">
+              <label className="text-muted-foreground flex items-center gap-1 font-bold uppercase tracking-wider text-[9px]">
+                <User className="h-3 w-3 text-primary" />
                 Full Name
               </label>
               <input
@@ -93,14 +97,14 @@ export default function SignupPage() {
                 onChange={(e) => setFullName(e.target.value)}
                 placeholder="Ada Lovelace"
                 required
-                className="w-full bg-background border border-border rounded px-3 py-2 text-foreground focus:outline-none focus:border-primary"
+                className={inputClasses}
               />
             </div>
 
-            <div className="space-y-1.5">
-              <label className="text-muted-foreground flex items-center gap-1.5 font-medium">
-                <Mail className="h-3.5 w-3.5 text-primary" />
-                Email Address
+            <div className="space-y-1">
+              <label className="text-muted-foreground flex items-center gap-1 font-bold uppercase tracking-wider text-[9px]">
+                <Mail className="h-3 w-3 text-primary" />
+                Email
               </label>
               <input
                 type="email"
@@ -108,14 +112,14 @@ export default function SignupPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="student@embeddedlab.org"
                 required
-                className="w-full bg-background border border-border rounded px-3 py-2 text-foreground focus:outline-none focus:border-primary"
+                className={inputClasses}
               />
             </div>
 
-            <div className="space-y-1.5">
-              <label className="text-muted-foreground flex items-center gap-1.5 font-medium">
-                <KeyRound className="h-3.5 w-3.5 text-primary" />
-                Password (min. 6 characters)
+            <div className="space-y-1">
+              <label className="text-muted-foreground flex items-center gap-1 font-bold uppercase tracking-wider text-[9px]">
+                <KeyRound className="h-3 w-3 text-primary" />
+                Password (min 6 chars)
               </label>
               <input
                 type="password"
@@ -123,13 +127,13 @@ export default function SignupPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••••••"
                 required
-                className="w-full bg-background border border-border rounded px-3 py-2 text-foreground focus:outline-none focus:border-primary"
+                className={inputClasses}
               />
             </div>
 
-            <div className="space-y-1.5">
-              <label className="text-muted-foreground flex items-center gap-1.5 font-medium">
-                <KeyRound className="h-3.5 w-3.5 text-primary" />
+            <div className="space-y-1">
+              <label className="text-muted-foreground flex items-center gap-1 font-bold uppercase tracking-wider text-[9px]">
+                <KeyRound className="h-3 w-3 text-primary" />
                 Confirm Password
               </label>
               <input
@@ -138,21 +142,21 @@ export default function SignupPage() {
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 placeholder="••••••••••••"
                 required
-                className="w-full bg-background border border-border rounded px-3 py-2 text-foreground focus:outline-none focus:border-primary"
+                className={inputClasses}
               />
             </div>
 
             <Button
               type="submit"
               disabled={isSubmitting}
-              className="w-full font-mono text-xs font-semibold h-9 mt-2"
+              className="w-full font-mono text-[10px] font-bold h-8 control-elevated mt-1"
             >
-              {isSubmitting ? "Creating Account..." : "Register Account"}
-              <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
+              {isSubmitting ? "Creating Account..." : "Register"}
+              <ArrowRight className="ml-1 h-3 w-3" />
             </Button>
           </form>
 
-          <div className="pt-3 border-t border-border/80 text-center text-[11px] font-mono text-muted-foreground">
+          <div className="pt-3 border-t border-[var(--border-subtle)] text-center text-[9px] font-mono text-muted-foreground">
             Already have an account?{" "}
             <Link href="/login" className="text-primary hover:underline font-bold">
               Sign In

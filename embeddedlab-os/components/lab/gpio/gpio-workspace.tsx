@@ -1,17 +1,11 @@
 /**
  * EmbeddedLab OS — components/lab/gpio/gpio-workspace.tsx
- *
- * Full GPIO Laboratory Workspace.
- * Integrates:
- * - 3-column engineering layout (Instructions | Microcontroller Hardware | Inspector)
- * - Simulation engine stores via useGPIOState() and useEventLog()
- * - Challenge system with actual state validators
- * - Bottom event log console
+ * High-Density GPIO Laboratory Workspace with 3-Column Engineering Layout.
  */
 "use client";
 
 import { useState } from "react";
-import { ArrowLeft, FlaskConical, RotateCcw } from "lucide-react";
+import { ArrowLeft, Cpu, RotateCcw, Zap } from "lucide-react";
 import Link from "next/link";
 
 import { Button, buttonVariants } from "@/components/ui/button";
@@ -61,47 +55,53 @@ export function GPIOWorkspace() {
   };
 
   return (
-    <div className="p-5 max-w-7xl mx-auto space-y-5">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-border">
+    <div className="p-4 max-w-7xl mx-auto space-y-4">
+      {/* Instrumentation Header Bar */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[var(--border-default)]">
         <div>
-          <div className="flex items-center gap-2 text-muted-foreground mb-0.5">
-            <FlaskConical className="h-4 w-4 text-primary" />
-            <span className="text-xs font-mono uppercase tracking-wider">
-              Interactive Lab Workspace
-            </span>
+          <div className="flex items-center gap-1.5 text-muted-foreground mb-0.5 font-mono text-[10px] uppercase tracking-wider">
+            <Zap className="h-3.5 w-3.5 text-primary" />
+            <span>DIGITAL LOGIC & I/O WORKBENCH</span>
+            <span>·</span>
+            <span className="text-primary font-bold">16 ACTIVE CHANNELS</span>
           </div>
-          <h1 className="text-xl font-bold text-foreground">
+          <h1 className="text-xl font-bold text-foreground font-sans tracking-tight">
             GPIO — General Purpose Input / Output
           </h1>
         </div>
 
         <div className="flex items-center gap-2">
           <StatusBadge status="running" />
-          <Button variant="outline" size="sm" onClick={handleReset}>
-            <RotateCcw className="mr-1.5 h-3.5 w-3.5" />
-            Reset MCU State
+          <Button variant="outline" size="xs" onClick={handleReset} className="h-7 text-xs font-mono control-elevated">
+            <RotateCcw className="mr-1 h-3 w-3" />
+            Reset MCU
           </Button>
-          <Link href="/labs" className={buttonVariants({ variant: "outline", size: "sm" })}>
-            <ArrowLeft className="mr-1.5 h-3.5 w-3.5" />
-            All Labs
+          <Link href="/labs" className={buttonVariants({ variant: "outline", size: "sm", className: "h-7 text-xs font-mono" })}>
+            <ArrowLeft className="mr-1 h-3 w-3" />
+            Directory
           </Link>
         </div>
       </div>
 
-      {/* 3-Column Layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
-        {/* Left Column: Instructions & Challenges & AI Assistant (4 cols) */}
-        <div className="lg:col-span-4 space-y-4">
+      {/* 3-Column Engineering Layout */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
+        {/* Left Column: Worksheet & Theory & AI Ribbon (4 cols) */}
+        <div className="lg:col-span-4 space-y-3.5">
           <LabEducationCard labId="gpio" currentState={mcuState} />
           <ChallengePanel labId="gpio" />
           <AIAssistantPanel labId="gpio" state={mcuState} />
         </div>
 
-        {/* Center Column: Microcontroller Visual Hardware (5 cols) */}
-        <div className="lg:col-span-5 space-y-4">
-          <Panel title="Interactive Microcontroller Hardware" variant="sunken">
-            <div className="space-y-5">
+        {/* Center Column: Microcontroller Hardware Visualization (5 cols) */}
+        <div className="lg:col-span-5 space-y-3.5">
+          <Panel
+            title="Silicon Microcontroller Hardware"
+            subtitle="Virtual STM32 Port A & Port B Matrix"
+            icon={Cpu}
+            variant="instrument"
+            telemetryTag="3.3V CMOS"
+          >
+            <div className="space-y-4">
               <VirtualLED pin={pins[5]} />
               <VirtualButton pin={pins[0]} onPressStateChange={handleButtonPressStateChange} />
               <PinGrid
@@ -115,60 +115,62 @@ export function GPIOWorkspace() {
           </Panel>
         </div>
 
-        {/* Right Column: Pin Inspector Panel (3 cols) */}
-        <div className="lg:col-span-3 space-y-4">
+        {/* Right Column: Pin Inspector & Register Configuration (3 cols) */}
+        <div className="lg:col-span-3 space-y-3.5">
           <InspectorPanel
             title="GPIO Pin Inspector"
-            subtitle={selectedPin ? `Pin ${selectedPin.label}` : "Select a pin"}
+            subtitle={selectedPin ? `Selected Port: ${selectedPin.label}` : "Select a pin"}
           >
             {selectedPin && (
               <>
-                <InspectorRow label="Pin Name" value={selectedPin.label} />
-                <InspectorRow label="Pin ID" value={`[${selectedPin.id}]`} />
-                <InspectorRow label="Mode" value={selectedPin.mode} />
+                <InspectorRow label="Port Index" value={selectedPin.label} />
+                <InspectorRow label="Register ID" value={`MODER[${selectedPin.id}]`} />
+                <InspectorRow label="Pin Mode" value={selectedPin.mode} />
                 <InspectorRow label="Logic State" value={selectedPin.level} />
-                <InspectorRow label="Drive Voltage" value={selectedPin.level === "HIGH" ? "3.30 V" : "0.00 V"} />
+                <InspectorRow label="Terminal Voltage" value={selectedPin.level === "HIGH" ? "3.30 V" : "0.00 V"} />
 
-                <div className="pt-4 border-t border-border space-y-2">
-                  <span className="text-[11px] font-mono text-muted-foreground uppercase tracking-wider block">
-                    Mode Configuration
+                {/* Mode Select Segment */}
+                <div className="pt-3 border-t border-[var(--border-subtle)] space-y-1.5">
+                  <span className="text-[10px] font-mono text-muted-foreground uppercase tracking-wider block font-semibold">
+                    Pin Configuration
                   </span>
-                  <div className="grid grid-cols-2 gap-1.5">
-                    {(["INPUT", "OUTPUT", "ANALOG", "ALTERNATE"] as PinMode[]).map((mode) => (
+                  <div className="grid grid-cols-2 gap-1">
+                    {(["INPUT", "OUTPUT", "INPUT_PULLUP", "INPUT_PULLDOWN"] as PinMode[]).map((mode) => (
                       <button
                         key={mode}
                         onClick={() => setPinMode(selectedPin.id, mode)}
-                        className={`px-2 py-1 text-[10px] font-mono rounded border transition-colors ${
+                        className={`px-1.5 py-1 text-[9px] font-mono rounded border transition-colors cursor-pointer truncate ${
                           selectedPin.mode === mode
-                            ? "bg-primary text-primary-foreground font-bold border-primary"
-                            : "bg-muted/30 border-border text-muted-foreground hover:text-foreground"
+                            ? "bg-primary text-primary-foreground font-bold border-primary shadow-sm"
+                            : "bg-[var(--surface-sunken)] border-[var(--border-subtle)] text-muted-foreground hover:text-foreground"
                         }`}
                       >
-                        {mode}
+                        {mode.replace("INPUT_", "")}
                       </button>
                     ))}
                   </div>
                 </div>
 
+                {/* Output Drive Level Controller */}
                 {selectedPin.mode === "OUTPUT" && (
-                  <div className="pt-3 border-t border-border space-y-2">
-                    <span className="text-[11px] font-mono text-muted-foreground uppercase tracking-wider block">
-                      Output Drive Level
+                  <div className="pt-3 border-t border-[var(--border-subtle)] space-y-1.5">
+                    <span className="text-[10px] font-mono text-muted-foreground uppercase tracking-wider block font-semibold">
+                      ODR Level Register
                     </span>
-                    <div className="flex gap-2">
+                    <div className="flex gap-1.5">
                       <Button
-                        size="sm"
+                        size="xs"
                         variant={selectedPin.level === "LOW" ? "default" : "outline"}
                         onClick={() => setPinLevel(selectedPin.id, "LOW")}
-                        className="flex-1 font-mono text-xs"
+                        className="flex-1 font-mono text-[10px] h-7"
                       >
                         LOW (0V)
                       </Button>
                       <Button
-                        size="sm"
+                        size="xs"
                         variant={selectedPin.level === "HIGH" ? "default" : "outline"}
                         onClick={() => setPinLevel(selectedPin.id, "HIGH")}
-                        className="flex-1 font-mono text-xs"
+                        className="flex-1 font-mono text-[10px] h-7"
                       >
                         HIGH (3.3V)
                       </Button>
@@ -181,8 +183,8 @@ export function GPIOWorkspace() {
         </div>
       </div>
 
-      {/* Bottom Row: Event Log */}
-      <EventLogView events={events} onClear={() => resetStore("gpio")} maxHeight="h-44" />
+      {/* Bottom Diagnostic Console */}
+      <EventLogView events={events} onClear={() => resetStore("gpio")} maxHeight="h-36" />
     </div>
   );
 }

@@ -2,17 +2,16 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
-/* ─────────────────────────────────────────────
-   EmbeddedLab OS — Design System
-   Dark-first engineering laboratory interface
-   Built on shadcn/ui base-nova + Tailwind v4
-   ───────────────────────────────────────────── */
+/* ────────────────────────────────────────────────────────────────────────────
+   EmbeddedLab OS — Engineering Design System & Precision Instrumentation Tokens
+   Dark-first, high-density hardware laboratory aesthetic
+   ──────────────────────────────────────────────────────────────────────────── */
 
 @custom-variant dark (&:is(.dark *));
 
-/* ─── Tailwind v4 theme tokens ────────────────── */
+/* ─── Tailwind v4 theme tokens ────────────────────────────────────────────── */
 @theme inline {
-  /* shadcn/ui base tokens (required) */
+  /* Core shadcn/ui base tokens */
   --color-background:          var(--background);
   --color-foreground:          var(--foreground);
   --color-card:                var(--card);
@@ -40,155 +39,167 @@
   --color-sidebar-foreground:  var(--sidebar-foreground);
   --color-sidebar:             var(--sidebar);
 
-  /* Radius scale */
-  --radius-sm:  calc(var(--radius) * 0.6);
-  --radius-md:  calc(var(--radius) * 0.8);
+  /* Radius scale (crisp engineering radii) */
+  --radius-sm:  calc(var(--radius) * 0.5);
+  --radius-md:  calc(var(--radius) * 0.75);
   --radius-lg:  var(--radius);
-  --radius-xl:  calc(var(--radius) * 1.4);
+  --radius-xl:  calc(var(--radius) * 1.25);
 
   /* Typography */
   --font-sans: var(--font-inter);
   --font-mono: var(--font-jetbrains-mono);
   --font-heading: var(--font-inter);
 
-  /* EmbeddedLab OS semantic signal tokens */
+  /* Signal and instrumentation semantic tokens */
   --color-signal-high:      var(--signal-high);
   --color-signal-low:       var(--signal-low);
   --color-signal-float:     var(--signal-float);
+  --color-signal-pulse:     var(--signal-pulse);
 
-  /* EmbeddedLab OS surface layer tokens */
-  --color-surface-base:     var(--surface-base);
-  --color-surface-panel:    var(--surface-panel);
-  --color-surface-elevated: var(--surface-elevated);
-  --color-surface-sunken:   var(--surface-sunken);
+  /* Multi-morphism surface layer tokens */
+  --color-surface-base:       var(--surface-base);
+  --color-surface-panel:      var(--surface-panel);
+  --color-surface-instrument: var(--surface-instrument);
+  --color-surface-elevated:   var(--surface-elevated);
+  --color-surface-sunken:     var(--surface-sunken);
+  --color-surface-console:    var(--surface-console);
 
-  /* EmbeddedLab OS border tokens */
-  --color-border-subtle:    var(--border-subtle);
-  --color-border-default:   var(--border-default);
-  --color-border-strong:    var(--border-strong);
+  /* Precision border tokens */
+  --color-border-subtle:      var(--border-subtle);
+  --color-border-default:     var(--border-default);
+  --color-border-strong:      var(--border-strong);
+  --color-border-accent:      var(--border-accent);
 
-  /* EmbeddedLab OS text tokens */
-  --color-text-primary:     var(--text-primary);
-  --color-text-secondary:   var(--text-secondary);
-  --color-text-muted:       var(--text-muted);
+  /* Text tokens */
+  --color-text-primary:       var(--text-primary);
+  --color-text-secondary:     var(--text-secondary);
+  --color-text-muted:         var(--text-muted);
 
   /* Semantic feedback */
-  --color-feedback-success: var(--feedback-success);
-  --color-feedback-warning: var(--feedback-warning);
-  --color-feedback-error:   var(--feedback-error);
-  --color-feedback-info:    var(--feedback-info);
+  --color-feedback-success:   var(--feedback-success);
+  --color-feedback-warning:   var(--feedback-warning);
+  --color-feedback-error:     var(--feedback-error);
+  --color-feedback-info:      var(--feedback-info);
 }
 
-/* ─── Dark mode (default — dark first) ──────────── */
+/* ─── Dark Mode Palette (Engineering Default) ─────────────────────────────── */
 :root {
-  /* shadcn/ui base dark palette */
-  --background: oklch(0.09 0.01 250);
-  --foreground: oklch(0.93 0.01 250);
-  --card: oklch(0.12 0.012 250);
-  --card-foreground: oklch(0.93 0.01 250);
-  --popover: oklch(0.13 0.013 250);
-  --popover-foreground: oklch(0.93 0.01 250);
-  --primary: oklch(0.62 0.19 256);
-  --primary-foreground: oklch(0.98 0 0);
-  --secondary: oklch(0.16 0.014 250);
-  --secondary-foreground: oklch(0.85 0.01 250);
-  --muted: oklch(0.16 0.014 250);
-  --muted-foreground: oklch(0.55 0.02 250);
-  --accent: oklch(0.16 0.014 250);
-  --accent-foreground: oklch(0.85 0.01 250);
-  --destructive: oklch(0.63 0.22 25);
-  --border: oklch(0.22 0.016 250);
-  --input: oklch(0.19 0.015 250);
-  --ring: oklch(0.62 0.19 256);
-  --radius: 0.5rem;
+  /* Base graphite & carbon tones */
+  --background: oklch(0.11 0.012 255);        /* #0e1117 graphite base */
+  --foreground: oklch(0.94 0.01 250);         /* #e2e8f0 clean bright text */
+  --card: oklch(0.14 0.015 255);              /* #141822 instrument card */
+  --card-foreground: oklch(0.94 0.01 250);
+  --popover: oklch(0.15 0.016 255);
+  --popover-foreground: oklch(0.94 0.01 250);
+  --primary: oklch(0.68 0.18 230);            /* #0284c7 / #38bdf8 precision cyan */
+  --primary-foreground: oklch(0.09 0.01 250);
+  --secondary: oklch(0.18 0.018 255);
+  --secondary-foreground: oklch(0.88 0.01 250);
+  --muted: oklch(0.17 0.015 255);
+  --muted-foreground: oklch(0.58 0.02 250);
+  --accent: oklch(0.20 0.02 255);
+  --accent-foreground: oklch(0.92 0.01 250);
+  --destructive: oklch(0.62 0.22 25);
+  --border: oklch(0.22 0.02 255);             /* #222938 precision divider */
+  --input: oklch(0.18 0.018 255);
+  --ring: oklch(0.68 0.18 230);
+  --radius: 0.375rem;                         /* 6px tight technical corners */
 
-  /* Sidebar tokens */
-  --sidebar: oklch(0.11 0.012 250);
-  --sidebar-foreground: oklch(0.85 0.01 250);
-  --sidebar-primary: oklch(0.62 0.19 256);
-  --sidebar-primary-foreground: oklch(0.98 0 0);
-  --sidebar-accent: oklch(0.16 0.014 250);
-  --sidebar-accent-foreground: oklch(0.85 0.01 250);
-  --sidebar-border: oklch(0.18 0.014 250);
-  --sidebar-ring: oklch(0.62 0.19 256);
+  /* Sidebar Tokens */
+  --sidebar: oklch(0.12 0.014 255);           /* #10141c */
+  --sidebar-foreground: oklch(0.88 0.01 250);
+  --sidebar-primary: oklch(0.68 0.18 230);
+  --sidebar-primary-foreground: oklch(0.09 0.01 250);
+  --sidebar-accent: oklch(0.17 0.018 255);
+  --sidebar-accent-foreground: oklch(0.92 0.01 250);
+  --sidebar-border: oklch(0.19 0.018 255);
+  --sidebar-ring: oklch(0.68 0.18 230);
 
-  /* EmbeddedLab OS surface layers */
-  --surface-base:     oklch(0.09 0.01 250);
-  --surface-panel:    oklch(0.12 0.012 250);
-  --surface-elevated: oklch(0.15 0.013 250);
-  --surface-sunken:   oklch(0.07 0.008 250);
+  /* Multi-Morphism Surface Layers */
+  --surface-base:       oklch(0.11 0.012 255);
+  --surface-panel:      oklch(0.14 0.015 255);
+  --surface-instrument: oklch(0.13 0.014 255);
+  --surface-elevated:   oklch(0.18 0.018 255);
+  --surface-sunken:     oklch(0.08 0.01 255);  /* #090c10 deep scope well */
+  --surface-console:    oklch(0.07 0.008 255); /* #07090d terminal well */
 
-  /* EmbeddedLab OS border layers */
-  --border-subtle:    oklch(0.17 0.013 250);
-  --border-default:   oklch(0.22 0.016 250);
-  --border-strong:    oklch(0.30 0.02 250);
+  /* Precision Border Layers */
+  --border-subtle:      oklch(0.18 0.016 255);
+  --border-default:     oklch(0.22 0.02 255);
+  --border-strong:      oklch(0.32 0.025 255);
+  --border-accent:      oklch(0.68 0.18 230);
 
-  /* EmbeddedLab OS text layers */
-  --text-primary:     oklch(0.93 0.01 250);
-  --text-secondary:   oklch(0.62 0.02 250);
-  --text-muted:       oklch(0.40 0.015 250);
+  /* Text Hierarchy */
+  --text-primary:       oklch(0.94 0.01 250);
+  --text-secondary:     oklch(0.68 0.02 250);
+  --text-muted:         oklch(0.46 0.018 250);
 
-  /* Signal state colors (GPIO / PWM) */
-  --signal-high:    #22c55e;   /* green  — pin HIGH, LED on */
-  --signal-low:     #4a5878;   /* muted  — pin LOW */
-  --signal-float:   #f59e0b;   /* amber  — floating / undriven */
+  /* Electrical & Signal State Colors */
+  --signal-high:        #10b981;   /* Emerald 500 — Logic HIGH, active output */
+  --signal-low:         #475569;   /* Slate 600   — Logic LOW, grounded */
+  --signal-float:       #f59e0b;   /* Amber 500   — High-Z Floating / Warning */
+  --signal-pulse:       #38bdf8;   /* Sky 400     — Dynamic carrier pulse */
 
-  /* Semantic feedback */
-  --feedback-success: #22c55e;
-  --feedback-warning: #f59e0b;
-  --feedback-error:   #ef4444;
-  --feedback-info:    #3b82f6;
+  /* Feedback Colors */
+  --feedback-success:   #10b981;
+  --feedback-warning:   #f59e0b;
+  --feedback-error:     #ef4444;
+  --feedback-info:      #0ea5e9;
 }
 
-/* Light mode override (if user removes .dark class) */
+/* Light Mode Fallback */
 .light {
-  --background: oklch(0.99 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(0.97 0 0);
-  --card-foreground: oklch(0.145 0 0);
+  --background: oklch(0.98 0 0);
+  --foreground: oklch(0.12 0 0);
+  --card: oklch(0.96 0 0);
+  --card-foreground: oklch(0.12 0 0);
   --popover: oklch(0.99 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.52 0.19 256);
-  --primary-foreground: oklch(0.98 0 0);
-  --secondary: oklch(0.94 0 0);
-  --secondary-foreground: oklch(0.25 0 0);
-  --muted: oklch(0.94 0 0);
-  --muted-foreground: oklch(0.50 0 0);
-  --accent: oklch(0.94 0 0);
-  --accent-foreground: oklch(0.25 0 0);
-  --destructive: oklch(0.58 0.24 27);
-  --border: oklch(0.88 0 0);
-  --input: oklch(0.88 0 0);
-  --ring: oklch(0.52 0.19 256);
-  --sidebar: oklch(0.96 0 0);
-  --sidebar-foreground: oklch(0.25 0 0);
-  --sidebar-primary: oklch(0.52 0.19 256);
-  --sidebar-primary-foreground: oklch(0.98 0 0);
-  --sidebar-accent: oklch(0.92 0 0);
-  --sidebar-accent-foreground: oklch(0.25 0 0);
-  --sidebar-border: oklch(0.88 0 0);
-  --sidebar-ring: oklch(0.52 0.19 256);
+  --popover-foreground: oklch(0.12 0 0);
+  --primary: oklch(0.52 0.18 230);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.92 0 0);
+  --secondary-foreground: oklch(0.22 0 0);
+  --muted: oklch(0.92 0 0);
+  --muted-foreground: oklch(0.48 0 0);
+  --accent: oklch(0.92 0 0);
+  --accent-foreground: oklch(0.22 0 0);
+  --destructive: oklch(0.58 0.22 25);
+  --border: oklch(0.85 0 0);
+  --input: oklch(0.85 0 0);
+  --ring: oklch(0.52 0.18 230);
+  --sidebar: oklch(0.95 0 0);
+  --sidebar-foreground: oklch(0.22 0 0);
+  --sidebar-primary: oklch(0.52 0.18 230);
+  --sidebar-primary-foreground: oklch(0.99 0 0);
+  --sidebar-accent: oklch(0.90 0 0);
+  --sidebar-accent-foreground: oklch(0.22 0 0);
+  --sidebar-border: oklch(0.85 0 0);
+  --sidebar-ring: oklch(0.52 0.18 230);
 
-  --surface-base:     oklch(0.99 0 0);
-  --surface-panel:    oklch(0.97 0 0);
-  --surface-elevated: oklch(0.95 0 0);
-  --surface-sunken:   oklch(0.93 0 0);
-  --border-subtle:    oklch(0.92 0 0);
-  --border-default:   oklch(0.87 0 0);
-  --border-strong:    oklch(0.78 0 0);
-  --text-primary:     oklch(0.145 0 0);
-  --text-secondary:   oklch(0.40 0 0);
-  --text-muted:       oklch(0.58 0 0);
-  --signal-high:    #16a34a;
-  --signal-low:     #9ca3af;
-  --signal-float:   #d97706;
-  --feedback-success: #16a34a;
-  --feedback-warning: #d97706;
-  --feedback-error:   #dc2626;
-  --feedback-info:    #2563eb;
+  --surface-base:       oklch(0.98 0 0);
+  --surface-panel:      oklch(0.96 0 0);
+  --surface-instrument: oklch(0.95 0 0);
+  --surface-elevated:   oklch(0.93 0 0);
+  --surface-sunken:     oklch(0.91 0 0);
+  --surface-console:    oklch(0.89 0 0);
+  --border-subtle:      oklch(0.90 0 0);
+  --border-default:     oklch(0.85 0 0);
+  --border-strong:      oklch(0.75 0 0);
+  --border-accent:      oklch(0.52 0.18 230);
+  --text-primary:       oklch(0.12 0 0);
+  --text-secondary:     oklch(0.38 0 0);
+  --text-muted:         oklch(0.55 0 0);
+  --signal-high:        #059669;
+  --signal-low:         #94a3b8;
+  --signal-float:       #d97706;
+  --signal-pulse:       #0284c7;
+  --feedback-success:   #059669;
+  --feedback-warning:   #d97706;
+  --feedback-error:     #dc2626;
+  --feedback-info:      #0284c7;
 }
 
-/* ─── Base layer ────────────────────────────────── */
+/* ─── Base Layer ──────────────────────────────────────────────────────────── */
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -204,101 +215,142 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+    font-family: var(--font-inter), ui-sans-serif, system-ui, -apple-system, sans-serif;
     min-height: 100%;
-    line-height: 1.6;
+    line-height: 1.5;
   }
 
-  /* Monospace baseline for technical data */
-  code, kbd, pre, samp,
-  .font-mono {
+  /* Monospace typography for hardware data, addresses, registers, metrics */
+  code, kbd, pre, samp, .font-mono {
     font-family: var(--font-jetbrains-mono), ui-monospace, "JetBrains Mono",
-      "Cascadia Code", Consolas, monospace;
-    font-feature-settings: "liga" 0;
+      "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+    font-feature-settings: "liga" 0, "calt" 0;
   }
 
-  /* Consistent heading weights */
   h1, h2, h3, h4, h5, h6 {
     font-weight: 600;
-    line-height: 1.3;
-    letter-spacing: -0.01em;
+    line-height: 1.25;
+    letter-spacing: -0.015em;
   }
 
-  /* Subtle scrollbar */
+  /* Thin precision scrollbar */
   ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 5px;
+    height: 5px;
   }
   ::-webkit-scrollbar-track {
     background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    background: var(--border-default);
-    border-radius: 3px;
+    background: oklch(0.25 0.02 255);
+    border-radius: 2px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: var(--border-strong);
+    background: oklch(0.35 0.025 255);
   }
 }
 
-/* ─── EmbeddedLab OS utility classes ─────────────── */
+/* ─── Precision Material Morphisms & Utilities ────────────────────────────── */
 @layer utilities {
-  /* Signal state indicators */
-  .signal-high {
-    color: var(--signal-high);
-  }
-  .signal-low {
-    color: var(--signal-low);
-  }
-  .signal-float {
-    color: var(--signal-float);
+  /* 1. Instrument Panel Morphism (Dense technical casing) */
+  .panel-instrument {
+    background-color: var(--surface-panel);
+    border: 1px solid var(--border-default);
+    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.04), 0 2px 4px rgba(0, 0, 0, 0.25);
   }
 
-  .bg-signal-high {
-    background-color: var(--signal-high);
-  }
-  .bg-signal-low {
-    background-color: var(--signal-low);
-  }
-  .bg-signal-float {
-    background-color: var(--signal-float);
+  /* 2. Recessed Console Morphism (Deep sunken screen/terminal well) */
+  .panel-sunken {
+    background-color: var(--surface-sunken);
+    border: 1px solid var(--border-subtle);
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4);
   }
 
-  /* Surface layers */
-  .bg-surface-base     { background-color: var(--surface-base); }
-  .bg-surface-panel    { background-color: var(--surface-panel); }
-  .bg-surface-elevated { background-color: var(--surface-elevated); }
-  .bg-surface-sunken   { background-color: var(--surface-sunken); }
+  /* 3. Elevated Control Morphism (Tactile mechanical interactive button/switch) */
+  .control-elevated {
+    background-color: var(--surface-elevated);
+    border: 1px solid var(--border-default);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    transition: all 120ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .control-elevated:hover {
+    border-color: var(--border-strong);
+    background-color: oklch(0.20 0.02 255);
+  }
+  .control-elevated:active {
+    transform: translateY(1px);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4);
+  }
 
-  /* Border layers */
+  /* 4. Technical Blueprint Pattern (Subtle background grid) */
+  .bg-blueprint {
+    background-image: 
+      linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  .bg-oscilloscope-grid {
+    background-image:
+      linear-gradient(to right, rgba(56, 189, 248, 0.08) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(56, 189, 248, 0.08) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  /* Signal Glow Effects */
+  .glow-signal-high {
+    box-shadow: 0 0 12px rgba(16, 185, 129, 0.45);
+  }
+  .glow-signal-pulse {
+    box-shadow: 0 0 12px rgba(56, 189, 248, 0.45);
+  }
+  .glow-signal-warn {
+    box-shadow: 0 0 12px rgba(245, 158, 11, 0.45);
+  }
+
+  /* Signal Indicators */
+  .signal-high    { color: var(--signal-high); }
+  .signal-low     { color: var(--signal-low); }
+  .signal-float   { color: var(--signal-float); }
+  .signal-pulse   { color: var(--signal-pulse); }
+
+  .bg-signal-high { background-color: var(--signal-high); }
+  .bg-signal-low  { background-color: var(--signal-low); }
+  .bg-signal-float { background-color: var(--signal-float); }
+  .bg-signal-pulse { background-color: var(--signal-pulse); }
+
+  /* Surface classes */
+  .bg-surface-base       { background-color: var(--surface-base); }
+  .bg-surface-panel      { background-color: var(--surface-panel); }
+  .bg-surface-instrument { background-color: var(--surface-instrument); }
+  .bg-surface-elevated   { background-color: var(--surface-elevated); }
+  .bg-surface-sunken     { background-color: var(--surface-sunken); }
+  .bg-surface-console    { background-color: var(--surface-console); }
+
+  /* Border classes */
   .border-subtle  { border-color: var(--border-subtle); }
   .border-default { border-color: var(--border-default); }
   .border-strong  { border-color: var(--border-strong); }
+  .border-accent  { border-color: var(--border-accent); }
 
-  /* Text layers */
+  /* Text hierarchy classes */
   .text-primary-fg   { color: var(--text-primary); }
   .text-secondary-fg { color: var(--text-secondary); }
   .text-muted-fg     { color: var(--text-muted); }
 
-  /* Feedback colors */
+  /* Feedback text classes */
   .text-success { color: var(--feedback-success); }
   .text-warning { color: var(--feedback-warning); }
   .text-error   { color: var(--feedback-error); }
   .text-info    { color: var(--feedback-info); }
+}
 
-  /* Technical data display */
-  .data-value {
-    font-family: var(--font-jetbrains-mono), monospace;
-    font-size: 0.875rem;
-    letter-spacing: 0.01em;
-  }
-
-  /* Lab status indicator dot */
-  .status-dot {
-    display: inline-block;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    flex-shrink: 0;
+/* ─── Reduced Motion Support ──────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

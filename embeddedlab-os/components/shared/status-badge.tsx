@@ -1,7 +1,6 @@
 /**
  * EmbeddedLab OS — components/shared/status-badge.tsx
- * Reusable status indicator badge.
- * Used by lab cards, lab placeholders, and the dashboard.
+ * Compact engineering system status indicator with LED-dot feedback.
  */
 import { cn } from "@/lib/utils";
 
@@ -22,16 +21,16 @@ interface StatusBadgeProps {
 
 const STATUS_CONFIG: Record<
   StatusType,
-  { label: string; dot: string; text: string; bg: string }
+  { label: string; dot: string; border: string; text: string; bg: string }
 > = {
-  idle:        { label: "Idle",        dot: "bg-muted-foreground", text: "text-muted-foreground", bg: "bg-muted/30" },
-  running:     { label: "Running",     dot: "bg-[var(--feedback-info)]",    text: "text-[var(--feedback-info)]",    bg: "bg-[var(--feedback-info)]/10" },
-  complete:    { label: "Complete",    dot: "bg-[var(--feedback-success)]", text: "text-[var(--feedback-success)]", bg: "bg-[var(--feedback-success)]/10" },
-  error:       { label: "Error",       dot: "bg-[var(--feedback-error)]",   text: "text-[var(--feedback-error)]",   bg: "bg-[var(--feedback-error)]/10" },
-  "coming-soon": { label: "Coming Soon", dot: "bg-[var(--feedback-warning)]", text: "text-[var(--feedback-warning)]", bg: "bg-[var(--feedback-warning)]/10" },
-  demo:        { label: "Demo Mode",   dot: "bg-[var(--feedback-info)]",    text: "text-[var(--feedback-info)]",    bg: "bg-[var(--feedback-info)]/10" },
-  active:      { label: "Available",   dot: "bg-[var(--feedback-success)]", text: "text-[var(--feedback-success)]", bg: "bg-[var(--feedback-success)]/10" },
-  "not-started": { label: "Not Started", dot: "bg-muted-foreground", text: "text-muted-foreground", bg: "bg-muted/30" },
+  idle:          { label: "IDLE",       dot: "bg-slate-500",     border: "border-slate-700",         text: "text-slate-400",       bg: "bg-slate-900/50" },
+  running:       { label: "RUNNING",    dot: "bg-sky-400 shadow-[0_0_6px_rgba(56,189,248,0.7)] animate-pulse", border: "border-sky-500/30", text: "text-sky-400", bg: "bg-sky-500/10" },
+  complete:      { label: "COMPLETE",   dot: "bg-emerald-400 shadow-[0_0_6px_rgba(16,185,129,0.7)]", border: "border-emerald-500/30", text: "text-emerald-400", bg: "bg-emerald-500/10" },
+  error:         { label: "ERROR",      dot: "bg-red-400 shadow-[0_0_6px_rgba(239,68,68,0.7)]",     border: "border-red-500/30",     text: "text-red-400",     bg: "bg-red-500/10" },
+  "coming-soon": { label: "PENDING",    dot: "bg-amber-400",    border: "border-amber-500/30",      text: "text-amber-400",       bg: "bg-amber-500/10" },
+  demo:          { label: "DEMO",       dot: "bg-amber-400",    border: "border-amber-500/30",      text: "text-amber-400",       bg: "bg-amber-500/10" },
+  active:        { label: "ACTIVE",     dot: "bg-emerald-400 shadow-[0_0_6px_rgba(16,185,129,0.7)]", border: "border-emerald-500/30", text: "text-emerald-400", bg: "bg-emerald-500/10" },
+  "not-started": { label: "STANDBY",    dot: "bg-slate-500",    border: "border-slate-700",         text: "text-slate-400",       bg: "bg-slate-900/50" },
 };
 
 export function StatusBadge({ status, className }: StatusBadgeProps) {
@@ -39,15 +38,16 @@ export function StatusBadge({ status, className }: StatusBadgeProps) {
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1.5 rounded px-2 py-0.5 text-xs font-medium",
+        "inline-flex items-center gap-1.5 rounded border px-1.5 py-0.5 text-[10px] font-mono font-bold tracking-wider uppercase select-none",
         config.bg,
+        config.border,
         config.text,
         className
       )}
       aria-label={`Status: ${config.label}`}
     >
       <span
-        className={cn("status-dot", config.dot)}
+        className={cn("w-1.5 h-1.5 rounded-full shrink-0", config.dot)}
         aria-hidden="true"
       />
       {config.label}

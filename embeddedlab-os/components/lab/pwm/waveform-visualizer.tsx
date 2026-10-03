@@ -1,11 +1,7 @@
 /**
  * EmbeddedLab OS — components/lab/pwm/waveform-visualizer.tsx
  * Dynamic oscilloscope-style SVG waveform visualizer for PWM pulse train.
- *
- * Dynamically scales:
- * 1. Cycle density (higher frequency = more pulses across viewport).
- * 2. High-time pulse width (duty cycle % controls HIGH plateau ratio).
- * 3. Color & muted state.
+ * Precision engineering oscilloscope frame with voltage reference markers.
  */
 import { cn } from "@/lib/utils";
 import type { PWMChannel, PWMDerivedValues } from "@/types/simulator";
@@ -24,8 +20,6 @@ export function WaveformVisualizer({
   const { dutyCyclePercent, enabled, frequencyHz } = channel;
   const { periodMs, highTimeMs, lowTimeMs } = derived;
 
-  // Calculate dynamic cycle count based on frequency (100 Hz -> 2 cycles, 10,000 Hz -> 12 cycles)
-  // Ensures higher frequencies look visibly denser on screen!
   const minCycles = 2;
   const maxCycles = 12;
   const cycles = Math.min(
@@ -40,11 +34,9 @@ export function WaveformVisualizer({
   const yLow = height - paddingY;
   const cycleWidth = width / cycles;
 
-  // Duty ratio (0.0 to 1.0)
   const dutyRatio = enabled ? Math.max(0, Math.min(100, dutyCyclePercent)) / 100 : 0;
   const highWidth = cycleWidth * dutyRatio;
 
-  // Build SVG path string for square wave
   let pathD = "";
   for (let i = 0; i < cycles; i++) {
     const xStart = i * cycleWidth;
@@ -70,76 +62,74 @@ export function WaveformVisualizer({
   return (
     <div
       className={cn(
-        "rounded-md border border-border bg-[var(--surface-sunken)] p-3 font-mono",
+        "rounded border border-[var(--border-default)] bg-[var(--surface-sunken)] p-3 font-mono shadow-[inset_0_2px_6px_rgba(0,0,0,0.4)] select-none",
         className
       )}
     >
-      {/* Header telemetry info */}
-      <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-muted-foreground mb-2 px-1 select-none">
+      {/* Oscilloscope Header Telemetry Strip */}
+      <div className="flex flex-wrap items-center justify-between gap-2 text-[10px] text-muted-foreground mb-2 px-0.5">
         <div className="flex items-center gap-2">
-          <span className={cn("w-2 h-2 rounded-full", enabled ? "bg-[var(--signal-high)] animate-pulse" : "bg-muted-foreground")} />
-          <span className="font-semibold text-foreground">OSCILLOSCOPE CH1</span>
-          <span className="text-[11px] text-muted-foreground">
-            ({frequencyHz} Hz · {periodMs.toFixed(2)} ms period · {cycles} cycles shown)
+          <span className={cn(
+            "w-2 h-2 rounded-full shrink-0",
+            enabled ? "bg-emerald-400 shadow-[0_0_8px_rgba(16,185,129,0.7)] animate-pulse" : "bg-slate-600"
+          )} />
+          <span className="font-bold text-foreground uppercase tracking-wider">OSCILLOSCOPE · CH1</span>
+          <span className="text-muted-foreground/70">
+            {frequencyHz.toLocaleString()} Hz · {periodMs.toFixed(2)} ms · {cycles} cyc
           </span>
         </div>
-        <div className="flex items-center gap-3 text-[11px]">
-          <span className="text-[var(--signal-high)]">
-            T_HIGH: {highTimeMs.toFixed(3)} ms ({dutyCyclePercent}%)
+        <div className="flex items-center gap-3 text-[10px]">
+          <span className="text-emerald-400 font-bold">
+            t_HIGH {highTimeMs.toFixed(3)} ms
           </span>
-          <span className="text-muted-foreground">
-            T_LOW: {lowTimeMs.toFixed(3)} ms
+          <span className="text-muted-foreground/70">
+            t_LOW {lowTimeMs.toFixed(3)} ms
           </span>
         </div>
       </div>
 
-      {/* SVG Waveform Frame */}
-      <div className="relative border border-border/60 rounded bg-black/50 overflow-hidden p-1">
-        {/* Voltage Reference Markers */}
-        <div className="absolute left-2 top-2 text-[9px] font-mono text-emerald-400/80 z-10">
-          3.3V (HIGH)
+      {/* SVG Waveform Scope Well */}
+      <div className="relative border border-[var(--border-subtle)] rounded bg-[var(--surface-console)] overflow-hidden">
+        {/* Voltage Reference Labels */}
+        <div className="absolute left-1.5 top-1.5 text-[8px] font-mono font-bold text-emerald-400/70 z-10">
+          3.3V
         </div>
-        <div className="absolute left-2 bottom-2 text-[9px] font-mono text-slate-500 z-10">
-          0.0V (LOW)
+        <div className="absolute left-1.5 bottom-1.5 text-[8px] font-mono font-bold text-slate-500 z-10">
+          GND
         </div>
 
-        {/* Oscilloscope Grid background lines */}
-        <div className="absolute inset-0 bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:16px_16px] opacity-50 pointer-events-none" />
+        {/* Engineering Oscilloscope Grid */}
+        <div className="absolute inset-0 bg-oscilloscope-grid pointer-events-none" />
 
         <svg
           viewBox={`0 0 ${width} ${height}`}
-          className="w-full h-32 overflow-visible"
+          className="w-full h-28 overflow-visible"
           preserveAspectRatio="none"
         >
-          {/* Center Voltage Baseline Line */}
+          {/* Center Voltage Baseline */}
           <line
-            x1="0"
-            y1={height / 2}
-            x2={width}
-            y2={height / 2}
-            stroke="#1e293b"
-            strokeDasharray="4 4"
-            strokeWidth="1"
+            x1="0" y1={height / 2} x2={width} y2={height / 2}
+            stroke="rgba(56,189,248,0.12)" strokeDasharray="4 4" strokeWidth="1"
           />
 
-          {/* 3.3V High Reference Line */}
+          {/* 3.3V Reference Line */}
           <line
-            x1="0"
-            y1={yHigh}
-            x2={width}
-            y2={yHigh}
-            stroke="#059669"
-            strokeDasharray="2 4"
-            strokeWidth="0.75"
-            opacity="0.3"
+            x1="0" y1={yHigh} x2={width} y2={yHigh}
+            stroke="#10b981" strokeDasharray="2 4" strokeWidth="0.75" opacity="0.25"
+          />
+
+          {/* GND Reference Line */}
+          <line
+            x1="0" y1={yLow} x2={width} y2={yLow}
+            stroke="#475569" strokeDasharray="2 4" strokeWidth="0.75" opacity="0.25"
           />
 
           {/* Signal Waveform Path */}
           <path
             d={pathD}
             fill="none"
-            stroke={enabled && dutyCyclePercent > 0 ? "#22c55e" : "#4a5878"}
-            strokeWidth="2.5"
+            stroke={enabled && dutyCyclePercent > 0 ? "#10b981" : "#475569"}
+            strokeWidth="2"
             strokeLinejoin="round"
             strokeLinecap="square"
             className="transition-all duration-200"
@@ -147,11 +137,14 @@ export function WaveformVisualizer({
         </svg>
       </div>
 
-      {/* Footer readout */}
-      <div className="flex items-center justify-between text-[11px] text-muted-foreground mt-2 px-1">
-        <span>Duty Cycle: <strong className="text-foreground">{dutyCyclePercent}%</strong></span>
-        <span>Frequency: <strong className="text-foreground">{frequencyHz} Hz</strong></span>
-        <span>Output Status: <strong className={enabled ? "text-success" : "text-muted-foreground"}>{enabled ? "ACTIVE WAVEFORM" : "MUTED"}</strong></span>
+      {/* Scope Measurement Footer */}
+      <div className="flex items-center justify-between text-[9px] text-muted-foreground mt-1.5 px-0.5 font-bold uppercase tracking-wider">
+        <span>D = <span className="text-foreground">{dutyCyclePercent}%</span></span>
+        <span>f = <span className="text-foreground">{frequencyHz.toLocaleString()} Hz</span></span>
+        <span>V_avg = <span className="text-foreground">{(3.3 * dutyCyclePercent / 100).toFixed(2)}V</span></span>
+        <span className={enabled ? "text-emerald-400" : "text-slate-500"}>
+          {enabled ? "● ACTIVE" : "○ DISABLED"}
+        </span>
       </div>
     </div>
   );

@@ -1,7 +1,6 @@
 /**
  * EmbeddedLab OS — app/(app)/dashboard/page.tsx
- *
- * Student Dashboard using real application state and persisted progress.
+ * Student Dashboard — Engineering Command Center.
  */
 "use client";
 
@@ -42,48 +41,48 @@ export default function DashboardPage() {
   const isNewStudent = totalChallengesCompleted === 0;
 
   return (
-    <div className="p-6 max-w-6xl mx-auto space-y-7">
+    <div className="p-4 max-w-6xl mx-auto space-y-5">
       {/* Page Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-border">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[var(--border-default)]">
         <div>
-          <div className="flex items-center gap-2 text-muted-foreground mb-1">
-            <LayoutDashboard className="h-4 w-4 text-primary" strokeWidth={1.5} />
-            <span className="text-xs font-mono uppercase tracking-wider">Student Dashboard</span>
+          <div className="flex items-center gap-1.5 text-muted-foreground mb-0.5 font-mono text-[10px] uppercase tracking-wider">
+            <LayoutDashboard className="h-3.5 w-3.5 text-primary" strokeWidth={1.5} />
+            <span>SYSTEM OVERVIEW</span>
+            <span>·</span>
+            <span className="text-primary font-bold">STUDENT COMMAND CENTER</span>
           </div>
-          <h1 className="text-2xl font-bold text-foreground tracking-tight">
+          <h1 className="text-xl font-bold text-foreground font-sans tracking-tight">
             Virtual Hardware Laboratory
           </h1>
-          <p className="mt-1 text-xs text-muted-foreground max-w-xl font-mono">
+          <p className="mt-0.5 text-[10px] text-muted-foreground font-mono">
             Track your embedded systems learning progress across GPIO, PWM, ADC, and UART labs.
           </p>
         </div>
 
-        {/* Continue Learning CTA Button */}
         <Link href={nextRecommendedLab.href}>
-          <Button size="sm" className="font-mono text-xs font-semibold shadow-md">
-            <Play className="mr-1.5 h-3.5 w-3.5 fill-current" />
-            Continue Learning: {nextRecommendedLab.labId.toUpperCase()}
+          <Button size="sm" className="h-8 font-mono text-xs font-bold shadow-md control-elevated">
+            <Play className="mr-1 h-3 w-3 fill-current" />
+            Continue: {nextRecommendedLab.labId.toUpperCase()}
           </Button>
         </Link>
       </div>
 
-      {/* Real Progress Metrics Summary Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      {/* Telemetry Metric Cards */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         <MetricCard
-          label="Labs Completed"
+          label="Labs Complete"
           value={isLoading ? "..." : `${labsCompletedCount}`}
-          unit="/ 4 labs"
+          unit="/ 4"
           signalState={labsCompletedCount > 0 ? "high" : "normal"}
         />
         <MetricCard
-          label="Labs In Progress"
+          label="In Progress"
           value={isLoading ? "..." : `${labsInProgressCount}`}
           unit="active"
         />
         <MetricCard
-          label="Overall Progress"
+          label="Completion"
           value={isLoading ? "..." : `${overallCompletionPercent}%`}
-          unit="completed"
           signalState={overallCompletionPercent > 50 ? "high" : "normal"}
         />
         <MetricCard
@@ -94,59 +93,59 @@ export default function DashboardPage() {
         />
       </div>
 
-      {/* Recommended Next Step / Continue Learning Banner */}
-      <div className="rounded-lg border border-primary/30 bg-primary/5 p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-sm">
+      {/* Recommended Next Lab Banner */}
+      <div className="rounded border border-primary/20 bg-primary/5 p-4 flex flex-col md:flex-row md:items-center justify-between gap-3 shadow-[0_2px_8px_rgba(0,0,0,0.2)]">
         <div className="space-y-1">
-          <div className="flex items-center gap-2 text-xs font-mono text-primary font-bold">
-            <Compass className="h-4 w-4 shrink-0" />
+          <div className="flex items-center gap-1.5 text-[10px] font-mono text-primary font-bold uppercase tracking-wider">
+            <Compass className="h-3.5 w-3.5 shrink-0" />
             <span>RECOMMENDED NEXT LAB</span>
           </div>
-          <h3 className="text-base font-bold text-foreground">
+          <h3 className="text-sm font-bold text-foreground">
             {nextRecommendedLab.title}
           </h3>
-          <p className="text-xs text-muted-foreground font-mono">
+          <p className="text-[10px] text-muted-foreground font-mono">
             {isNewStudent
-              ? "Start with GPIO — learn the fundamentals of digital input/output, LED driving, and push-button logic."
+              ? "Start with GPIO — learn digital I/O, LED driving, and push-button logic."
               : "Continue with your next uncompleted challenge suite."}
           </p>
         </div>
 
         <Link href={nextRecommendedLab.href} className="shrink-0">
-          <Button className="font-mono text-xs font-semibold">
-            Launch {nextRecommendedLab.labId.toUpperCase()} Lab
-            <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
+          <Button size="sm" className="h-8 font-mono text-xs font-bold">
+            Launch {nextRecommendedLab.labId.toUpperCase()}
+            <ArrowRight className="ml-1 h-3 w-3" />
           </Button>
         </Link>
       </div>
 
       {/* Labs Overview Grid */}
-      <div className="space-y-4">
+      <div className="space-y-3">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <FlaskConical className="h-4 w-4 text-primary" />
-            <h2 className="text-sm font-bold text-foreground font-mono uppercase tracking-wider">
+          <div className="flex items-center gap-1.5">
+            <FlaskConical className="h-3.5 w-3.5 text-primary" />
+            <h2 className="text-xs font-bold text-foreground font-mono uppercase tracking-wider">
               Laboratory Progress Overview
             </h2>
           </div>
           <Link href="/labs" className={buttonVariants({ variant: "ghost", size: "sm" })}>
-            <span className="text-xs font-mono text-muted-foreground hover:text-foreground">
+            <span className="text-[10px] font-mono text-muted-foreground hover:text-foreground">
               View All Labs →
             </span>
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {(["gpio", "pwm", "adc", "uart"] as const).map((labId) => {
             const lab = labStats[labId];
             return (
               <div
                 key={labId}
-                className="rounded-lg border border-border bg-card p-5 space-y-4 hover:border-primary/40 transition-colors"
+                className="rounded border border-[var(--border-default)] bg-[var(--surface-panel)] p-4 space-y-3 hover:border-primary/30 transition-colors shadow-[0_1px_4px_rgba(0,0,0,0.15)] group"
               >
                 <div className="flex items-start justify-between gap-2">
                   <div>
-                    <span className="text-[10px] font-mono font-bold text-primary tracking-wider uppercase block mb-1">
-                      {lab.difficulty} DIFFICULTY
+                    <span className="text-[9px] font-mono font-bold text-primary tracking-wider uppercase block mb-0.5">
+                      {lab.difficulty}
                     </span>
                     <h3 className="text-sm font-bold text-foreground leading-snug">
                       {lab.title}
@@ -155,24 +154,24 @@ export default function DashboardPage() {
 
                   <span
                     className={cn(
-                      "text-[10px] font-mono px-2 py-0.5 rounded border font-semibold shrink-0 uppercase",
+                      "text-[9px] font-mono px-1.5 py-0.5 rounded border font-bold shrink-0 uppercase tracking-wider",
                       lab.status === "COMPLETED"
-                        ? "bg-[var(--feedback-success)]/10 text-[var(--feedback-success)] border-[var(--feedback-success)]/30"
+                        ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30"
                         : lab.status === "IN_PROGRESS"
                         ? "bg-amber-500/10 text-amber-400 border-amber-500/30"
-                        : "bg-muted/30 text-muted-foreground border-border"
+                        : "bg-slate-900/50 text-slate-400 border-slate-700"
                     )}
                   >
                     {lab.status.replace("_", " ")}
                   </span>
                 </div>
 
-                <p className="text-xs text-muted-foreground font-sans leading-relaxed">
+                <p className="text-[10px] text-muted-foreground font-sans leading-relaxed">
                   {lab.description}
                 </p>
 
-                <div className="space-y-1.5 pt-2 border-t border-border/60">
-                  <div className="flex justify-between items-center text-xs font-mono">
+                <div className="space-y-1 pt-2 border-t border-[var(--border-subtle)]">
+                  <div className="flex justify-between items-center text-[10px] font-mono">
                     <span className="text-muted-foreground">
                       Challenges: <strong className="text-foreground">{lab.completedCount} / {lab.totalChallenges}</strong>
                     </span>
@@ -181,14 +180,14 @@ export default function DashboardPage() {
                   <ProgressBar value={lab.progressPercent} showPercentage={false} />
                 </div>
 
-                <div className="flex items-center justify-between pt-1">
-                  <span className="text-[11px] font-mono text-muted-foreground">
-                    Score: <strong className="text-foreground">{lab.totalScore} pts</strong>
+                <div className="flex items-center justify-between">
+                  <span className="text-[9px] font-mono text-muted-foreground font-bold uppercase tracking-wider">
+                    Score: <span className="text-foreground">{lab.totalScore} pts</span>
                   </span>
                   <Link href={`/labs/${labId}`}>
-                    <Button variant="outline" size="sm" className="h-7 text-xs font-mono">
+                    <Button variant="outline" size="xs" className="h-6 text-[10px] font-mono font-bold control-elevated group-hover:border-primary/30">
                       Open Lab
-                      <ArrowRight className="ml-1 h-3 w-3" />
+                      <ArrowRight className="ml-1 h-2.5 w-2.5" />
                     </Button>
                   </Link>
                 </div>
@@ -198,38 +197,38 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* Bottom Section: Recent Activity & Clean Starting State */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
-        {/* Left Column: Recent Activity Feed (7 cols) */}
+      {/* Bottom: Activity & Getting Started */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
+        {/* Recent Activity */}
         <div className="lg:col-span-7">
           <Panel title="Recent Lab Activity" icon={Activity}>
             {recentActivity.length === 0 ? (
-              <div className="py-8 text-center text-muted-foreground text-xs font-mono space-y-2">
-                <Clock className="h-8 w-8 text-muted-foreground/40 mx-auto" />
-                <p className="font-semibold text-foreground">No recent validation attempts</p>
-                <p className="text-[11px] max-w-sm mx-auto">
-                  Launch a lab and submit your first challenge to see your activity history here.
+              <div className="py-6 text-center text-muted-foreground text-[10px] font-mono space-y-1.5">
+                <Clock className="h-6 w-6 text-muted-foreground/30 mx-auto" />
+                <p className="font-bold text-foreground text-xs">No recent activity</p>
+                <p className="max-w-xs mx-auto">
+                  Launch a lab and complete a challenge to see your activity here.
                 </p>
               </div>
             ) : (
-              <div className="space-y-2 font-mono text-xs">
+              <div className="space-y-1.5 font-mono text-xs">
                 {recentActivity.map((item) => (
                   <div
                     key={item.id}
-                    className="p-3 rounded border border-border bg-muted/20 flex items-center justify-between gap-3"
+                    className="p-2.5 rounded border border-[var(--border-subtle)] bg-[var(--surface-sunken)] flex items-center justify-between gap-2.5"
                   >
-                    <div className="flex items-center gap-2.5 min-w-0">
+                    <div className="flex items-center gap-2 min-w-0">
                       {item.status === "PASSED" ? (
-                        <CheckCircle2 className="h-4 w-4 text-[var(--feedback-success)] shrink-0" />
+                        <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400 shrink-0" />
                       ) : (
-                        <Award className="h-4 w-4 text-[var(--feedback-error)] shrink-0" />
+                        <Award className="h-3.5 w-3.5 text-red-400 shrink-0" />
                       )}
                       <div className="min-w-0">
-                        <span className="text-foreground font-semibold block truncate">
+                        <span className="text-foreground font-bold block truncate text-[11px]">
                           {item.challengeTitle}
                         </span>
-                        <span className="text-[10px] text-muted-foreground">
-                          {item.labId.toUpperCase()} • {new Date(item.timestamp).toLocaleTimeString()}
+                        <span className="text-[9px] text-muted-foreground">
+                          {item.labId.toUpperCase()} · {new Date(item.timestamp).toLocaleTimeString()}
                         </span>
                       </div>
                     </div>
@@ -237,13 +236,13 @@ export default function DashboardPage() {
                     <div className="text-right shrink-0">
                       <span
                         className={cn(
-                          "font-bold text-xs block",
-                          item.status === "PASSED" ? "text-[var(--feedback-success)]" : "text-[var(--feedback-error)]"
+                          "font-bold text-[10px] block",
+                          item.status === "PASSED" ? "text-emerald-400" : "text-red-400"
                         )}
                       >
                         {item.status}
                       </span>
-                      <span className="text-[10px] text-muted-foreground">{item.score} pts</span>
+                      <span className="text-[9px] text-muted-foreground">{item.score} pts</span>
                     </div>
                   </div>
                 ))}
@@ -252,30 +251,25 @@ export default function DashboardPage() {
           </Panel>
         </div>
 
-        {/* Right Column: Clean Getting Started Guide for New Students (5 cols) */}
+        {/* Getting Started Guide */}
         <div className="lg:col-span-5">
           <Panel title="Getting Started Guide" icon={BookOpen}>
-            <div className="space-y-3.5 font-mono text-xs">
-              <div className="p-3 rounded border border-border bg-card space-y-1">
-                <span className="text-primary font-bold block">1. Select a Laboratory</span>
-                <p className="text-muted-foreground text-[11px] font-sans">
-                  Begin with GPIO to understand digital high/low logic, pin modes, and pull-up resistors.
-                </p>
-              </div>
-
-              <div className="p-3 rounded border border-border bg-card space-y-1">
-                <span className="text-primary font-bold block">2. Configure Hardware Controls</span>
-                <p className="text-muted-foreground text-[11px] font-sans">
-                  Interact with real-time hardware controls in the central visual oscilloscope/dial panel.
-                </p>
-              </div>
-
-              <div className="p-3 rounded border border-border bg-card space-y-1">
-                <span className="text-primary font-bold block">3. Submit Challenges</span>
-                <p className="text-muted-foreground text-[11px] font-sans">
-                  Validation functions inspect actual simulator state (never UI clicks) to award points.
-                </p>
-              </div>
+            <div className="space-y-2 font-mono text-[10px]">
+              {[
+                { step: "01", title: "Select a Laboratory", desc: "Begin with GPIO — learn digital I/O, pin modes, and pull-up resistors." },
+                { step: "02", title: "Configure Hardware", desc: "Interact with oscilloscope, dial, and control panels in real-time." },
+                { step: "03", title: "Submit Challenges", desc: "Validation inspects actual simulator state (not UI clicks) to award points." },
+              ].map((item) => (
+                <div key={item.step} className="p-2.5 rounded border border-[var(--border-subtle)] bg-[var(--surface-panel)] space-y-0.5">
+                  <span className="text-primary font-bold">
+                    <span className="text-muted-foreground/50 mr-1">{item.step}</span>
+                    {item.title}
+                  </span>
+                  <p className="text-muted-foreground text-[9px] font-sans">
+                    {item.desc}
+                  </p>
+                </div>
+              ))}
             </div>
           </Panel>
         </div>

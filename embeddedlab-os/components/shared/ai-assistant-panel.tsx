@@ -1,14 +1,12 @@
 /**
  * EmbeddedLab OS — components/shared/ai-assistant-panel.tsx
- *
- * Contextual AI Learning Assistant UI.
- * Provides exactly three action buttons: Explain Concept, Progressive Hint, and Debug Hardware State.
- * Displays clear disclaimer labeling AI outputs as educational guidance.
+ * Scoped, professional AI Contextual Engineering Assistant.
+ * Provides exact 3 actions (Explain, Hint, Debug) with clean technical formatting.
  */
 "use client";
 
 import { useState } from "react";
-import { AlertTriangle, Bot, Bug, HelpCircle, Lightbulb, Loader2, Sparkles } from "lucide-react";
+import { AlertTriangle, Bug, HelpCircle, Lightbulb, Loader2, Sparkles, Terminal } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Panel } from "@/components/shared/panel";
@@ -53,72 +51,70 @@ export function AIAssistantPanel({
   return (
     <Panel
       title="AI Contextual Assistant"
-      icon={Bot}
-      className={cn("space-y-4", className)}
+      icon={Terminal}
+      telemetryTag="GEMINI 2.5"
+      className={cn("space-y-3", className)}
     >
-      {/* Disclaimer Banner */}
-      <div className="rounded border border-amber-500/30 bg-amber-500/10 p-2.5 flex items-start gap-2.5 text-[11px] font-mono text-amber-400">
-        <AlertTriangle className="h-4 w-4 shrink-0 mt-0.5" />
-        <div className="leading-snug">
-          <strong className="block font-bold">AI Educational Guidance</strong>
-          <span className="text-[10px] text-muted-foreground">
-            AI suggestions provide learning support. Official verification is calculated deterministically by the simulator engine.
-          </span>
-        </div>
+      {/* Educational Notice */}
+      <div className="rounded border border-amber-500/25 bg-amber-500/5 p-2 flex items-start gap-2 text-[10px] font-mono text-amber-400">
+        <AlertTriangle className="h-3.5 w-3.5 shrink-0 mt-0.5" />
+        <span className="leading-tight text-muted-foreground">
+          <strong className="text-amber-400">Educational Guidance:</strong> Suggestions assist conceptual learning. State validation is evaluated by the deterministic simulation kernel.
+        </span>
       </div>
 
-      {/* Exactly 3 Contextual Actions Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+      {/* Exactly 3 Contextual Action Buttons */}
+      <div className="grid grid-cols-3 gap-1.5">
         <Button
           variant="outline"
-          size="sm"
+          size="xs"
           disabled={isLoading}
           onClick={() => handleAction("explain")}
           className={cn(
-            "font-mono text-xs justify-start h-9 border-border hover:border-primary/50",
+            "font-mono text-[10px] justify-center h-7 border-border hover:border-primary/50 control-elevated",
             activeAction === "explain" && "border-primary text-primary"
           )}
         >
           {isLoading && activeAction === "explain" ? (
-            <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" />
+            <Loader2 className="mr-1 h-3 w-3 animate-spin" />
           ) : (
-            <Lightbulb className="mr-1.5 h-3.5 w-3.5 text-amber-400" />
+            <Lightbulb className="mr-1 h-3 w-3 text-amber-400" />
           )}
-          Explain Concept
+          Explain
         </Button>
 
         <Button
           variant="outline"
-          size="sm"
+          size="xs"
           disabled={isLoading}
           onClick={() => handleAction("hint")}
           className={cn(
-            "font-mono text-xs justify-start h-9 border-border hover:border-primary/50",
+            "font-mono text-[10px] justify-center h-7 border-border hover:border-primary/50 control-elevated",
             activeAction === "hint" && "border-primary text-primary"
           )}
         >
           {isLoading && activeAction === "hint" ? (
-            <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" />
+            <Loader2 className="mr-1 h-3 w-3 animate-spin" />
           ) : (
-            <HelpCircle className="mr-1.5 h-3.5 w-3.5 text-blue-400" />
+            <HelpCircle className="mr-1 h-3 w-3 text-sky-400" />
           )}
-          Progressive Hint
+          Hint
         </Button>
 
         <Button
           variant="outline"
-          size="sm"
+          size="xs"
           disabled={isLoading}
           onClick={() => handleAction("debug")}
           className={cn(
-            "font-mono text-xs justify-start h-9 border-border hover:border-primary/50",
+            "font-mono text-[10px] justify-center h-7 border-border hover:border-primary/50 control-elevated",
             activeAction === "debug" && "border-primary text-primary"
           )}
         >
           {isLoading && activeAction === "debug" ? (
-            <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" />
+            <Loader2 className="mr-1 h-3 w-3 animate-spin" />
           ) : (
-            <Bug className="mr-1.5 h-3.5 w-3.5 text-emerald-400" />
+            <Bug className="mr-1 h-3 w-3 text-emerald-400" />
           )}
           Debug State
         </Button>
@@ -126,24 +122,24 @@ export function AIAssistantPanel({
 
       {/* Response Display Box */}
       {activeResponse && (
-        <div className="rounded-md border border-border bg-card p-4 space-y-2 font-mono text-xs shadow-inner">
-          <div className="flex items-center justify-between border-b border-border pb-2 text-[11px] text-muted-foreground">
-            <span className="flex items-center gap-1.5 uppercase font-bold text-foreground">
-              <Sparkles className="h-3.5 w-3.5 text-primary" />
-              {activeResponse.action} Response
+        <div className="rounded border border-[var(--border-default)] bg-[var(--surface-sunken)] p-3 space-y-2 font-mono text-xs shadow-inner">
+          <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-1.5 text-[10px] text-muted-foreground">
+            <span className="flex items-center gap-1 uppercase font-bold text-foreground">
+              <Sparkles className="h-3 w-3 text-primary" />
+              {activeResponse.action} Analysis
             </span>
             {activeResponse.isFallback && (
-              <span className="text-[10px] bg-muted px-1.5 py-0.5 rounded text-muted-foreground">
-                Offline Mode
+              <span className="text-[9px] bg-muted/40 px-1 py-0.2 rounded text-muted-foreground border border-border">
+                Local Fallback
               </span>
             )}
           </div>
 
-          <div className="space-y-2 text-xs leading-relaxed text-foreground font-sans pt-1">
+          <div className="space-y-1.5 text-[11px] leading-relaxed text-foreground font-sans pt-0.5">
             {activeResponse.content.split("\n").map((line, idx) => {
               if (line.startsWith("### ")) {
                 return (
-                  <h4 key={idx} className="font-bold text-sm text-foreground pt-1 font-mono">
+                  <h4 key={idx} className="font-bold text-xs text-foreground pt-1 font-mono text-primary">
                     {line.replace("### ", "")}
                   </h4>
                 );
@@ -151,7 +147,7 @@ export function AIAssistantPanel({
               if (line.startsWith("* ") || line.startsWith("- ")) {
                 return (
                   <div key={idx} className="flex items-start gap-1.5 pl-1">
-                    <span className="text-primary font-bold">•</span>
+                    <span className="text-primary font-mono font-bold">›</span>
                     <span>{line.replace(/^[*\-]\s*/, "")}</span>
                   </div>
                 );

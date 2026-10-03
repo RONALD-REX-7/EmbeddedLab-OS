@@ -1,6 +1,6 @@
 /**
  * EmbeddedLab OS — app/(auth)/login/page.tsx
- * Professional engineering login page with Supabase Auth and Demo Mode fallback.
+ * Engineering-grade authentication portal.
  */
 "use client";
 
@@ -45,58 +45,63 @@ export default function LoginPage() {
     router.push("/dashboard");
   };
 
+  const inputClasses = "w-full bg-[var(--surface-console)] border border-[var(--border-subtle)] rounded px-3 py-2 text-foreground text-[10px] font-mono focus:outline-none focus:border-primary placeholder:text-muted-foreground/40 transition-colors";
+
   return (
-    <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4">
-      <div className="w-full max-w-md space-y-6">
-        {/* Header Logo & Title */}
-        <div className="text-center space-y-2">
-          <div className="inline-flex items-center justify-center w-12 h-12 rounded-lg bg-primary/10 border border-primary/30 text-primary mb-2">
-            <Cpu className="h-6 w-6" />
+    <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4 relative">
+      {/* Subtle background grid */}
+      <div className="absolute inset-0 bg-oscilloscope-grid opacity-20 pointer-events-none" />
+
+      <div className="w-full max-w-sm space-y-5 relative">
+        {/* Header */}
+        <div className="text-center space-y-1.5">
+          <div className="inline-flex items-center justify-center w-10 h-10 rounded bg-primary/10 border border-primary/20 text-primary mb-2">
+            <Cpu className="h-5 w-5" strokeWidth={2} />
           </div>
-          <h1 className="text-2xl font-bold text-foreground tracking-tight">
+          <h1 className="text-xl font-bold text-foreground tracking-tight font-sans">
             EmbeddedLab OS
           </h1>
-          <p className="text-xs text-muted-foreground font-mono">
-            Interactive Virtual Microcontroller Laboratory
+          <p className="text-[9px] text-muted-foreground font-mono uppercase tracking-wider font-bold">
+            Virtual Microcontroller Laboratory
           </p>
         </div>
 
-        {/* Demo Mode Notification Banner */}
+        {/* Demo Mode Banner */}
         {!isConfigured && (
-          <div className="rounded-md border border-amber-500/30 bg-amber-500/10 p-3.5 flex items-start gap-3 text-xs font-mono text-amber-400">
-            <Sparkles className="h-4 w-4 shrink-0 mt-0.5" />
-            <div className="space-y-1">
-              <span className="font-bold block">LOCAL DEMO MODE ACTIVE</span>
-              <p className="text-[11px] text-muted-foreground leading-relaxed">
-                Supabase credentials not configured in environment. The platform will run in offline demo mode using local storage.
+          <div className="rounded border border-amber-500/20 bg-amber-500/5 p-2.5 flex items-start gap-2 text-[10px] font-mono text-amber-400">
+            <Sparkles className="h-3.5 w-3.5 shrink-0 mt-0.5" />
+            <div className="space-y-0.5">
+              <span className="font-bold block uppercase tracking-wider text-[9px]">Local Demo Mode</span>
+              <p className="text-[9px] text-muted-foreground leading-relaxed">
+                Supabase not configured. Running in offline demo mode.
               </p>
             </div>
           </div>
         )}
 
-        {/* Login Form Panel */}
-        <div className="rounded-lg border border-border bg-card p-6 space-y-5 shadow-xl">
-          <div className="border-b border-border pb-3">
-            <h2 className="text-sm font-bold text-foreground uppercase tracking-wider font-mono">
+        {/* Login Panel */}
+        <div className="rounded border border-[var(--border-default)] bg-[var(--surface-panel)] p-5 space-y-4 shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
+          <div className="border-b border-[var(--border-subtle)] pb-2.5">
+            <h2 className="text-[10px] font-bold text-foreground uppercase tracking-wider font-mono">
               Account Authentication
             </h2>
-            <p className="text-xs text-muted-foreground mt-0.5">
-              Sign in to sync your laboratory challenge progress.
+            <p className="text-[9px] text-muted-foreground mt-0.5 font-mono">
+              Sign in to sync your challenge progress.
             </p>
           </div>
 
           {errorMsg && (
-            <div className="p-3 rounded border border-red-500/30 bg-red-500/10 text-red-400 text-xs font-mono flex items-center gap-2">
-              <AlertCircle className="h-4 w-4 shrink-0" />
+            <div className="p-2 rounded border border-red-500/30 bg-red-500/10 text-red-400 text-[10px] font-mono flex items-center gap-1.5">
+              <AlertCircle className="h-3.5 w-3.5 shrink-0" />
               <span>{errorMsg}</span>
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-4 text-xs font-mono">
-            <div className="space-y-1.5">
-              <label className="text-muted-foreground flex items-center gap-1.5 font-medium">
-                <Mail className="h-3.5 w-3.5 text-primary" />
-                Email Address
+          <form onSubmit={handleSubmit} className="space-y-3 text-[10px] font-mono">
+            <div className="space-y-1">
+              <label className="text-muted-foreground flex items-center gap-1 font-bold uppercase tracking-wider text-[9px]">
+                <Mail className="h-3 w-3 text-primary" />
+                Email
               </label>
               <input
                 type="email"
@@ -104,13 +109,13 @@ export default function LoginPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="student@embeddedlab.org"
                 required
-                className="w-full bg-background border border-border rounded px-3 py-2 text-foreground focus:outline-none focus:border-primary"
+                className={inputClasses}
               />
             </div>
 
-            <div className="space-y-1.5">
-              <label className="text-muted-foreground flex items-center gap-1.5 font-medium">
-                <KeyRound className="h-3.5 w-3.5 text-primary" />
+            <div className="space-y-1">
+              <label className="text-muted-foreground flex items-center gap-1 font-bold uppercase tracking-wider text-[9px]">
+                <KeyRound className="h-3 w-3 text-primary" />
                 Password
               </label>
               <input
@@ -119,33 +124,32 @@ export default function LoginPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••••••"
                 required
-                className="w-full bg-background border border-border rounded px-3 py-2 text-foreground focus:outline-none focus:border-primary"
+                className={inputClasses}
               />
             </div>
 
             <Button
               type="submit"
               disabled={isSubmitting}
-              className="w-full font-mono text-xs font-semibold h-9"
+              className="w-full font-mono text-[10px] font-bold h-8 control-elevated"
             >
-              {isSubmitting ? "Authenticating..." : "Sign In to Laboratory"}
-              <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
+              {isSubmitting ? "Authenticating..." : "Sign In"}
+              <ArrowRight className="ml-1 h-3 w-3" />
             </Button>
           </form>
 
-          {/* Quick Demo Mode Launch */}
-          <div className="pt-3 border-t border-border/80 flex flex-col gap-2">
+          <div className="pt-3 border-t border-[var(--border-subtle)] flex flex-col gap-2">
             <Button
               variant="outline"
-              size="sm"
+              size="xs"
               onClick={handleDemoMode}
-              className="w-full font-mono text-xs"
+              className="w-full font-mono text-[10px] h-7 font-bold"
             >
-              <Sparkles className="mr-1.5 h-3.5 w-3.5 text-amber-400" />
-              Enter Instant Demo Mode
+              <Sparkles className="mr-1 h-3 w-3 text-amber-400" />
+              Instant Demo Mode
             </Button>
-            <div className="text-center pt-1 text-[11px] text-muted-foreground">
-              Don&apos;t have an account?{" "}
+            <div className="text-center text-[9px] text-muted-foreground font-mono">
+              No account?{" "}
               <Link href="/signup" className="text-primary hover:underline font-bold">
                 Create Account
               </Link>

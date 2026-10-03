@@ -1,7 +1,6 @@
 /**
  * EmbeddedLab OS — components/lab/gpio/virtual-button.tsx
- * Virtual push button peripheral component.
- * Allows student to press/hold button to drive connected input pin level.
+ * Precision Virtual Tactile Push Button with Mechanical Spring-Travel Simulation.
  */
 "use client";
 
@@ -19,7 +18,7 @@ interface VirtualButtonProps {
 export function VirtualButton({
   pin,
   onPressStateChange,
-  label = "Push Button (PA0)",
+  label = "User Push Button (PA0)",
 }: VirtualButtonProps) {
   const [isPressed, setIsPressed] = useState(false);
 
@@ -34,26 +33,41 @@ export function VirtualButton({
   };
 
   return (
-    <div className="rounded-lg border border-border bg-card p-4 flex items-center justify-between">
-      <div className="flex items-center gap-3">
-        <div className="w-8 h-8 rounded-lg bg-muted/30 border border-border flex items-center justify-center">
+    <div className="rounded border border-[var(--border-default)] bg-[var(--surface-sunken)] p-3.5 flex items-center justify-between shadow-inner select-none">
+      <div className="flex items-center gap-3.5">
+        {/* Tactile Switch Package Bezel */}
+        <div
+          className={cn(
+            "w-9 h-9 rounded border flex items-center justify-center transition-all duration-100 shrink-0",
+            isPressed
+              ? "bg-primary/20 border-primary shadow-[inset_0_2px_4px_rgba(0,0,0,0.6)]"
+              : "bg-slate-900 border-slate-700 shadow-[0_2px_4px_rgba(0,0,0,0.4)]"
+          )}
+        >
           <CircleDot
             className={cn(
-              "h-5 w-5 transition-colors",
-              isPressed ? "text-primary scale-90" : "text-muted-foreground"
+              "h-5 w-5 transition-transform duration-75",
+              isPressed ? "text-primary scale-75" : "text-slate-400"
             )}
           />
         </div>
 
         <div>
-          <h4 className="text-xs font-semibold text-foreground">{label}</h4>
-          <p className="text-[11px] text-muted-foreground font-mono mt-0.5">
-            Connected to <span className="text-primary font-bold">{pin.label}</span> ({pin.mode})
+          <div className="flex items-center gap-1.5">
+            <span className="text-xs font-bold text-foreground font-sans">{label}</span>
+            <span className="text-[9px] font-mono font-semibold px-1 py-0.2 rounded bg-muted/40 text-muted-foreground border border-border">
+              SPST-NO TACTILE
+            </span>
+          </div>
+          <p className="text-[11px] text-muted-foreground font-mono mt-0.5 flex items-center gap-1.5">
+            <span>Terminal: <strong className="text-primary">{pin.label}</strong></span>
+            <span>·</span>
+            <span>Mode: <strong className="text-foreground">{pin.mode}</strong></span>
           </p>
         </div>
       </div>
 
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2">
         <button
           type="button"
           onMouseDown={handleMouseDown}
@@ -62,13 +76,13 @@ export function VirtualButton({
           onTouchStart={handleMouseDown}
           onTouchEnd={handleMouseUp}
           className={cn(
-            "px-3 py-1.5 text-xs font-mono font-semibold rounded border transition-all active:scale-95 select-none",
+            "px-3.5 py-1.5 text-xs font-mono font-bold rounded border transition-all select-none cursor-pointer",
             isPressed
-              ? "bg-primary text-primary-foreground border-primary shadow-inner"
-              : "bg-muted/40 text-foreground border-border hover:bg-muted/70"
+              ? "bg-primary text-primary-foreground border-primary shadow-[inset_0_2px_6px_rgba(0,0,0,0.6)] translate-y-[1px]"
+              : "bg-[var(--surface-elevated)] text-foreground border-[var(--border-default)] hover:border-primary/50 hover:bg-muted shadow-[0_2px_4px_rgba(0,0,0,0.3)]"
           )}
         >
-          {isPressed ? "PRESSED" : "PRESS BUTTON"}
+          {isPressed ? "CONTACT CLOSED (0Ω)" : "ACTUATE SWITCH"}
         </button>
       </div>
     </div>

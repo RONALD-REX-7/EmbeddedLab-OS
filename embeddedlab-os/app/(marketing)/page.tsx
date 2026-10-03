@@ -1,7 +1,6 @@
 /**
  * EmbeddedLab OS — app/(marketing)/page.tsx
- * Landing page. Explains the platform, shows lab cards, CTA.
- * No fake data, no fake charts, no simulator functionality.
+ * Landing Page — Engineering-grade product showcase.
  */
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -34,133 +33,138 @@ const ICON_MAP: Record<string, React.ElementType> = {
 const VALUE_PROPS = [
   {
     icon: FlaskConical,
-    title: "Virtual laboratory",
+    title: "Virtual Laboratory",
     description:
       "Experiment with GPIO, PWM, ADC, and UART peripherals in a deterministic software simulation.",
   },
   {
     icon: Cpu,
-    title: "No hardware required",
+    title: "No Hardware Required",
     description:
       "Everything runs in the browser. No development board, no cables, no drivers.",
   },
   {
     icon: CheckCircle2,
-    title: "Guided challenges",
+    title: "Guided Challenges",
     description:
       "Each lab includes structured challenges with progressive hints and automatic validation.",
   },
   {
     icon: Activity,
-    title: "Real calculations",
+    title: "Real Calculations",
     description:
-      "ADC conversions, PWM timing, and UART frame analysis use actual engineering formulas — not approximations.",
+      "ADC conversions, PWM timing, and UART frame analysis use actual engineering formulas.",
   },
 ];
 
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col">
-      {/* ── Top nav ── */}
-      <header className="border-b border-border px-6 py-3 flex items-center justify-between">
+      {/* ── Navigation Bar ── */}
+      <header className="border-b border-[var(--border-default)] px-6 py-2.5 flex items-center justify-between bg-[var(--surface-panel)] backdrop-blur-sm">
         <div className="flex items-center gap-2">
-          <Cpu className="h-4 w-4 text-primary" strokeWidth={1.5} aria-hidden="true" />
-          <span className="font-semibold text-sm">
+          <div className="w-6 h-6 rounded bg-primary/10 border border-primary/20 flex items-center justify-center">
+            <Cpu className="h-3 w-3 text-primary" strokeWidth={2} aria-hidden="true" />
+          </div>
+          <span className="font-mono text-xs font-bold tracking-wider">
             <span className="text-foreground">EmbeddedLab</span>
             <span className="text-primary">OS</span>
           </span>
         </div>
-        <nav className="flex items-center gap-4" aria-label="Top navigation">
+        <nav className="flex items-center gap-3" aria-label="Top navigation">
           <Link
             href="/labs"
-            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            className="text-[10px] font-mono font-bold text-muted-foreground hover:text-foreground transition-colors uppercase tracking-wider"
           >
             Labs
           </Link>
           <Link
             href="/dashboard"
-            className={buttonVariants({ size: "sm" })}
+            className={buttonVariants({ size: "sm", className: "h-7 text-[10px] font-mono font-bold" })}
           >
             Open Dashboard
           </Link>
         </nav>
       </header>
 
-      {/* ── Hero ── */}
+      {/* ── Hero Section ── */}
       <section
-        className="flex-1 flex flex-col items-center justify-center text-center px-6 py-20 max-w-4xl mx-auto w-full"
+        className="flex-1 flex flex-col items-center justify-center text-center px-6 py-16 max-w-4xl mx-auto w-full relative"
         aria-labelledby="hero-heading"
       >
-        {/* Pill */}
-        <div className="inline-flex items-center gap-2 rounded-full border border-border bg-muted/30 px-3 py-1 text-xs text-muted-foreground mb-8">
-          <span className="h-1.5 w-1.5 rounded-full bg-[var(--feedback-success)]" aria-hidden="true" />
-          Educational virtual simulation · No hardware required
+        {/* Subtle background grid */}
+        <div className="absolute inset-0 bg-oscilloscope-grid opacity-30 pointer-events-none" />
+
+        {/* Status Pill */}
+        <div className="relative inline-flex items-center gap-2 rounded border border-[var(--border-subtle)] bg-[var(--surface-panel)] px-3 py-1 text-[10px] text-muted-foreground font-mono mb-8 shadow-[0_1px_4px_rgba(0,0,0,0.2)]">
+          <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(16,185,129,0.7)] animate-pulse" aria-hidden="true" />
+          <span className="uppercase tracking-wider font-bold">Educational Software Simulation · No Hardware Required</span>
         </div>
 
         <h1
           id="hero-heading"
-          className="text-5xl sm:text-6xl font-bold tracking-tight text-foreground mb-5 leading-tight"
+          className="relative text-5xl sm:text-6xl font-bold tracking-tight text-foreground mb-5 leading-tight font-sans"
         >
           EmbeddedLab
           <span className="text-primary"> OS</span>
         </h1>
 
-        <p className="text-xl sm:text-2xl text-muted-foreground font-light mb-3 max-w-xl">
+        <p className="relative text-lg sm:text-xl text-muted-foreground font-light mb-3 max-w-xl font-sans">
           Learn Embedded Systems.{" "}
-          <span className="text-foreground font-medium">Experiment.</span>{" "}
+          <span className="text-foreground font-semibold">Experiment.</span>{" "}
           Understand.
         </p>
 
-        <p className="text-sm text-muted-foreground max-w-lg mb-10 leading-relaxed">
+        <p className="relative text-[11px] text-muted-foreground max-w-lg mb-8 leading-relaxed font-mono">
           A browser-based virtual laboratory for engineering students. Configure
           virtual peripherals, run guided experiments, and observe real
           calculations — without physical hardware.
         </p>
 
-        <div className="flex flex-col sm:flex-row gap-3 items-center">
+        <div className="relative flex flex-col sm:flex-row gap-2.5 items-center">
           <Link
             href="/dashboard"
-            className={buttonVariants({ size: "lg" })}
+            className={buttonVariants({ size: "lg", className: "font-mono text-xs font-bold shadow-lg" })}
           >
             Start Lab
-            <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
+            <ArrowRight className="ml-1.5 h-3.5 w-3.5" aria-hidden="true" />
           </Link>
           <Link
             href="/labs"
-            className={buttonVariants({ variant: "outline", size: "lg" })}
+            className={buttonVariants({ variant: "outline", size: "lg", className: "font-mono text-xs font-bold" })}
           >
             Explore Labs
           </Link>
         </div>
       </section>
 
-      {/* ── Value propositions ── */}
+      {/* ── Value Propositions ── */}
       <section
-        className="border-t border-border bg-card/30 px-6 py-14"
+        className="border-t border-[var(--border-default)] bg-[var(--surface-panel)]/50 px-6 py-12"
         aria-labelledby="features-heading"
       >
         <div className="max-w-5xl mx-auto">
           <h2
             id="features-heading"
-            className="text-xs font-semibold uppercase tracking-widest text-muted-foreground text-center mb-10"
+            className="text-[9px] font-mono font-bold uppercase tracking-[0.2em] text-muted-foreground text-center mb-10"
           >
-            What you get
+            What You Get
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {VALUE_PROPS.map((vp) => {
               const Icon = vp.icon;
               return (
                 <div key={vp.title} className="space-y-2">
                   <div
-                    className="w-8 h-8 rounded-md bg-primary/10 border border-primary/20 flex items-center justify-center"
+                    className="w-8 h-8 rounded bg-primary/10 border border-primary/20 flex items-center justify-center"
                     aria-hidden="true"
                   >
-                    <Icon className="h-4 w-4 text-primary" strokeWidth={1.75} />
+                    <Icon className="h-3.5 w-3.5 text-primary" strokeWidth={2} />
                   </div>
-                  <h3 className="text-sm font-semibold text-foreground">
+                  <h3 className="text-xs font-bold text-foreground font-mono uppercase tracking-wider">
                     {vp.title}
                   </h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
+                  <p className="text-[11px] text-muted-foreground leading-relaxed font-sans">
                     {vp.description}
                   </p>
                 </div>
@@ -170,59 +174,59 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── Lab cards ── */}
+      {/* ── Lab Preview Cards ── */}
       <section
-        className="px-6 py-14"
+        className="px-6 py-12"
         aria-labelledby="labs-heading"
       >
         <div className="max-w-5xl mx-auto">
-          <div className="flex items-end justify-between mb-8">
+          <div className="flex items-end justify-between mb-6">
             <div>
               <h2
                 id="labs-heading"
-                className="text-xl font-semibold text-foreground"
+                className="text-base font-bold text-foreground font-sans"
               >
-                Four interactive labs
+                Four Interactive Labs
               </h2>
-              <p className="text-sm text-muted-foreground mt-1">
+              <p className="text-[10px] text-muted-foreground mt-0.5 font-mono">
                 Each lab simulates a core embedded peripheral with guided challenges.
               </p>
             </div>
             <Link
               href="/labs"
-              className={buttonVariants({ variant: "ghost", size: "sm" })}
+              className={buttonVariants({ variant: "ghost", size: "sm", className: "text-[10px] font-mono font-bold" })}
             >
               View all
-              <ArrowRight className="ml-1.5 h-3.5 w-3.5" aria-hidden="true" />
+              <ArrowRight className="ml-1 h-3 w-3" aria-hidden="true" />
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
             {LABS.map((lab) => {
               const Icon = ICON_MAP[lab.icon] ?? Zap;
               return (
                 <Link
                   key={lab.id}
                   href={lab.route}
-                  className="group rounded-lg border border-border bg-card p-5 hover:border-primary/40 hover:bg-card/80 transition-colors"
+                  className="group rounded border border-[var(--border-default)] bg-[var(--surface-panel)] p-4 hover:border-primary/30 hover:shadow-[0_2px_12px_rgba(0,0,0,0.25)] transition-all"
                   aria-label={`Open ${lab.shortTitle} lab`}
                 >
                   <div
-                    className="w-9 h-9 rounded-md bg-primary/10 border border-primary/20 flex items-center justify-center mb-4"
+                    className="w-7 h-7 rounded bg-primary/10 border border-primary/20 flex items-center justify-center mb-3"
                     aria-hidden="true"
                   >
-                    <Icon className="h-4 w-4 text-primary" strokeWidth={1.75} />
+                    <Icon className="h-3.5 w-3.5 text-primary" strokeWidth={2} />
                   </div>
-                  <h3 className="text-sm font-semibold text-foreground mb-1">
+                  <h3 className="text-xs font-bold text-foreground font-mono uppercase tracking-wider mb-1">
                     {lab.shortTitle}
                   </h3>
-                  <p className="text-xs text-muted-foreground leading-relaxed mb-4">
+                  <p className="text-[10px] text-muted-foreground leading-relaxed mb-3 font-sans">
                     {lab.description}
                   </p>
-                  <div className="flex items-center gap-1.5 text-xs text-primary">
+                  <div className="flex items-center gap-1 text-[10px] text-primary font-mono font-bold">
                     <span>Open lab</span>
                     <ArrowRight
-                      className="h-3 w-3 group-hover:translate-x-0.5 transition-transform"
+                      className="h-2.5 w-2.5 group-hover:translate-x-0.5 transition-transform"
                       aria-hidden="true"
                     />
                   </div>
@@ -234,13 +238,13 @@ export default function LandingPage() {
       </section>
 
       {/* ── Footer ── */}
-      <footer className="border-t border-border px-6 py-6 mt-auto">
-        <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-muted-foreground">
-          <div className="flex items-center gap-2">
-            <Cpu className="h-3.5 w-3.5" strokeWidth={1.5} aria-hidden="true" />
-            <span>EmbeddedLab OS</span>
+      <footer className="border-t border-[var(--border-default)] px-6 py-4 mt-auto bg-[var(--surface-panel)]/30">
+        <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-[9px] text-muted-foreground font-mono uppercase tracking-wider">
+          <div className="flex items-center gap-1.5">
+            <Cpu className="h-3 w-3" strokeWidth={1.5} aria-hidden="true" />
+            <span className="font-bold">EmbeddedLab OS</span>
           </div>
-          <p className="font-mono text-center sm:text-right">
+          <p className="text-center sm:text-right">
             Educational virtual simulation · Not a real microcontroller
           </p>
         </div>

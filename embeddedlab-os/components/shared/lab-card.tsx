@@ -1,7 +1,6 @@
 /**
  * EmbeddedLab OS — components/shared/lab-card.tsx
- * Reusable lab summary card used in the lab selection grid and dashboard.
- * No simulation logic — purely presentational.
+ * Lab selection card with engineering-grade layout.
  */
 import Link from "next/link";
 import {
@@ -16,7 +15,6 @@ import { cn } from "@/lib/utils";
 import { StatusBadge, type StatusType } from "@/components/shared/status-badge";
 import type { LabDefinition } from "@/lib/constants/labs";
 
-/** Map of icon name strings to Lucide components */
 const ICON_MAP: Record<string, LucideIcon> = {
   Zap,
   Activity,
@@ -27,7 +25,6 @@ const ICON_MAP: Record<string, LucideIcon> = {
 interface LabCardProps {
   lab: LabDefinition;
   status?: StatusType;
-  /** Whether to show the objectives list */
   showObjectives?: boolean;
   className?: string;
 }
@@ -44,32 +41,32 @@ export function LabCard({
   const card = (
     <div
       className={cn(
-        "group relative rounded-lg border border-border bg-card",
-        "p-5 transition-colors duration-150",
-        isAvailable && "hover:border-primary/40 hover:bg-card/80 cursor-pointer",
-        !isAvailable && "opacity-70 cursor-not-allowed",
+        "group relative rounded border border-[var(--border-default)] bg-[var(--surface-panel)]",
+        "p-4 transition-all duration-200 shadow-[0_1px_4px_rgba(0,0,0,0.15)]",
+        isAvailable && "hover:border-primary/30 hover:shadow-[0_2px_12px_rgba(0,0,0,0.25)] cursor-pointer",
+        !isAvailable && "opacity-60 cursor-not-allowed",
         className
       )}
     >
       {/* Header */}
-      <div className="flex items-start justify-between gap-3 mb-3">
-        <div className="flex items-center gap-3">
+      <div className="flex items-start justify-between gap-3 mb-2.5">
+        <div className="flex items-center gap-2.5">
           <div
             className={cn(
-              "flex items-center justify-center rounded-md",
-              "w-9 h-9 shrink-0",
+              "flex items-center justify-center rounded",
+              "w-8 h-8 shrink-0",
               "bg-primary/10 text-primary",
               "border border-primary/20"
             )}
             aria-hidden="true"
           >
-            <Icon className="h-4 w-4" strokeWidth={1.75} />
+            <Icon className="h-3.5 w-3.5" strokeWidth={2} />
           </div>
           <div>
-            <h3 className="text-sm font-semibold text-foreground leading-tight">
+            <h3 className="text-sm font-bold text-foreground leading-tight">
               {lab.shortTitle}
             </h3>
-            <p className="text-xs text-muted-foreground mt-0.5 leading-tight">
+            <p className="text-[10px] text-muted-foreground font-mono uppercase tracking-wider">
               {lab.title.split("—")[0]?.trim()}
             </p>
           </div>
@@ -78,20 +75,20 @@ export function LabCard({
       </div>
 
       {/* Description */}
-      <p className="text-sm text-muted-foreground leading-relaxed mb-3">
+      <p className="text-[11px] text-muted-foreground font-sans leading-relaxed mb-2.5">
         {lab.description}
       </p>
 
-      {/* Objectives list (optional) */}
+      {/* Objectives */}
       {showObjectives && (
-        <ul className="space-y-1 mb-4">
+        <ul className="space-y-0.5 mb-3">
           {lab.objectives.slice(0, 4).map((obj) => (
             <li
               key={obj}
-              className="text-xs text-muted-foreground flex items-start gap-2"
+              className="text-[10px] text-muted-foreground flex items-start gap-1.5 font-mono"
             >
               <span
-                className="mt-1 h-1 w-1 rounded-full bg-primary/50 shrink-0"
+                className="mt-1 h-1 w-1 rounded-full bg-primary/60 shrink-0"
                 aria-hidden="true"
               />
               {obj}
@@ -101,13 +98,13 @@ export function LabCard({
       )}
 
       {/* Footer */}
-      <div className="flex items-center justify-between pt-2 border-t border-border">
-        <span className="text-xs text-muted-foreground">
+      <div className="flex items-center justify-between pt-2 border-t border-[var(--border-subtle)]">
+        <span className="text-[9px] text-muted-foreground font-mono font-bold uppercase tracking-wider">
           {lab.challengeCount} challenge{lab.challengeCount !== 1 ? "s" : ""}
         </span>
         {isAvailable && (
           <ChevronRight
-            className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors"
+            className="h-3.5 w-3.5 text-muted-foreground group-hover:text-primary group-hover:translate-x-0.5 transition-all"
             aria-hidden="true"
           />
         )}

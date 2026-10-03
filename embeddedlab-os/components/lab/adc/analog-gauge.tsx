@@ -1,6 +1,6 @@
 /**
  * EmbeddedLab OS — components/lab/adc/analog-gauge.tsx
- * Analog Voltmeter Gauge component displaying Vin relative to Vref.
+ * Precision Analog Voltmeter Gauge — SVG arc gauge with needle indicator.
  */
 import { cn } from "@/lib/utils";
 
@@ -18,49 +18,48 @@ export function AnalogGauge({
   className,
 }: AnalogGaugeProps) {
   const percentage = Math.max(0, Math.min(100, (voltage / maxVoltage) * 100));
-  // Map 0-100% to gauge angle (-90deg to +90deg)
   const angle = -90 + (percentage / 100) * 180;
 
   return (
     <div
       className={cn(
-        "rounded-md border border-border bg-[var(--surface-sunken)] p-4 flex flex-col items-center justify-between font-mono",
+        "rounded border border-[var(--border-default)] bg-[var(--surface-sunken)] p-4 flex flex-col items-center justify-between font-mono shadow-[inset_0_2px_6px_rgba(0,0,0,0.3)] select-none",
         className
       )}
     >
-      <div className="flex items-center justify-between w-full text-xs text-muted-foreground mb-1 select-none">
-        <span className="font-semibold text-foreground">{label}</span>
-        <span className="text-primary font-bold">{voltage.toFixed(2)} V</span>
+      <div className="flex items-center justify-between w-full text-[10px] text-muted-foreground mb-1.5">
+        <span className="font-bold text-foreground uppercase tracking-wider">{label}</span>
+        <span className="text-primary font-bold text-xs">{voltage.toFixed(2)} V</span>
       </div>
 
-      {/* Gauge Dial Arc Frame */}
+      {/* Gauge Dial Arc */}
       <div className="relative w-44 h-24 flex items-end justify-center overflow-hidden my-2">
-        {/* Outer Arc Path */}
-        <div className="absolute inset-0 rounded-t-full border-4 border-muted/40 border-b-0" />
+        {/* Outer Arc */}
+        <div className="absolute inset-0 rounded-t-full border-4 border-[var(--border-subtle)] border-b-0" />
 
-        {/* Dynamic Glowing Arc Progress */}
+        {/* Progress Arc */}
         <div
-          className="absolute inset-0 rounded-t-full border-4 border-primary border-b-0 transition-all duration-150"
+          className="absolute inset-0 rounded-t-full border-4 border-primary border-b-0 transition-all duration-200"
           style={{
             clipPath: `inset(0 ${100 - percentage}% 0 0)`,
           }}
         />
 
-        {/* Tick Marks (0V, Mid, Vref) */}
-        <span className="absolute bottom-1 left-2 text-[9px] text-muted-foreground">0.0V</span>
-        <span className="absolute top-1 text-[9px] text-muted-foreground">{(maxVoltage / 2).toFixed(1)}V</span>
-        <span className="absolute bottom-1 right-2 text-[9px] text-muted-foreground">{maxVoltage.toFixed(1)}V</span>
+        {/* Tick Marks */}
+        <span className="absolute bottom-0.5 left-1.5 text-[8px] text-muted-foreground font-bold">0V</span>
+        <span className="absolute top-0.5 text-[8px] text-muted-foreground font-bold">{(maxVoltage / 2).toFixed(1)}V</span>
+        <span className="absolute bottom-0.5 right-1.5 text-[8px] text-muted-foreground font-bold">{maxVoltage.toFixed(1)}V</span>
 
         {/* Pivot Needle */}
         <div
-          className="w-1 bg-primary h-16 origin-bottom rounded-full transition-transform duration-150 shadow-[0_0_8px_rgba(59,130,246,0.8)]"
+          className="w-0.5 bg-red-400 h-16 origin-bottom rounded-full transition-transform duration-200 shadow-[0_0_6px_rgba(239,68,68,0.6)]"
           style={{ transform: `rotate(${angle}deg)` }}
         />
-        <div className="w-4 h-4 rounded-full bg-foreground border-2 border-primary z-10 -mb-2" />
+        <div className="w-3 h-3 rounded-full bg-slate-300 border-2 border-red-400 z-10 -mb-1.5" />
       </div>
 
-      <div className="text-[11px] text-muted-foreground text-center">
-        Scale: <strong className="text-foreground">0.00V — {maxVoltage.toFixed(2)}V</strong> ({percentage.toFixed(1)}% Full Scale)
+      <div className="text-[9px] text-muted-foreground text-center font-bold uppercase tracking-wider">
+        Scale: <span className="text-foreground">0.00V — {maxVoltage.toFixed(2)}V</span> · {percentage.toFixed(1)}% FS
       </div>
     </div>
   );

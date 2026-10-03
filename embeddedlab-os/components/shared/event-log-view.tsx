@@ -1,7 +1,6 @@
 /**
  * EmbeddedLab OS — components/shared/event-log-view.tsx
- * Console & simulation event log component.
- * Displays timestamped events, severity filters, clear log action, and payload inspection.
+ * Precision engineering serial console & hardware event monitor.
  */
 "use client";
 
@@ -30,17 +29,17 @@ const SEVERITY_CONFIG: Record<
   EventSeverity,
   { icon: React.ElementType; color: string; badge: string }
 > = {
-  INFO:    { icon: Info,         color: "text-info",       badge: "bg-info/10 text-info border-info/20" },
-  SUCCESS: { icon: CheckCircle2, color: "text-success",    badge: "bg-success/10 text-success border-success/20" },
-  WARNING: { icon: AlertCircle,  color: "text-warning",    badge: "bg-warning/10 text-warning border-warning/20" },
-  ERROR:   { icon: AlertCircle,  color: "text-error",      badge: "bg-error/10 text-error border-error/20" },
+  INFO:    { icon: Info,         color: "text-sky-400",     badge: "bg-sky-500/10 text-sky-400 border-sky-500/20" },
+  SUCCESS: { icon: CheckCircle2, color: "text-emerald-400", badge: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20" },
+  WARNING: { icon: AlertCircle,  color: "text-amber-400",   badge: "bg-amber-500/10 text-amber-400 border-amber-500/20" },
+  ERROR:   { icon: AlertCircle,  color: "text-red-400",     badge: "bg-red-500/10 text-red-400 border-red-500/20" },
 };
 
 export function EventLogView({
   events,
   onClear,
   className,
-  maxHeight = "h-48",
+  maxHeight = "h-44",
 }: EventLogViewProps) {
   const [filterSeverity, setFilterSeverity] = useState<EventSeverity | "ALL">("ALL");
 
@@ -52,36 +51,39 @@ export function EventLogView({
   return (
     <div
       className={cn(
-        "rounded-lg border border-border bg-[var(--surface-sunken)] flex flex-col overflow-hidden font-mono text-xs",
+        "rounded-md border border-[var(--border-default)] bg-[var(--surface-console)] flex flex-col overflow-hidden font-mono text-xs shadow-inner select-none",
         className
       )}
     >
-      {/* Header toolbar */}
-      <div className="flex flex-wrap items-center justify-between gap-2 px-3 py-2 border-b border-border bg-card/60 select-none">
+      {/* Console Header Toolbar */}
+      <div className="flex flex-wrap items-center justify-between gap-2 px-3 py-1.5 border-b border-[var(--border-subtle)] bg-[var(--surface-panel)]/90 select-none">
         <div className="flex items-center gap-2">
-          <Terminal className="h-4 w-4 text-primary" />
-          <span className="font-semibold text-foreground text-xs uppercase tracking-wider">
-            Event Log & Console
+          <div className="flex items-center gap-1.5">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_6px_rgba(16,185,129,0.6)]" />
+            <Terminal className="h-3.5 w-3.5 text-primary" />
+          </div>
+          <span className="font-bold text-foreground text-[11px] uppercase tracking-wider">
+            Telemetry & Diagnostic Console
           </span>
-          <span className="text-[10px] text-muted-foreground bg-muted/40 px-1.5 py-0.5 rounded">
-            {filteredEvents.length} events
+          <span className="text-[9px] text-muted-foreground bg-[var(--surface-sunken)] px-1.5 py-0.2 rounded border border-border/60">
+            {filteredEvents.length} frames
           </span>
         </div>
 
-        {/* Action Controls */}
+        {/* Action Controls & Filters */}
         <div className="flex items-center gap-2">
-          {/* Severity filter buttons */}
-          <div className="flex items-center gap-1 bg-muted/20 p-0.5 rounded border border-border">
-            <Filter className="h-3 w-3 text-muted-foreground ml-1 mr-0.5" />
+          {/* Severity Filter Segment */}
+          <div className="flex items-center gap-0.5 bg-[var(--surface-sunken)] p-0.5 rounded border border-[var(--border-subtle)]">
+            <Filter className="h-2.5 w-2.5 text-muted-foreground/70 ml-1 mr-0.5" />
             {(["ALL", "INFO", "SUCCESS", "WARNING", "ERROR"] as const).map((sev) => (
               <button
                 key={sev}
                 onClick={() => setFilterSeverity(sev)}
                 aria-label={`Filter log events by ${sev}`}
                 className={cn(
-                  "px-1.5 py-0.5 text-[10px] rounded transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary",
+                  "px-1.5 py-0.5 text-[9px] rounded font-mono font-medium transition-colors",
                   filterSeverity === sev
-                    ? "bg-primary text-primary-foreground font-semibold"
+                    ? "bg-primary text-primary-foreground font-bold"
                     : "text-muted-foreground hover:text-foreground"
                 )}
               >
@@ -95,26 +97,26 @@ export function EventLogView({
               variant="ghost"
               size="xs"
               onClick={onClear}
-              className="h-6 text-[11px] text-muted-foreground hover:text-destructive"
+              className="h-5 text-[10px] text-muted-foreground hover:text-red-400 px-1.5"
               title="Clear Event Log"
             >
-              <Trash2 className="h-3 w-3 mr-1" />
+              <Trash2 className="h-2.5 w-2.5 mr-1" />
               Clear
             </Button>
           )}
         </div>
       </div>
 
-      {/* Log Entries Area */}
+      {/* Terminal Output Log Stream */}
       <ScrollArea className={cn("p-2", maxHeight)}>
         {filteredEvents.length === 0 ? (
-          <div className="py-8 text-center text-muted-foreground text-xs font-sans">
-            No simulation events logged yet. Perform operations to record activity.
+          <div className="py-6 text-center text-muted-foreground/60 text-[11px] font-mono">
+            › SYSTEM READY — AWAITING HARDWARE PERIPHERAL EVENTS
           </div>
         ) : (
-          <div className="space-y-1.5">
+          <div className="space-y-1">
             {filteredEvents.map((evt) => {
-              const sevBadge = SEVERITY_CONFIG[evt.severity]?.badge || "";
+              const sev = SEVERITY_CONFIG[evt.severity] || SEVERITY_CONFIG.INFO;
               const formattedTime = new Date(evt.timestamp).toLocaleTimeString([], {
                 hour12: false,
                 hour: "2-digit",
@@ -126,20 +128,20 @@ export function EventLogView({
               return (
                 <div
                   key={evt.id}
-                  className="flex items-start gap-2 py-1 px-2 rounded hover:bg-muted/20 border border-transparent hover:border-border transition-colors leading-tight"
+                  className="flex items-start gap-2 py-0.5 px-1.5 rounded hover:bg-muted/10 transition-colors leading-tight font-mono text-[11px]"
                 >
-                  <span className="text-muted-foreground/60 shrink-0 select-none text-[11px]">
-                    [{formattedTime}]
+                  <span className="text-muted-foreground/50 shrink-0 select-none text-[10px]">
+                    {formattedTime}
                   </span>
                   <span
                     className={cn(
-                      "text-[9px] px-1 py-0.2 rounded border font-semibold shrink-0 uppercase",
-                      sevBadge
+                      "text-[8px] px-1 py-0.2 rounded border font-bold shrink-0 uppercase tracking-wider",
+                      sev.badge
                     )}
                   >
                     {evt.severity}
                   </span>
-                  <span className="text-foreground flex-1 break-all">
+                  <span className="text-foreground/90 flex-1 break-all">
                     {evt.message}
                   </span>
                 </div>

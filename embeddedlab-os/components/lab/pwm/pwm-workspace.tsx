@@ -1,16 +1,10 @@
 /**
  * EmbeddedLab OS — components/lab/pwm/pwm-workspace.tsx
- *
- * Full PWM Laboratory Workspace.
- * Integrates:
- * - 3-column engineering layout
- * - Waveform Visualizer & PWM LED Dimmer
- * - State management via usePWMState() and useEventLog()
- * - Challenge system with actual state validators
+ * High-Density PWM Laboratory Workspace with Engineering Layout.
  */
 "use client";
 
-import { ArrowLeft, BarChart2, FlaskConical, RotateCcw } from "lucide-react";
+import { Activity, ArrowLeft, RotateCcw } from "lucide-react";
 import Link from "next/link";
 
 import { Button, buttonVariants } from "@/components/ui/button";
@@ -31,7 +25,6 @@ import { useChallenge } from "@/hooks/use-challenge";
 import { useSimulatorStore } from "@/store/simulator-store";
 
 export function PWMWorkspace() {
-  // Engine state & actions
   const { channel, derived, setFrequency, setDutyCycle, setEnabled } = usePWMState(0);
   const { events } = useEventLog("pwm");
   const resetStore = useSimulatorStore((state) => state.reset);
@@ -50,75 +43,81 @@ export function PWMWorkspace() {
   };
 
   return (
-    <div className="p-5 max-w-7xl mx-auto space-y-5">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-border">
+    <div className="p-4 max-w-7xl mx-auto space-y-4">
+      {/* Instrumentation Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[var(--border-default)]">
         <div>
-          <div className="flex items-center gap-2 text-muted-foreground mb-0.5">
-            <FlaskConical className="h-4 w-4 text-primary" />
-            <span className="text-xs font-mono uppercase tracking-wider">
-              Interactive Lab Workspace
-            </span>
+          <div className="flex items-center gap-1.5 text-muted-foreground mb-0.5 font-mono text-[10px] uppercase tracking-wider">
+            <Activity className="h-3.5 w-3.5 text-primary" />
+            <span>SIGNAL GENERATION & ANALYSIS WORKBENCH</span>
+            <span>·</span>
+            <span className="text-primary font-bold">4-CHANNEL TIMER</span>
           </div>
-          <h1 className="text-xl font-bold text-foreground">
+          <h1 className="text-xl font-bold text-foreground font-sans tracking-tight">
             PWM — Pulse-Width Modulation
           </h1>
         </div>
 
         <div className="flex items-center gap-2">
           <StatusBadge status="running" />
-          <Button variant="outline" size="sm" onClick={handleReset}>
-            <RotateCcw className="mr-1.5 h-3.5 w-3.5" />
-            Reset MCU State
+          <Button variant="outline" size="xs" onClick={handleReset} className="h-7 text-xs font-mono control-elevated">
+            <RotateCcw className="mr-1 h-3 w-3" />
+            Reset MCU
           </Button>
-          <Link href="/labs" className={buttonVariants({ variant: "outline", size: "sm" })}>
-            <ArrowLeft className="mr-1.5 h-3.5 w-3.5" />
-            All Labs
+          <Link href="/labs" className={buttonVariants({ variant: "outline", size: "sm", className: "h-7 text-xs font-mono" })}>
+            <ArrowLeft className="mr-1 h-3 w-3" />
+            Directory
           </Link>
         </div>
       </div>
 
-      {/* 3-Column Layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
-        {/* Left Column: Instructions & Challenges & AI Assistant (4 cols) */}
-        <div className="lg:col-span-4 space-y-4">
+      {/* 3-Column Engineering Layout */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
+        {/* Left Column */}
+        <div className="lg:col-span-4 space-y-3.5">
           <LabEducationCard labId="pwm" currentState={mcuState} />
           <ChallengePanel labId="pwm" />
           <AIAssistantPanel labId="pwm" state={mcuState} />
         </div>
 
-        {/* Center Column: Waveform Oscilloscope & Load (5 cols) */}
-        <div className="lg:col-span-5 space-y-4">
-          <Panel title="Real-Time PWM Waveform Oscilloscope" icon={BarChart2} variant="sunken">
-            <div className="space-y-4">
+        {/* Center Column: Oscilloscope & Measurements */}
+        <div className="lg:col-span-5 space-y-3.5">
+          <Panel
+            title="PWM Waveform Analysis"
+            subtitle="Real-Time Oscilloscope & Load Visualization"
+            icon={Activity}
+            variant="instrument"
+            telemetryTag="TIM3 CH1"
+          >
+            <div className="space-y-3.5">
               <WaveformVisualizer channel={channel} derived={activeDerived} />
               <PWMLEDDimmer channel={channel} />
-              <div className="grid grid-cols-3 gap-2.5">
-                <MetricCard label="Period (T)" value={activeDerived.periodMs.toFixed(2)} unit="ms" />
-                <MetricCard label="High Time (t_high)" value={activeDerived.highTimeMs.toFixed(2)} unit="ms" />
-                <MetricCard label="Low Time (t_low)" value={activeDerived.lowTimeMs.toFixed(2)} unit="ms" />
+              <div className="grid grid-cols-3 gap-2">
+                <MetricCard label="Period (T)" value={activeDerived.periodMs.toFixed(2)} unit="ms" signalState="pulse" />
+                <MetricCard label="High Time" value={activeDerived.highTimeMs.toFixed(2)} unit="ms" signalState="high" />
+                <MetricCard label="Low Time" value={activeDerived.lowTimeMs.toFixed(2)} unit="ms" />
               </div>
             </div>
           </Panel>
         </div>
 
-        {/* Right Column: PWM Inspector Panel (3 cols) */}
-        <div className="lg:col-span-3 space-y-4">
+        {/* Right Column: PWM Inspector */}
+        <div className="lg:col-span-3 space-y-3.5">
           <InspectorPanel
             title="PWM Channel Inspector"
-            subtitle={`Channel: ${channel.label}`}
+            subtitle={`Timer Channel: ${channel.label}`}
           >
             <InspectorRow label="Timer Channel" value={channel.label} />
-            <InspectorRow label="Frequency (f)" value={`${channel.frequencyHz} Hz`} />
-            <InspectorRow label="Duty Cycle (D)" value={`${channel.dutyCyclePercent}%`} />
-            <InspectorRow label="Output State" value={channel.enabled ? "ENABLED" : "DISABLED"} />
-            <InspectorRow label="Calculated Period" value={`${((1 / channel.frequencyHz) * 1000).toFixed(2)} ms`} />
+            <InspectorRow label="Frequency (f)" value={`${channel.frequencyHz.toLocaleString()}`} unit="Hz" />
+            <InspectorRow label="Duty Cycle (D)" value={`${channel.dutyCyclePercent}`} unit="%" />
+            <InspectorRow label="Output" value={channel.enabled ? "ENABLED" : "DISABLED"} />
+            <InspectorRow label="Period (T)" value={`${((1 / channel.frequencyHz) * 1000).toFixed(2)}`} unit="ms" />
 
-            {/* Frequency Control Slider */}
-            <div className="pt-4 border-t border-border space-y-2">
-              <div className="flex justify-between items-center text-xs font-mono">
-                <span className="text-muted-foreground">Frequency (Hz)</span>
-                <span className="font-bold text-primary">{channel.frequencyHz} Hz</span>
+            {/* Frequency Control */}
+            <div className="pt-3 border-t border-[var(--border-subtle)] space-y-1.5">
+              <div className="flex justify-between items-center text-[10px] font-mono">
+                <span className="text-muted-foreground uppercase tracking-wider font-semibold">Frequency</span>
+                <span className="font-bold text-primary">{channel.frequencyHz.toLocaleString()} Hz</span>
               </div>
               <input
                 type="range"
@@ -127,14 +126,18 @@ export function PWMWorkspace() {
                 step="100"
                 value={channel.frequencyHz}
                 onChange={(e) => setFrequency(Number(e.target.value))}
-                className="w-full accent-primary cursor-pointer h-2 bg-muted rounded"
+                className="w-full accent-primary cursor-pointer h-1.5 bg-[var(--surface-sunken)] rounded-sm border border-[var(--border-subtle)]"
               />
+              <div className="flex justify-between text-[8px] font-mono text-muted-foreground/50">
+                <span>100 Hz</span>
+                <span>10 kHz</span>
+              </div>
             </div>
 
-            {/* Duty Cycle Control Slider */}
-            <div className="pt-3 border-t border-border space-y-2">
-              <div className="flex justify-between items-center text-xs font-mono">
-                <span className="text-muted-foreground">Duty Cycle (%)</span>
+            {/* Duty Cycle Control */}
+            <div className="pt-3 border-t border-[var(--border-subtle)] space-y-1.5">
+              <div className="flex justify-between items-center text-[10px] font-mono">
+                <span className="text-muted-foreground uppercase tracking-wider font-semibold">Duty Cycle</span>
                 <span className="font-bold text-primary">{channel.dutyCyclePercent}%</span>
               </div>
               <input
@@ -144,27 +147,32 @@ export function PWMWorkspace() {
                 step="1"
                 value={channel.dutyCyclePercent}
                 onChange={(e) => setDutyCycle(Number(e.target.value))}
-                className="w-full accent-primary cursor-pointer h-2 bg-muted rounded"
+                className="w-full accent-primary cursor-pointer h-1.5 bg-[var(--surface-sunken)] rounded-sm border border-[var(--border-subtle)]"
               />
+              <div className="flex justify-between text-[8px] font-mono text-muted-foreground/50">
+                <span>0%</span>
+                <span>50%</span>
+                <span>100%</span>
+              </div>
             </div>
 
             {/* Enable/Disable Toggle */}
-            <div className="pt-3 border-t border-border">
+            <div className="pt-3 border-t border-[var(--border-subtle)]">
               <Button
                 variant={channel.enabled ? "default" : "outline"}
-                size="sm"
+                size="xs"
                 onClick={() => setEnabled(!channel.enabled)}
-                className="w-full font-mono text-xs"
+                className="w-full font-mono text-[10px] h-7 control-elevated font-bold"
               >
-                {channel.enabled ? "Disable PWM Output" : "Enable PWM Output"}
+                {channel.enabled ? "● Disable PWM Output" : "○ Enable PWM Output"}
               </Button>
             </div>
           </InspectorPanel>
         </div>
       </div>
 
-      {/* Bottom Row: Event Log */}
-      <EventLogView events={events} onClear={() => resetStore("pwm")} maxHeight="h-44" />
+      {/* Bottom Diagnostic Console */}
+      <EventLogView events={events} onClear={() => resetStore("pwm")} maxHeight="h-36" />
     </div>
   );
 }
