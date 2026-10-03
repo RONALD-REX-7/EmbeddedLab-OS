@@ -51,12 +51,12 @@ export function EventLogView({
   return (
     <div
       className={cn(
-        "rounded-md border border-[var(--border-default)] bg-[var(--surface-console)] flex flex-col overflow-hidden font-mono text-xs shadow-inner select-none",
+        "rounded-md border border-border-default bg-surface-console flex flex-col overflow-hidden font-mono text-xs shadow-inner select-none",
         className
       )}
     >
       {/* Console Header Toolbar */}
-      <div className="flex flex-wrap items-center justify-between gap-2 px-3 py-1.5 border-b border-[var(--border-subtle)] bg-[var(--surface-panel)]/90 select-none">
+      <div className="flex flex-wrap items-center justify-between gap-2 px-3 py-1.5 border-b border-border-subtle bg-surface-panel/90 select-none">
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-1.5">
             <span className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_6px_rgba(16,185,129,0.6)]" />
@@ -65,7 +65,7 @@ export function EventLogView({
           <span className="font-bold text-foreground text-[11px] uppercase tracking-wider">
             Telemetry & Diagnostic Console
           </span>
-          <span className="text-[9px] text-muted-foreground bg-[var(--surface-sunken)] px-1.5 py-0.2 rounded border border-border/60">
+          <span className="text-[9px] text-muted-foreground bg-surface-sunken px-1.5 py-0.2 rounded border border-border/60">
             {filteredEvents.length} frames
           </span>
         </div>
@@ -73,7 +73,7 @@ export function EventLogView({
         {/* Action Controls & Filters */}
         <div className="flex items-center gap-2">
           {/* Severity Filter Segment */}
-          <div className="flex items-center gap-0.5 bg-[var(--surface-sunken)] p-0.5 rounded border border-[var(--border-subtle)]">
+          <div className="flex items-center gap-0.5 bg-surface-sunken p-0.5 rounded border border-border-subtle">
             <Filter className="h-2.5 w-2.5 text-muted-foreground/70 ml-1 mr-0.5" />
             {(["ALL", "INFO", "SUCCESS", "WARNING", "ERROR"] as const).map((sev) => (
               <button

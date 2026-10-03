@@ -43,7 +43,7 @@ export default function DashboardPage() {
   return (
     <div className="p-4 max-w-6xl mx-auto space-y-5">
       {/* Page Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[var(--border-default)]">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-border-default">
         <div>
           <div className="flex items-center gap-1.5 text-muted-foreground mb-0.5 font-mono text-[10px] uppercase tracking-wider">
             <LayoutDashboard className="h-3.5 w-3.5 text-primary" strokeWidth={1.5} />
@@ -140,7 +140,7 @@ export default function DashboardPage() {
             return (
               <div
                 key={labId}
-                className="rounded border border-[var(--border-default)] bg-[var(--surface-panel)] p-4 space-y-3 hover:border-primary/30 transition-colors shadow-[0_1px_4px_rgba(0,0,0,0.15)] group"
+                className="rounded border border-border-default bg-surface-panel p-4 space-y-3 hover:border-primary/30 transition-colors shadow-[0_1px_4px_rgba(0,0,0,0.15)] group"
               >
                 <div className="flex items-start justify-between gap-2">
                   <div>
@@ -170,7 +170,7 @@ export default function DashboardPage() {
                   {lab.description}
                 </p>
 
-                <div className="space-y-1 pt-2 border-t border-[var(--border-subtle)]">
+                <div className="space-y-1 pt-2 border-t border-border-subtle">
                   <div className="flex justify-between items-center text-[10px] font-mono">
                     <span className="text-muted-foreground">
                       Challenges: <strong className="text-foreground">{lab.completedCount} / {lab.totalChallenges}</strong>
@@ -215,7 +215,7 @@ export default function DashboardPage() {
                 {recentActivity.map((item) => (
                   <div
                     key={item.id}
-                    className="p-2.5 rounded border border-[var(--border-subtle)] bg-[var(--surface-sunken)] flex items-center justify-between gap-2.5"
+                    className="p-2.5 rounded border border-border-subtle bg-surface-sunken flex items-center justify-between gap-2.5"
                   >
                     <div className="flex items-center gap-2 min-w-0">
                       {item.status === "PASSED" ? (
@@ -260,7 +260,7 @@ export default function DashboardPage() {
                 { step: "02", title: "Configure Hardware", desc: "Interact with oscilloscope, dial, and control panels in real-time." },
                 { step: "03", title: "Submit Challenges", desc: "Validation inspects actual simulator state (not UI clicks) to award points." },
               ].map((item) => (
-                <div key={item.step} className="p-2.5 rounded border border-[var(--border-subtle)] bg-[var(--surface-panel)] space-y-0.5">
+                <div key={item.step} className="p-2.5 rounded border border-border-subtle bg-surface-panel space-y-0.5">
                   <span className="text-primary font-bold">
                     <span className="text-muted-foreground/50 mr-1">{item.step}</span>
                     {item.title}

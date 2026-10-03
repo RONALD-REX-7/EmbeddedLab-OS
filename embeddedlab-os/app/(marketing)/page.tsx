@@ -61,7 +61,7 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col">
       {/* ── Navigation Bar ── */}
-      <header className="border-b border-[var(--border-default)] px-6 py-2.5 flex items-center justify-between bg-[var(--surface-panel)] backdrop-blur-sm">
+      <header className="border-b border-border-default px-6 py-2.5 flex items-center justify-between bg-surface-panel backdrop-blur-sm">
         <div className="flex items-center gap-2">
           <div className="w-6 h-6 rounded bg-primary/10 border border-primary/20 flex items-center justify-center">
             <Cpu className="h-3 w-3 text-primary" strokeWidth={2} aria-hidden="true" />
@@ -96,7 +96,7 @@ export default function LandingPage() {
         <div className="absolute inset-0 bg-oscilloscope-grid opacity-30 pointer-events-none" />
 
         {/* Status Pill */}
-        <div className="relative inline-flex items-center gap-2 rounded border border-[var(--border-subtle)] bg-[var(--surface-panel)] px-3 py-1 text-[10px] text-muted-foreground font-mono mb-8 shadow-[0_1px_4px_rgba(0,0,0,0.2)]">
+        <div className="relative inline-flex items-center gap-2 rounded border border-border-subtle bg-surface-panel px-3 py-1 text-[10px] text-muted-foreground font-mono mb-8 shadow-[0_1px_4px_rgba(0,0,0,0.2)]">
           <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(16,185,129,0.7)] animate-pulse" aria-hidden="true" />
           <span className="uppercase tracking-wider font-bold">Educational Software Simulation · No Hardware Required</span>
         </div>
@@ -140,7 +140,7 @@ export default function LandingPage() {
 
       {/* ── Value Propositions ── */}
       <section
-        className="border-t border-[var(--border-default)] bg-[var(--surface-panel)]/50 px-6 py-12"
+        className="border-t border-border-default bg-surface-panel/50 px-6 py-12"
         aria-labelledby="features-heading"
       >
         <div className="max-w-5xl mx-auto">
@@ -208,7 +208,7 @@ export default function LandingPage() {
                 <Link
                   key={lab.id}
                   href={lab.route}
-                  className="group rounded border border-[var(--border-default)] bg-[var(--surface-panel)] p-4 hover:border-primary/30 hover:shadow-[0_2px_12px_rgba(0,0,0,0.25)] transition-all"
+                  className="group rounded border border-border-default bg-surface-panel p-4 hover:border-primary/30 hover:shadow-[0_2px_12px_rgba(0,0,0,0.25)] transition-all"
                   aria-label={`Open ${lab.shortTitle} lab`}
                 >
                   <div
@@ -238,7 +238,7 @@ export default function LandingPage() {
       </section>
 
       {/* ── Footer ── */}
-      <footer className="border-t border-[var(--border-default)] px-6 py-4 mt-auto bg-[var(--surface-panel)]/30">
+      <footer className="border-t border-border-default px-6 py-4 mt-auto bg-surface-panel/30">
         <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-[9px] text-muted-foreground font-mono uppercase tracking-wider">
           <div className="flex items-center gap-1.5">
             <Cpu className="h-3 w-3" strokeWidth={1.5} aria-hidden="true" />

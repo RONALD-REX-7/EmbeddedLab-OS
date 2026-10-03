@@ -23,7 +23,7 @@ export function Topbar({ className }: TopbarProps) {
     <header
       className={cn(
         "h-11 shrink-0 flex items-center justify-between",
-        "px-4 border-b border-[var(--border-default)] bg-[var(--surface-panel)]/90 backdrop-blur-md relative z-10",
+        "px-4 border-b border-border-default bg-surface-panel/90 backdrop-blur-md relative z-10",
         className
       )}
       role="banner"
@@ -34,8 +34,8 @@ export function Topbar({ className }: TopbarProps) {
       {/* Right: Instrumentation telemetry & authentication controls */}
       <div className="flex items-center gap-3 font-mono text-xs select-none">
         {/* Hardware Clock / Deterministic Simulator Badge */}
-        <div className="hidden md:flex items-center gap-1.5 px-2 py-0.5 rounded bg-[var(--surface-sunken)] border border-[var(--border-subtle)] text-muted-foreground text-[10px]">
-          <span className="w-1.5 h-1.5 rounded-full bg-[var(--signal-high)] animate-pulse" />
+        <div className="hidden md:flex items-center gap-1.5 px-2 py-0.5 rounded bg-surface-sunken border border-border-subtle text-muted-foreground text-[10px]">
+          <span className="w-1.5 h-1.5 rounded-full bg-signal-high animate-pulse" />
           <span>VIRTUAL STM32 ARCH</span>
           <span className="text-border">|</span>
           <span className="text-primary font-bold">STATE SYNC</span>
@@ -59,7 +59,7 @@ export function Topbar({ className }: TopbarProps) {
           <div className="flex items-center gap-2 border-l border-border pl-2.5">
             <div className="hidden sm:flex items-center gap-1.5 text-foreground text-[11px]">
               <UserIcon className="h-3.5 w-3.5 text-primary" />
-              <span className="truncate max-w-[130px] font-semibold">
+              <span className="truncate max-w-32.5 font-semibold">
                 {user.user_metadata?.full_name || user.email?.split("@")[0]}
               </span>
             </div>

@@ -65,7 +65,7 @@ function NavLink({ item, pathname }: { item: NavItem; pathname: string }) {
         item.isChild ? "pl-5" : "pl-2.5",
         isActive
           ? "bg-primary/10 text-primary border border-primary/25 shadow-sm font-semibold"
-          : "text-muted-foreground hover:text-foreground hover:bg-[var(--surface-elevated)]/60 border border-transparent"
+          : "text-muted-foreground hover:text-foreground hover:bg-surface-elevated/60 border border-transparent"
       )}
     >
       {/* Active Left Indicator Notch */}
@@ -117,16 +117,16 @@ export function Sidebar() {
     <aside
       className={cn(
         "flex flex-col w-56 shrink-0 h-full",
-        "bg-[var(--sidebar)] border-r border-[var(--sidebar-border)]",
+        "bg-sidebar border-r border-sidebar-border",
         "py-3.5 relative z-20"
       )}
       aria-label="Application navigation"
     >
       {/* Brand Header */}
-      <div className="px-3.5 pb-3 border-b border-[var(--sidebar-border)] mb-3">
+      <div className="px-3.5 pb-3 border-b border-sidebar-border mb-3">
         <Logo size="md" />
         <div className="flex items-center gap-1.5 mt-2">
-          <span className="w-1.5 h-1.5 rounded-full bg-[var(--signal-high)] shadow-[0_0_5px_rgba(16,185,129,0.5)]" />
+          <span className="w-1.5 h-1.5 rounded-full bg-signal-high shadow-[0_0_5px_rgba(16,185,129,0.5)]" />
           <span className="text-[10px] text-muted-foreground font-mono uppercase tracking-wider font-semibold">
             ENGINEERING WORKSTATION
           </span>
@@ -141,7 +141,7 @@ export function Sidebar() {
           ))}
         </div>
 
-        <div className="space-y-0.5 pt-2 border-t border-[var(--sidebar-border)]/50">
+        <div className="space-y-0.5 pt-2 border-t border-sidebar-border/50">
           <div className="px-2 mb-1 flex items-center justify-between text-[9px] font-mono font-bold uppercase tracking-widest text-muted-foreground/60 select-none">
             <span>PERIPHERAL LABS</span>
             <span className="text-[8px] bg-muted/40 px-1 py-0.2 rounded">4 / 4</span>
@@ -153,7 +153,7 @@ export function Sidebar() {
       </nav>
 
       {/* System Status & Telemetry Module */}
-      <div className="px-3 pt-2.5 mt-auto border-t border-[var(--sidebar-border)] space-y-2">
+      <div className="px-3 pt-2.5 mt-auto border-t border-sidebar-border space-y-2">
         <div className="space-y-0.5">
           {BOTTOM_NAV.map((item) => (
             <NavLink key={item.href} item={item} pathname={pathname} />
@@ -161,13 +161,13 @@ export function Sidebar() {
         </div>
 
         {/* Telemetry Indicator Card */}
-        <div className="rounded border border-[var(--border-subtle)] bg-[var(--surface-sunken)] p-2 space-y-1 font-mono text-[10px] select-none">
+        <div className="rounded border border-border-subtle bg-surface-sunken p-2 space-y-1 font-mono text-[10px] select-none">
           <div className="flex items-center justify-between text-muted-foreground">
             <span className="flex items-center gap-1">
               <Cpu className="h-3 w-3 text-primary" />
               SIMULATOR CORE
             </span>
-            <span className="text-[var(--signal-high)] font-bold">16 MHz</span>
+            <span className="text-signal-high font-bold">16 MHz</span>
           </div>
           <div className="flex items-center justify-between text-muted-foreground/70 text-[9px]">
             <span>ENGINE: DETERMINISTIC</span>

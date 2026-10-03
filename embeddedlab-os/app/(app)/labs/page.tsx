@@ -15,7 +15,7 @@ export default function LabsPage() {
   return (
     <div className="p-4 max-w-5xl mx-auto space-y-5">
       {/* Page Header */}
-      <div className="pb-3 border-b border-[var(--border-default)]">
+      <div className="pb-3 border-b border-border-default">
         <div className="flex items-center gap-1.5 text-muted-foreground mb-0.5 font-mono text-[10px] uppercase tracking-wider">
           <FlaskConical className="h-3.5 w-3.5 text-primary" strokeWidth={1.75} aria-hidden="true" />
           <span>LAB DIRECTORY</span>
@@ -32,7 +32,7 @@ export default function LabsPage() {
       </div>
 
       {/* Engineering Disclaimer */}
-      <div className="rounded border border-[var(--border-subtle)] bg-[var(--surface-sunken)] px-3 py-2 text-[9px] text-muted-foreground font-mono uppercase tracking-wider shadow-[inset_0_1px_3px_rgba(0,0,0,0.2)]">
+      <div className="rounded border border-border-subtle bg-surface-sunken px-3 py-2 text-[9px] text-muted-foreground font-mono uppercase tracking-wider shadow-[inset_0_1px_3px_rgba(0,0,0,0.2)]">
         ⓘ Educational software simulations. These model relevant concepts accurately for learning purposes but do not emulate real MCU hardware.
       </div>
 

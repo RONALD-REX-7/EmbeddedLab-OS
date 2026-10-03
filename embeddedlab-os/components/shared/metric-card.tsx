@@ -36,7 +36,7 @@ export function MetricCard({
   return (
     <div
       className={cn(
-        "rounded border bg-[var(--surface-sunken)] p-2.5 flex flex-col justify-between relative select-none",
+        "rounded border bg-surface-sunken p-2.5 flex flex-col justify-between relative select-none",
         style.border,
         className
       )}

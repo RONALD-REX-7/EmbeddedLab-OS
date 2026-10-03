@@ -176,7 +176,7 @@ export default function ProgressPage() {
                     className={cn(
                       "text-[10px] px-2 py-0.5 rounded border font-semibold shrink-0 uppercase",
                       lab.status === "COMPLETED"
-                        ? "bg-[var(--feedback-success)]/10 text-[var(--feedback-success)] border-[var(--feedback-success)]/30"
+                        ? "bg-feedback-success/10 text-feedback-success border-feedback-success/30"
                         : lab.status === "IN_PROGRESS"
                         ? "bg-amber-500/10 text-amber-400 border-amber-500/30"
                         : "bg-muted/30 text-muted-foreground border-border"
@@ -238,9 +238,9 @@ export default function ProgressPage() {
                   >
                     <div className="flex items-center gap-2.5 min-w-0">
                       {item.status === "PASSED" ? (
-                        <CheckCircle2 className="h-4 w-4 text-[var(--feedback-success)] shrink-0" />
+                        <CheckCircle2 className="h-4 w-4 text-feedback-success shrink-0" />
                       ) : (
-                        <Award className="h-4 w-4 text-[var(--feedback-error)] shrink-0" />
+                        <Award className="h-4 w-4 text-feedback-error shrink-0" />
                       )}
                       <div className="min-w-0">
                         <span className="text-foreground font-semibold block truncate">
@@ -256,7 +256,7 @@ export default function ProgressPage() {
                       <span
                         className={cn(
                           "font-bold text-xs block",
-                          item.status === "PASSED" ? "text-[var(--feedback-success)]" : "text-[var(--feedback-error)]"
+                          item.status === "PASSED" ? "text-feedback-success" : "text-feedback-error"
                         )}
                       >
                         {item.status}

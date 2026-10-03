@@ -15,7 +15,7 @@ export function VirtualLED({ pin, label = "Onboard Status LED (PA5)" }: VirtualL
   const isOn = isOutput && pin.level === "HIGH";
 
   return (
-    <div className="rounded border border-[var(--border-default)] bg-[var(--surface-sunken)] p-3.5 flex items-center justify-between shadow-inner select-none">
+    <div className="rounded border border-border-default bg-surface-sunken p-3.5 flex items-center justify-between shadow-inner select-none">
       <div className="flex items-center gap-3.5">
         {/* Optical 5mm LED Package Visualizer */}
         <div className="relative flex items-center justify-center shrink-0">

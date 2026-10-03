@@ -52,7 +52,7 @@ export function Panel({
       {(title || actions || telemetryTag) && (
         <div
           className={cn(
-            "flex items-center justify-between px-3.5 py-2 border-b border-[var(--border-default)]/80 bg-[var(--surface-base)]/80 shrink-0 select-none",
+            "flex items-center justify-between px-3.5 py-2 border-b border-border-default/80 bg-surface-base/80 shrink-0 select-none",
             headerClassName
           )}
         >

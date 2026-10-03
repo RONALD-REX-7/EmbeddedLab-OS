@@ -45,7 +45,7 @@ export function PinCard({
         "rounded border p-2.5 flex flex-col justify-between transition-all cursor-pointer select-none relative",
         isSelected
           ? "border-primary bg-primary/10 shadow-[0_0_12px_rgba(56,189,248,0.2)] ring-1 ring-primary"
-          : "border-[var(--border-default)] bg-[var(--surface-panel)] hover:border-primary/40 hover:bg-[var(--surface-elevated)]"
+          : "border-border-default bg-surface-panel hover:border-primary/40 hover:bg-surface-elevated"
       )}
     >
       {/* Port Label & Mode Badge */}
@@ -69,7 +69,7 @@ export function PinCard({
       </div>
 
       {/* Logic State & Drive Control */}
-      <div className="flex items-center justify-between mt-1 pt-1.5 border-t border-[var(--border-subtle)]">
+      <div className="flex items-center justify-between mt-1 pt-1.5 border-t border-border-subtle">
         <div className="flex items-center gap-1.5">
           <span className={cn("w-1.5 h-1.5 rounded-full shrink-0", levelInfo.dot)} />
           <span className={cn("text-[10px] font-mono", levelInfo.text)}>
@@ -99,7 +99,7 @@ export function PinCard({
             value={pin.mode}
             onClick={(e) => e.stopPropagation()}
             onChange={(e) => onModeChange(pin.id, e.target.value as PinMode)}
-            className="text-[9px] font-mono bg-[var(--surface-sunken)] border border-[var(--border-subtle)] rounded px-1 py-0.5 text-muted-foreground focus:outline-none focus:border-primary cursor-pointer"
+            className="text-[9px] font-mono bg-surface-sunken border border-border-subtle rounded px-1 py-0.5 text-muted-foreground focus:outline-none focus:border-primary cursor-pointer"
           >
             <option value="INPUT">INPUT</option>
             <option value="OUTPUT">OUTPUT</option>

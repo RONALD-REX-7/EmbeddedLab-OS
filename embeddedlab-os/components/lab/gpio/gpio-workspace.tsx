@@ -57,7 +57,7 @@ export function GPIOWorkspace() {
   return (
     <div className="p-4 max-w-7xl mx-auto space-y-4">
       {/* Instrumentation Header Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[var(--border-default)]">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-border-default">
         <div>
           <div className="flex items-center gap-1.5 text-muted-foreground mb-0.5 font-mono text-[10px] uppercase tracking-wider">
             <Zap className="h-3.5 w-3.5 text-primary" />
@@ -130,7 +130,7 @@ export function GPIOWorkspace() {
                 <InspectorRow label="Terminal Voltage" value={selectedPin.level === "HIGH" ? "3.30 V" : "0.00 V"} />
 
                 {/* Mode Select Segment */}
-                <div className="pt-3 border-t border-[var(--border-subtle)] space-y-1.5">
+                <div className="pt-3 border-t border-border-subtle space-y-1.5">
                   <span className="text-[10px] font-mono text-muted-foreground uppercase tracking-wider block font-semibold">
                     Pin Configuration
                   </span>
@@ -142,7 +142,7 @@ export function GPIOWorkspace() {
                         className={`px-1.5 py-1 text-[9px] font-mono rounded border transition-colors cursor-pointer truncate ${
                           selectedPin.mode === mode
                             ? "bg-primary text-primary-foreground font-bold border-primary shadow-sm"
-                            : "bg-[var(--surface-sunken)] border-[var(--border-subtle)] text-muted-foreground hover:text-foreground"
+                            : "bg-surface-sunken border-border-subtle text-muted-foreground hover:text-foreground"
                         }`}
                       >
                         {mode.replace("INPUT_", "")}
@@ -153,7 +153,7 @@ export function GPIOWorkspace() {
 
                 {/* Output Drive Level Controller */}
                 {selectedPin.mode === "OUTPUT" && (
-                  <div className="pt-3 border-t border-[var(--border-subtle)] space-y-1.5">
+                  <div className="pt-3 border-t border-border-subtle space-y-1.5">
                     <span className="text-[10px] font-mono text-muted-foreground uppercase tracking-wider block font-semibold">
                       ODR Level Register
                     </span>

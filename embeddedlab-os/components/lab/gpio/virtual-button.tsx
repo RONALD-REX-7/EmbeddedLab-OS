@@ -33,7 +33,7 @@ export function VirtualButton({
   };
 
   return (
-    <div className="rounded border border-[var(--border-default)] bg-[var(--surface-sunken)] p-3.5 flex items-center justify-between shadow-inner select-none">
+    <div className="rounded border border-border-default bg-surface-sunken p-3.5 flex items-center justify-between shadow-inner select-none">
       <div className="flex items-center gap-3.5">
         {/* Tactile Switch Package Bezel */}
         <div
@@ -78,8 +78,8 @@ export function VirtualButton({
           className={cn(
             "px-3.5 py-1.5 text-xs font-mono font-bold rounded border transition-all select-none cursor-pointer",
             isPressed
-              ? "bg-primary text-primary-foreground border-primary shadow-[inset_0_2px_6px_rgba(0,0,0,0.6)] translate-y-[1px]"
-              : "bg-[var(--surface-elevated)] text-foreground border-[var(--border-default)] hover:border-primary/50 hover:bg-muted shadow-[0_2px_4px_rgba(0,0,0,0.3)]"
+              ? "bg-primary text-primary-foreground border-primary shadow-[inset_0_2px_6px_rgba(0,0,0,0.6)] translate-y-px"
+              : "bg-surface-elevated text-foreground border-border-default hover:border-primary/50 hover:bg-muted shadow-[0_2px_4px_rgba(0,0,0,0.3)]"
           )}
         >
           {isPressed ? "CONTACT CLOSED (0Ω)" : "ACTUATE SWITCH"}

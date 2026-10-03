@@ -41,7 +41,7 @@ export function LabCard({
   const card = (
     <div
       className={cn(
-        "group relative rounded border border-[var(--border-default)] bg-[var(--surface-panel)]",
+        "group relative rounded border border-border-default bg-surface-panel",
         "p-4 transition-all duration-200 shadow-[0_1px_4px_rgba(0,0,0,0.15)]",
         isAvailable && "hover:border-primary/30 hover:shadow-[0_2px_12px_rgba(0,0,0,0.25)] cursor-pointer",
         !isAvailable && "opacity-60 cursor-not-allowed",
@@ -98,7 +98,7 @@ export function LabCard({
       )}
 
       {/* Footer */}
-      <div className="flex items-center justify-between pt-2 border-t border-[var(--border-subtle)]">
+      <div className="flex items-center justify-between pt-2 border-t border-border-subtle">
         <span className="text-[9px] text-muted-foreground font-mono font-bold uppercase tracking-wider">
           {lab.challengeCount} challenge{lab.challengeCount !== 1 ? "s" : ""}
         </span>
