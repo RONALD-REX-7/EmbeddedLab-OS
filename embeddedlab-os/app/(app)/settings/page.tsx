@@ -172,11 +172,11 @@ export default function SettingsPage() {
               </h2>
             </div>
             {isDemoMode ? (
-              <span className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/30 uppercase">
+              <span className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-800 dark:text-amber-300 border border-amber-600/30 dark:border-amber-500/30 uppercase">
                 Offline Demo
               </span>
             ) : (
-              <span className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 uppercase">
+              <span className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-800 dark:text-emerald-300 border border-emerald-600/30 dark:border-emerald-500/30 uppercase">
                 Cloud Synced
               </span>
             )}
