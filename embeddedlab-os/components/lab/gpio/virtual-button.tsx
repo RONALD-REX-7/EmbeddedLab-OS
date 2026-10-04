@@ -70,13 +70,31 @@ export function VirtualButton({
       <div className="flex items-center gap-2">
         <button
           type="button"
+          aria-label={label}
+          aria-pressed={isPressed}
           onMouseDown={handleMouseDown}
           onMouseUp={handleMouseUp}
           onMouseLeave={handleMouseUp}
           onTouchStart={handleMouseDown}
           onTouchEnd={handleMouseUp}
+          onKeyDown={(e) => {
+            if (e.key === " " || e.key === "Enter") {
+              if (!isPressed) {
+                e.preventDefault();
+                setIsPressed(true);
+                onPressStateChange(true);
+              }
+            }
+          }}
+          onKeyUp={(e) => {
+            if (e.key === " " || e.key === "Enter") {
+              e.preventDefault();
+              setIsPressed(false);
+              onPressStateChange(false);
+            }
+          }}
           className={cn(
-            "px-3.5 py-1.5 text-xs font-mono font-bold rounded border transition-all select-none cursor-pointer",
+            "px-3.5 py-1.5 text-xs font-mono font-bold rounded border transition-all select-none cursor-pointer focus-visible:outline-2 focus-visible:outline-primary",
             isPressed
               ? "bg-primary text-primary-foreground border-primary shadow-[inset_0_2px_6px_rgba(0,0,0,0.6)] translate-y-px"
               : "bg-surface-elevated text-foreground border-border-default hover:border-primary/50 hover:bg-muted shadow-[0_2px_4px_rgba(0,0,0,0.3)]"

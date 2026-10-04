@@ -152,14 +152,16 @@ export function UARTWorkspace() {
                 </span>
                 <div className="flex gap-1.5">
                   <input
+                    id="uart-tx-input"
+                    aria-label="Transmit Serial Data (ASCII)"
                     type="text"
                     value={messageInput}
                     onChange={(e) => setMessageInput(e.target.value)}
-                    placeholder="Enter ASCII data..."
-                    className="flex-1 bg-[var(--surface-console)] border border-[var(--border-subtle)] rounded px-2.5 py-1.5 text-[10px] font-mono text-foreground focus:outline-none focus:border-primary placeholder:text-muted-foreground/40"
+                    placeholder="Enter ASCII data (e.g. HELLO)..."
+                    className="flex-1 bg-[var(--surface-console)] border border-[var(--border-subtle)] rounded px-2.5 py-1.5 text-[10px] font-mono text-foreground focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary placeholder:text-muted-foreground/60"
                   />
                   <Button type="submit" size="xs" className="font-mono text-[10px] h-7 font-bold">
-                    <Send className="mr-1 h-3 w-3" />
+                    <Send className="mr-1 h-3 w-3" aria-hidden="true" />
                     TX
                   </Button>
                 </div>

@@ -14,6 +14,7 @@ interface PanelProps {
   headerClassName?: string;
   bodyClassName?: string;
   variant?: "default" | "instrument" | "sunken" | "elevated";
+  headingLevel?: "h2" | "h3";
   /** Optional telemetry label displayed in header right */
   telemetryTag?: string;
 }
@@ -28,8 +29,10 @@ export function Panel({
   headerClassName,
   bodyClassName,
   variant = "instrument",
+  headingLevel = "h2",
   telemetryTag,
 }: PanelProps) {
+  const HeadingTag = headingLevel;
   const variantStyles = {
     default:    "bg-card border-border shadow-sm",
     instrument: "bg-[var(--surface-panel)] border-[var(--border-default)] shadow-[0_2px_8px_rgba(0,0,0,0.3)]",
@@ -64,9 +67,9 @@ export function Panel({
             )}
             <div className="min-w-0">
               {title && (
-                <h3 className="text-xs font-mono font-bold tracking-wider uppercase text-foreground truncate flex items-center gap-1.5">
+                <HeadingTag className="text-xs font-mono font-bold tracking-wider uppercase text-foreground truncate flex items-center gap-1.5">
                   {title}
-                </h3>
+                </HeadingTag>
               )}
               {subtitle && (
                 <p className="text-[10px] text-muted-foreground font-mono truncate leading-tight">

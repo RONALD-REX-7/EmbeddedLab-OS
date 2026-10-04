@@ -63,9 +63,9 @@ export function LabCard({
             <Icon className="h-3.5 w-3.5" strokeWidth={2} />
           </div>
           <div>
-            <h3 className="text-sm font-bold text-foreground leading-tight">
+            <h2 className="text-sm font-bold text-foreground leading-tight">
               {lab.shortTitle}
-            </h3>
+            </h2>
             <p className="text-[10px] text-muted-foreground font-mono uppercase tracking-wider">
               {lab.title.split("—")[0]?.trim()}
             </p>
@@ -115,7 +115,11 @@ export function LabCard({
   if (!isAvailable) return card;
 
   return (
-    <Link href={lab.route} aria-label={`Open ${lab.shortTitle} lab`}>
+    <Link
+      href={lab.route}
+      aria-label={`Open ${lab.shortTitle} lab`}
+      className="focus-visible:outline-2 focus-visible:outline-primary rounded block"
+    >
       {card}
     </Link>
   );

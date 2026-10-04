@@ -76,9 +76,9 @@ export function AIAssistantPanel({
           )}
         >
           {isLoading && activeAction === "explain" ? (
-            <Loader2 className="mr-1 h-3 w-3 animate-spin" />
+            <Loader2 className="mr-1 h-3 w-3 animate-spin" aria-hidden="true" />
           ) : (
-            <Lightbulb className="mr-1 h-3 w-3 text-amber-400" />
+            <Lightbulb className="mr-1 h-3 w-3 text-amber-400" aria-hidden="true" />
           )}
           Explain
         </Button>
@@ -94,9 +94,9 @@ export function AIAssistantPanel({
           )}
         >
           {isLoading && activeAction === "hint" ? (
-            <Loader2 className="mr-1 h-3 w-3 animate-spin" />
+            <Loader2 className="mr-1 h-3 w-3 animate-spin" aria-hidden="true" />
           ) : (
-            <HelpCircle className="mr-1 h-3 w-3 text-sky-400" />
+            <HelpCircle className="mr-1 h-3 w-3 text-sky-400" aria-hidden="true" />
           )}
           Hint
         </Button>
@@ -112,9 +112,9 @@ export function AIAssistantPanel({
           )}
         >
           {isLoading && activeAction === "debug" ? (
-            <Loader2 className="mr-1 h-3 w-3 animate-spin" />
+            <Loader2 className="mr-1 h-3 w-3 animate-spin" aria-hidden="true" />
           ) : (
-            <Bug className="mr-1 h-3 w-3 text-emerald-400" />
+            <Bug className="mr-1 h-3 w-3 text-emerald-400" aria-hidden="true" />
           )}
           Debug State
         </Button>
@@ -125,7 +125,7 @@ export function AIAssistantPanel({
         <div className="rounded border border-[var(--border-default)] bg-[var(--surface-sunken)] p-3 space-y-2 font-mono text-xs shadow-inner">
           <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-1.5 text-[10px] text-muted-foreground">
             <span className="flex items-center gap-1 uppercase font-bold text-foreground">
-              <Sparkles className="h-3 w-3 text-primary" />
+              <Sparkles className="h-3 w-3 text-primary" aria-hidden="true" />
               {activeResponse.action} Analysis
             </span>
             {activeResponse.isFallback && (

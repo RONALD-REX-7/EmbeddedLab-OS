@@ -42,9 +42,11 @@ export function ProgressBar({
           )}
           style={{ width: `${percentage}%` }}
           role="progressbar"
+          aria-label={label || "Progress indicator"}
           aria-valuenow={value}
           aria-valuemin={0}
           aria-valuemax={max}
+          aria-valuetext={`${percentage}% completed`}
         />
       </div>
     </div>

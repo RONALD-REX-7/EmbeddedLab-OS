@@ -102,6 +102,8 @@ export function WaveformVisualizer({
         <div className="absolute inset-0 bg-oscilloscope-grid pointer-events-none" />
 
         <svg
+          role="img"
+          aria-label={`PWM waveform for ${channel.label}: frequency ${frequencyHz} Hz, duty cycle ${dutyCyclePercent} percent, period ${periodMs.toFixed(2)} ms`}
           viewBox={`0 0 ${width} ${height}`}
           className="w-full h-28 overflow-visible"
           preserveAspectRatio="none"

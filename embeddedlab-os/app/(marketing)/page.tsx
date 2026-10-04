@@ -16,6 +16,8 @@ import {
 } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { LABS } from "@/lib/constants/labs";
+import { MarketingNav } from "@/components/layout/marketing-nav";
+import { MarketingFooter } from "@/components/layout/marketing-footer";
 
 export const metadata: Metadata = {
   title: "EmbeddedLab OS — Interactive Virtual Embedded Systems Laboratory",
@@ -60,38 +62,24 @@ const VALUE_PROPS = [
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col">
-      {/* ── Navigation Bar ── */}
-      <header className="border-b border-border-default px-6 py-2.5 flex items-center justify-between bg-surface-panel backdrop-blur-sm">
-        <div className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded bg-primary/10 border border-primary/20 flex items-center justify-center">
-            <Cpu className="h-3 w-3 text-primary" strokeWidth={2} aria-hidden="true" />
-          </div>
-          <span className="font-mono text-xs font-bold tracking-wider">
-            <span className="text-foreground">EmbeddedLab</span>
-            <span className="text-primary">OS</span>
-          </span>
-        </div>
-        <nav className="flex items-center gap-3" aria-label="Top navigation">
-          <Link
-            href="/labs"
-            className="text-[10px] font-mono font-bold text-muted-foreground hover:text-foreground transition-colors uppercase tracking-wider"
-          >
-            Labs
-          </Link>
-          <Link
-            href="/dashboard"
-            className={buttonVariants({ size: "sm", className: "h-7 text-[10px] font-mono font-bold" })}
-          >
-            Open Dashboard
-          </Link>
-        </nav>
-      </header>
-
-      {/* ── Hero Section ── */}
-      <section
-        className="flex-1 flex flex-col items-center justify-center text-center px-6 py-16 max-w-4xl mx-auto w-full relative"
-        aria-labelledby="hero-heading"
+      {/* Skip to Main Content Link for Keyboard / Screen Reader Accessibility */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:px-3 focus:py-1.5 focus:bg-primary focus:text-primary-foreground focus:rounded focus:font-mono focus:text-xs focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-ring"
       >
+        Skip to main content
+      </a>
+
+      {/* ── Navigation Bar ── */}
+      <MarketingNav />
+
+      {/* ── Main Landmark ── */}
+      <main id="main-content" className="flex-1 flex flex-col">
+        {/* ── Hero Section ── */}
+        <section
+          className="flex-1 flex flex-col items-center justify-center text-center px-6 py-16 max-w-4xl mx-auto w-full relative"
+          aria-labelledby="hero-heading"
+        >
         {/* Subtle background grid */}
         <div className="absolute inset-0 bg-oscilloscope-grid opacity-30 pointer-events-none" />
 
@@ -237,18 +225,8 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── Footer ── */}
-      <footer className="border-t border-border-default px-6 py-4 mt-auto bg-surface-panel/30">
-        <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-[9px] text-muted-foreground font-mono uppercase tracking-wider">
-          <div className="flex items-center gap-1.5">
-            <Cpu className="h-3 w-3" strokeWidth={1.5} aria-hidden="true" />
-            <span className="font-bold">EmbeddedLab OS</span>
-          </div>
-          <p className="text-center sm:text-right">
-            Educational virtual simulation · Not a real microcontroller
-          </p>
-        </div>
-      </footer>
+      </main>
+      <MarketingFooter />
     </div>
   );
 }

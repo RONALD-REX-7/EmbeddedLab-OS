@@ -22,6 +22,12 @@ export function AnalogGauge({
 
   return (
     <div
+      role="meter"
+      aria-label={label}
+      aria-valuenow={voltage}
+      aria-valuemin={0}
+      aria-valuemax={maxVoltage}
+      aria-valuetext={`${voltage.toFixed(2)} Volts (${percentage.toFixed(1)}% full scale)`}
       className={cn(
         "rounded border border-[var(--border-default)] bg-[var(--surface-sunken)] p-4 flex flex-col items-center justify-between font-mono shadow-[inset_0_2px_6px_rgba(0,0,0,0.3)] select-none",
         className

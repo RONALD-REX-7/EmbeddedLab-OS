@@ -44,20 +44,29 @@ export function PinCard({
       className={cn(
         "rounded border p-2.5 flex flex-col justify-between transition-all cursor-pointer select-none relative",
         isSelected
-          ? "border-primary bg-primary/10 shadow-[0_0_12px_rgba(56,189,248,0.2)] ring-1 ring-primary"
+          ? "border-primary bg-surface-panel shadow-[0_0_12px_rgba(56,189,248,0.2)] ring-1 ring-primary"
           : "border-border-default bg-surface-panel hover:border-primary/40 hover:bg-surface-elevated"
       )}
     >
       {/* Port Label & Mode Badge */}
       <div className="flex items-center justify-between mb-1.5">
-        <div className="flex items-center gap-1.5">
+        <button
+          type="button"
+          aria-label={`Select pin ${pin.label}, mode ${pin.mode}, level ${pin.level}`}
+          aria-pressed={isSelected}
+          onClick={(e) => {
+            e.stopPropagation();
+            onSelect(pin.id);
+          }}
+          className="flex items-center gap-1.5 focus-visible:outline-2 focus-visible:outline-primary rounded px-1 py-0.5 text-left -ml-1 hover:bg-surface-elevated transition-colors"
+        >
           <span className="font-mono text-xs font-bold text-foreground">
             {pin.label}
           </span>
           <span className="text-[9px] font-mono text-muted-foreground/70">
             #{pin.id}
           </span>
-        </div>
+        </button>
         <span
           className={cn(
             "text-[9px] px-1 py-0.2 rounded border font-mono font-semibold uppercase tracking-wider",
@@ -97,9 +106,10 @@ export function PinCard({
         ) : (
           <select
             value={pin.mode}
+            aria-label={`Mode for pin ${pin.label}`}
             onClick={(e) => e.stopPropagation()}
             onChange={(e) => onModeChange(pin.id, e.target.value as PinMode)}
-            className="text-[9px] font-mono bg-surface-sunken border border-border-subtle rounded px-1 py-0.5 text-muted-foreground focus:outline-none focus:border-primary cursor-pointer"
+            className="text-[9px] font-mono bg-surface-sunken border border-border-subtle rounded px-1 py-0.5 text-foreground focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary cursor-pointer"
           >
             <option value="INPUT">INPUT</option>
             <option value="OUTPUT">OUTPUT</option>

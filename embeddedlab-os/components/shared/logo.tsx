@@ -30,6 +30,7 @@ export function Logo({ size = "md", showIcon = true, className }: LogoProps) {
             strokeWidth="1.75"
             strokeLinecap="round"
             strokeLinejoin="round"
+            aria-hidden="true"
             className="w-full h-full text-primary"
           >
             {/* Silicon IC Body */}

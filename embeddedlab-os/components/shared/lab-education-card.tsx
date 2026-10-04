@@ -43,24 +43,57 @@ export function LabEducationCard({
       className={cn("space-y-3 font-mono text-xs", className)}
     >
       {/* Tab Navigation */}
-      <div className="flex items-center gap-0.5 border-b border-[var(--border-subtle)] pb-2 text-xs">
-        <button onClick={() => setActiveTab("objectives")} className={tabClass("objectives")}>
-          <ListChecks className="h-3 w-3" />
+      <div
+        role="tablist"
+        aria-label="Laboratory guide sections"
+        className="flex items-center gap-0.5 border-b border-[var(--border-subtle)] pb-2 text-xs"
+      >
+        <button
+          type="button"
+          role="tab"
+          id="tab-objectives"
+          aria-selected={activeTab === "objectives"}
+          aria-controls="panel-objectives"
+          onClick={() => setActiveTab("objectives")}
+          className={tabClass("objectives")}
+        >
+          <ListChecks className="h-3 w-3" aria-hidden="true" />
           Objectives
         </button>
-        <button onClick={() => setActiveTab("theory")} className={tabClass("theory")}>
-          <Layers className="h-3 w-3" />
+        <button
+          type="button"
+          role="tab"
+          id="tab-theory"
+          aria-selected={activeTab === "theory"}
+          aria-controls="panel-theory"
+          onClick={() => setActiveTab("theory")}
+          className={tabClass("theory")}
+        >
+          <Layers className="h-3 w-3" aria-hidden="true" />
           Theory
         </button>
-        <button onClick={() => setActiveTab("dynamic")} className={tabClass("dynamic")}>
-          <Cpu className="h-3 w-3" />
+        <button
+          type="button"
+          role="tab"
+          id="tab-dynamic"
+          aria-selected={activeTab === "dynamic"}
+          aria-controls="panel-dynamic"
+          onClick={() => setActiveTab("dynamic")}
+          className={tabClass("dynamic")}
+        >
+          <Cpu className="h-3 w-3" aria-hidden="true" />
           Live State
         </button>
       </div>
 
       {/* Tab 1: Objectives */}
       {activeTab === "objectives" && (
-        <div className="space-y-3">
+        <div
+          role="tabpanel"
+          id="panel-objectives"
+          aria-labelledby="tab-objectives"
+          className="space-y-3"
+        >
           <div className="space-y-1.5">
             <span className="text-[9px] font-bold text-primary uppercase tracking-wider block">
               Learning Objectives
@@ -88,7 +121,7 @@ export function LabEducationCard({
             </ol>
           </div>
 
-          <div className="p-2 rounded border border-primary/15 bg-primary/5 text-[10px] font-sans text-foreground">
+          <div className="p-2.5 rounded border border-border-default bg-surface-panel text-[10px] font-sans text-foreground shadow-sm">
             <strong className="font-mono text-primary uppercase block text-[9px] mb-0.5">Key Takeaway</strong>
             {content.keyTakeaway}
           </div>
@@ -97,7 +130,12 @@ export function LabEducationCard({
 
       {/* Tab 2: Theory */}
       {activeTab === "theory" && (
-        <div className="space-y-2.5 font-sans text-[10px]">
+        <div
+          role="tabpanel"
+          id="panel-theory"
+          aria-labelledby="tab-theory"
+          className="space-y-2.5 font-sans text-[10px]"
+        >
           {content.sections.map((sec, i) => (
             <div key={i} className="space-y-1 p-2.5 rounded border border-[var(--border-subtle)] bg-[var(--surface-panel)]">
               <h4 className="font-mono font-bold text-primary text-[10px] uppercase tracking-wider">
@@ -115,7 +153,12 @@ export function LabEducationCard({
 
       {/* Tab 3: Active Simulator State */}
       {activeTab === "dynamic" && (
-        <div className="space-y-2.5 font-mono text-[10px]">
+        <div
+          role="tabpanel"
+          id="panel-dynamic"
+          aria-labelledby="tab-dynamic"
+          className="space-y-2.5 font-mono text-[10px]"
+        >
           <div className="p-2.5 rounded border border-[var(--border-subtle)] bg-[var(--surface-sunken)] space-y-2 shadow-[inset_0_1px_3px_rgba(0,0,0,0.2)]">
             <div className="flex items-center justify-between text-foreground">
               <span className="font-bold uppercase tracking-wider text-[9px]">Active Hardware Parameters</span>

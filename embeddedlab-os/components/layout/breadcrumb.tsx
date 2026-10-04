@@ -60,7 +60,7 @@ export function Breadcrumb({ className }: { className?: string }) {
           <span key={crumb.href} className="flex items-center gap-1">
             <Link
               href={crumb.href}
-              className="text-muted-foreground hover:text-foreground transition-colors"
+              className="text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-2 focus-visible:outline-primary rounded px-0.5"
             >
               {crumb.label}
             </Link>

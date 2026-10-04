@@ -66,15 +66,24 @@ export function ChallengePanel({ labId, className }: ChallengePanelProps) {
     >
       <div className="space-y-3.5 font-mono text-xs">
         {/* Challenge Navigation Tabs */}
-        <div className="grid grid-cols-3 gap-1 bg-[var(--surface-sunken)] p-1 rounded border border-[var(--border-default)] select-none">
+        <div
+          role="tablist"
+          aria-label="Laboratory challenge tasks"
+          className="grid grid-cols-3 gap-1 bg-[var(--surface-sunken)] p-1 rounded border border-[var(--border-default)] select-none"
+        >
           {challenges.map((ch, idx) => {
             const isCurrent = activeIdx === idx;
             return (
               <button
+                type="button"
+                role="tab"
+                id={`task-tab-${idx}`}
+                aria-selected={isCurrent}
+                aria-controls={`task-panel-${idx}`}
                 key={ch.id}
                 onClick={() => handleSelectChallenge(idx)}
                 className={cn(
-                  "py-1 px-1.5 rounded text-[10px] font-mono transition-all font-medium text-center truncate",
+                  "py-1 px-1.5 rounded text-[10px] font-mono transition-all font-medium text-center truncate focus-visible:outline-2 focus-visible:outline-primary",
                   isCurrent
                     ? "bg-primary text-primary-foreground font-bold shadow-sm"
                     : "text-muted-foreground hover:text-foreground hover:bg-muted/30"
@@ -88,7 +97,12 @@ export function ChallengePanel({ labId, className }: ChallengePanelProps) {
 
         {/* Active Challenge Worksheet Container */}
         {currentChallenge && (
-          <div className="space-y-3 bg-[var(--surface-sunken)]/60 border border-[var(--border-default)] rounded p-3.5">
+          <div
+            role="tabpanel"
+            id={`task-panel-${activeIdx}`}
+            aria-labelledby={`task-tab-${activeIdx}`}
+            className="space-y-3 bg-[var(--surface-sunken)]/60 border border-[var(--border-default)] rounded p-3.5"
+          >
             {/* Header: Title, Level Badge, and Score Box */}
             <div className="space-y-2 pb-2.5 border-b border-[var(--border-default)]/70">
               <div className="flex items-center justify-between gap-2">
@@ -149,11 +163,12 @@ export function ChallengePanel({ labId, className }: ChallengePanelProps) {
                 </span>
                 {activeChallenge && activeChallenge.hintsRevealed < currentChallenge.hints.length && (
                   <button
+                    type="button"
                     onClick={() => revealNextHint(currentChallenge.scoringRules.hintPenalty)}
-                    className="text-primary hover:underline font-semibold flex items-center gap-0.5"
+                    className="text-primary hover:underline font-semibold flex items-center gap-0.5 focus-visible:outline-2 focus-visible:outline-primary rounded px-1"
                   >
                     <span>Request Hint (-{currentChallenge.scoringRules.hintPenalty} pts)</span>
-                    <ChevronRight className="h-3 w-3" />
+                    <ChevronRight className="h-3 w-3" aria-hidden="true" />
                   </button>
                 )}
               </div>

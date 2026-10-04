@@ -37,12 +37,15 @@ export function UARTTerminal({
             "w-1.5 h-1.5 rounded-full shrink-0",
             type === "TX" ? "bg-sky-400 shadow-[0_0_4px_rgba(56,189,248,0.7)]" : "bg-emerald-400 shadow-[0_0_4px_rgba(16,185,129,0.7)]"
           )} />
-          <Terminal className={cn("h-3 w-3", type === "TX" ? "text-sky-400" : "text-emerald-400")} />
+          <Terminal
+            className={cn("h-3 w-3", type === "TX" ? "text-sky-400" : "text-emerald-400")}
+            aria-hidden="true"
+          />
           <span className="font-bold text-foreground text-[10px] uppercase tracking-wider">
             {title}
           </span>
           {subtitle && (
-            <span className="text-[9px] text-muted-foreground/70">{subtitle}</span>
+            <span className="text-[9px] text-muted-foreground">{subtitle}</span>
           )}
         </div>
         <span className="text-[9px] text-muted-foreground font-bold">
@@ -53,7 +56,7 @@ export function UARTTerminal({
       {/* Terminal Buffer */}
       <ScrollArea className="p-2.5 h-36">
         {buffer.length === 0 ? (
-          <div className="py-4 text-center text-muted-foreground/50 text-[10px] font-mono">
+          <div className="py-4 text-center text-muted-foreground text-[10px] font-mono">
             {type === "TX"
               ? "TX buffer idle. Send data below."
               : "RX buffer idle. Awaiting data."}

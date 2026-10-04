@@ -99,12 +99,18 @@ export default function LoginPage() {
 
           <form onSubmit={handleSubmit} className="space-y-3 text-[10px] font-mono">
             <div className="space-y-1">
-              <label className="text-muted-foreground flex items-center gap-1 font-bold uppercase tracking-wider text-[9px]">
-                <Mail className="h-3 w-3 text-primary" />
-                Email
+              <label
+                htmlFor="login-email"
+                className="text-muted-foreground flex items-center gap-1 font-bold uppercase tracking-wider text-[9px]"
+              >
+                <Mail className="h-3 w-3 text-primary" aria-hidden="true" />
+                Email Address
               </label>
               <input
+                id="login-email"
+                name="email"
                 type="email"
+                autoComplete="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="student@embeddedlab.org"
@@ -114,12 +120,18 @@ export default function LoginPage() {
             </div>
 
             <div className="space-y-1">
-              <label className="text-muted-foreground flex items-center gap-1 font-bold uppercase tracking-wider text-[9px]">
-                <KeyRound className="h-3 w-3 text-primary" />
+              <label
+                htmlFor="login-password"
+                className="text-muted-foreground flex items-center gap-1 font-bold uppercase tracking-wider text-[9px]"
+              >
+                <KeyRound className="h-3 w-3 text-primary" aria-hidden="true" />
                 Password
               </label>
               <input
+                id="login-password"
+                name="password"
                 type="password"
+                autoComplete="current-password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••••••"
@@ -134,24 +146,38 @@ export default function LoginPage() {
               className="w-full font-mono text-[10px] font-bold h-8 control-elevated"
             >
               {isSubmitting ? "Authenticating..." : "Sign In"}
-              <ArrowRight className="ml-1 h-3 w-3" />
+              <ArrowRight className="ml-1 h-3 w-3" aria-hidden="true" />
             </Button>
           </form>
 
           <div className="pt-3 border-t border-[var(--border-subtle)] flex flex-col gap-2">
             <Button
+              type="button"
               variant="outline"
               size="xs"
               onClick={handleDemoMode}
               className="w-full font-mono text-[10px] h-7 font-bold"
             >
-              <Sparkles className="mr-1 h-3 w-3 text-amber-400" />
-              Instant Demo Mode
+              <Sparkles className="mr-1 h-3 w-3 text-amber-400" aria-hidden="true" />
+              Instant Demo Mode (Anonymous)
             </Button>
             <div className="text-center text-[9px] text-muted-foreground font-mono">
               No account?{" "}
               <Link href="/signup" className="text-primary hover:underline font-bold">
                 Create Account
+              </Link>
+            </div>
+            <div className="text-center text-[8.5px] text-muted-foreground/80 font-mono pt-1 border-t border-border-subtle/50">
+              <Link href="/privacy" className="hover:underline">
+                Privacy Policy
+              </Link>
+              <span className="mx-1">·</span>
+              <Link href="/terms" className="hover:underline">
+                Terms of Service
+              </Link>
+              <span className="mx-1">·</span>
+              <Link href="/cookies" className="hover:underline">
+                Cookies
               </Link>
             </div>
           </div>

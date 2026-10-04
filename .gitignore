@@ -30,6 +30,7 @@ dist/
 *.swo
 
 # misc & OS
+.remember/
 .DS_Store
 Thumbs.db
 *.pem

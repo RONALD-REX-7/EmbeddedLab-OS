@@ -160,6 +160,21 @@ export function Sidebar() {
           ))}
         </div>
 
+        {/* Subtle Legal & Transparency Links */}
+        <div className="flex items-center justify-center gap-2 px-1 text-[9px] font-mono text-muted-foreground/75 py-0.5">
+          <Link href="/privacy" className="hover:text-foreground transition-colors hover:underline">
+            Privacy
+          </Link>
+          <span className="text-sidebar-border">·</span>
+          <Link href="/terms" className="hover:text-foreground transition-colors hover:underline">
+            Terms
+          </Link>
+          <span className="text-sidebar-border">·</span>
+          <Link href="/cookies" className="hover:text-foreground transition-colors hover:underline">
+            Cookies
+          </Link>
+        </div>
+
         {/* Telemetry Indicator Card */}
         <div className="rounded border border-border-subtle bg-surface-sunken p-2 space-y-1 font-mono text-[10px] select-none">
           <div className="flex items-center justify-between text-muted-foreground">

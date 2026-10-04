@@ -77,11 +77,13 @@ export function EventLogView({
             <Filter className="h-2.5 w-2.5 text-muted-foreground/70 ml-1 mr-0.5" />
             {(["ALL", "INFO", "SUCCESS", "WARNING", "ERROR"] as const).map((sev) => (
               <button
+                type="button"
                 key={sev}
                 onClick={() => setFilterSeverity(sev)}
+                aria-pressed={filterSeverity === sev}
                 aria-label={`Filter log events by ${sev}`}
                 className={cn(
-                  "px-1.5 py-0.5 text-[9px] rounded font-mono font-medium transition-colors",
+                  "px-1.5 py-0.5 text-[9px] rounded font-mono font-medium transition-colors focus-visible:outline-2 focus-visible:outline-primary",
                   filterSeverity === sev
                     ? "bg-primary text-primary-foreground font-bold"
                     : "text-muted-foreground hover:text-foreground"

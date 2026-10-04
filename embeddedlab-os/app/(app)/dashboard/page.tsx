@@ -94,15 +94,18 @@ export default function DashboardPage() {
       </div>
 
       {/* Recommended Next Lab Banner */}
-      <div className="rounded border border-primary/20 bg-primary/5 p-4 flex flex-col md:flex-row md:items-center justify-between gap-3 shadow-[0_2px_8px_rgba(0,0,0,0.2)]">
+      <section
+        aria-labelledby="recommended-lab-heading"
+        className="rounded border border-border-default bg-surface-panel p-4 flex flex-col md:flex-row md:items-center justify-between gap-3 shadow-[0_2px_8px_rgba(0,0,0,0.2)]"
+      >
         <div className="space-y-1">
           <div className="flex items-center gap-1.5 text-[10px] font-mono text-primary font-bold uppercase tracking-wider">
-            <Compass className="h-3.5 w-3.5 shrink-0" />
+            <Compass className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
             <span>RECOMMENDED NEXT LAB</span>
           </div>
-          <h3 className="text-sm font-bold text-foreground">
+          <h2 id="recommended-lab-heading" className="text-sm font-bold text-foreground">
             {nextRecommendedLab.title}
-          </h3>
+          </h2>
           <p className="text-[10px] text-muted-foreground font-mono">
             {isNewStudent
               ? "Start with GPIO — learn digital I/O, LED driving, and push-button logic."
@@ -116,7 +119,7 @@ export default function DashboardPage() {
             <ArrowRight className="ml-1 h-3 w-3" />
           </Button>
         </Link>
-      </div>
+      </section>
 
       {/* Labs Overview Grid */}
       <div className="space-y-3">

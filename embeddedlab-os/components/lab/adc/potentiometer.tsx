@@ -46,10 +46,12 @@ export function Potentiometer({
           const val = Number((maxVoltage * ratio).toFixed(2));
           return (
             <button
+              type="button"
               key={ratio}
+              aria-label={`Set potentiometer to ${val} Volts`}
               onClick={() => onChange(val)}
               className={cn(
-                "flex-1 text-[9px] font-mono py-0.5 rounded border transition-colors font-bold control-elevated",
+                "flex-1 text-[9px] font-mono py-0.5 rounded border transition-colors font-bold control-elevated focus-visible:outline-2 focus-visible:outline-primary",
                 Math.abs(voltage - val) < 0.02
                   ? "bg-primary text-primary-foreground border-primary"
                   : "bg-[var(--surface-panel)] border-[var(--border-subtle)] text-muted-foreground hover:text-foreground hover:border-[var(--border-default)]"
