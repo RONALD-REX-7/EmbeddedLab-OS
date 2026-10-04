@@ -84,6 +84,7 @@ export function useStudentProgress(): StudentProgressSummary {
   }, []);
 
   return useMemo(() => {
+    void tick;
     if (!mounted || typeof window === "undefined") {
       const initialStats: Record<LabId, LabSummaryStats> = {
         gpio: { labId: "gpio", title: LAB_TITLES.gpio.title, description: LAB_TITLES.gpio.desc, difficulty: "BEGINNER", completedCount: 0, totalChallenges: 3, progressPercent: 0, status: "NOT_STARTED", totalScore: 0 },
