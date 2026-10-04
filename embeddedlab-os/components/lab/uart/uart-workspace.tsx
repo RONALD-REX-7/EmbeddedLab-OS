@@ -289,6 +289,7 @@ export function UARTWorkspace() {
                   <span className="text-[8px] text-muted-foreground block mb-0.5 font-mono font-bold uppercase tracking-wider">Baud</span>
                   <select
                     value={transmitter.baudRate}
+                    aria-label="Transmitter Baud Rate"
                     onChange={(e) => setTransmitterConfig({ baudRate: Number(e.target.value) })}
                     className={selectClasses}
                   >
@@ -301,6 +302,7 @@ export function UARTWorkspace() {
                   <span className="text-[8px] text-muted-foreground block mb-0.5 font-mono font-bold uppercase tracking-wider">Parity</span>
                   <select
                     value={transmitter.parity}
+                    aria-label="Transmitter Parity"
                     onChange={(e) => setTransmitterConfig({ parity: e.target.value as Parity })}
                     className={selectClasses}
                   >
@@ -314,7 +316,7 @@ export function UARTWorkspace() {
 
             {/* RX Config */}
             <div className="space-y-1.5 pt-2">
-              <span className="text-[9px] font-mono text-emerald-600 dark:text-emerald-400 font-bold uppercase tracking-wider block">
+              <span className="text-[9px] font-mono text-emerald-800 dark:text-emerald-300 font-bold uppercase tracking-wider block">
                 Receiver (RX)
               </span>
               <InspectorRow label="Baud Rate" value={`${receiver.baudRate}`} unit="bps" />
@@ -325,6 +327,7 @@ export function UARTWorkspace() {
                   <span className="text-[8px] text-muted-foreground block mb-0.5 font-mono font-bold uppercase tracking-wider">Baud</span>
                   <select
                     value={receiver.baudRate}
+                    aria-label="Receiver Baud Rate"
                     onChange={(e) => setReceiverConfig({ baudRate: Number(e.target.value) })}
                     className={selectClasses}
                   >
@@ -337,6 +340,7 @@ export function UARTWorkspace() {
                   <span className="text-[8px] text-muted-foreground block mb-0.5 font-mono font-bold uppercase tracking-wider">Parity</span>
                   <select
                     value={receiver.parity}
+                    aria-label="Receiver Parity"
                     onChange={(e) => setReceiverConfig({ parity: e.target.value as Parity })}
                     className={selectClasses}
                   >

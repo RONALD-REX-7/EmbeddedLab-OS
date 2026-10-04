@@ -21,7 +21,7 @@ export function Potentiometer({
   return (
     <div className="rounded-lg border border-border/80 bg-surface-panel p-3.5 space-y-2.5 select-none shadow-2xs transition-colors">
       <div className="flex items-center justify-between">
-        <h4 className="text-[10px] font-mono font-bold text-foreground uppercase tracking-wider">{label}</h4>
+        <span className="text-[10px] font-mono font-bold text-foreground uppercase tracking-wider">{label}</span>
         <span className="font-mono text-xs font-bold text-primary">
           {voltage.toFixed(2)} V
         </span>

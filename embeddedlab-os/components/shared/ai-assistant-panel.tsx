@@ -56,10 +56,10 @@ export function AIAssistantPanel({
       className={cn("space-y-3", className)}
     >
       {/* Educational Notice */}
-      <div className="rounded border border-amber-500/25 bg-amber-500/5 p-2 flex items-start gap-2 text-[10px] font-mono text-amber-400">
-        <AlertTriangle className="h-3.5 w-3.5 shrink-0 mt-0.5" />
-        <span className="leading-tight text-muted-foreground">
-          <strong className="text-amber-400">Educational Guidance:</strong> Suggestions assist conceptual learning. State validation is evaluated by the deterministic simulation kernel.
+      <div className="rounded border border-amber-600/25 dark:border-amber-500/25 bg-amber-500/5 p-2 flex items-start gap-2 text-[10px] font-mono text-amber-800 dark:text-amber-300">
+        <AlertTriangle className="h-3.5 w-3.5 shrink-0 mt-0.5 text-amber-700 dark:text-amber-400" />
+        <span className="leading-tight text-foreground/80 dark:text-muted-foreground">
+          <strong className="text-amber-800 dark:text-amber-300 font-bold">Educational Guidance:</strong> Suggestions assist conceptual learning. State validation is evaluated by the deterministic simulation kernel.
         </span>
       </div>
 

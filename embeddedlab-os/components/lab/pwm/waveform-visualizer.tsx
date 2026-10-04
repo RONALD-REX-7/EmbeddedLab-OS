@@ -81,7 +81,7 @@ export function WaveformVisualizer({
           </span>
         </div>
         <div className="flex items-center gap-3 text-[10px]">
-          <span className="text-emerald-600 dark:text-emerald-400 font-bold">
+          <span className="text-emerald-800 dark:text-emerald-300 font-bold">
             t_HIGH: {highTimeMs.toFixed(3)} ms
           </span>
           <span className="text-muted-foreground">
@@ -93,7 +93,7 @@ export function WaveformVisualizer({
       {/* SVG Waveform Scope Well */}
       <div className="relative border border-border/80 rounded-md bg-surface-console overflow-hidden">
         {/* Voltage Reference Labels */}
-        <div className="absolute left-2 top-1.5 text-[8px] font-mono font-bold text-emerald-600 dark:text-emerald-400 z-10">
+        <div className="absolute left-2 top-1.5 text-[8px] font-mono font-bold text-emerald-800 dark:text-emerald-300 z-10">
           3.3V
         </div>
         <div className="absolute left-2 bottom-1.5 text-[8px] font-mono font-bold text-muted-foreground z-10">
@@ -164,7 +164,7 @@ export function WaveformVisualizer({
         <span>D = <span className="text-foreground">{dutyCyclePercent}%</span></span>
         <span>f = <span className="text-foreground">{frequencyHz.toLocaleString()} Hz</span></span>
         <span>V_avg = <span className="text-foreground">{(3.3 * dutyCyclePercent / 100).toFixed(2)}V</span></span>
-        <span className={enabled ? "text-emerald-600 dark:text-emerald-400" : "text-muted-foreground"}>
+        <span className={enabled ? "text-emerald-800 dark:text-emerald-300" : "text-muted-foreground"}>
           {enabled ? "● ACTIVE" : "○ DISABLED"}
         </span>
       </div>

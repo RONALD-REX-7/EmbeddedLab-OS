@@ -50,9 +50,9 @@ export function ChallengePanel({ labId, className }: ChallengePanelProps) {
   };
 
   const difficultyBadges: Record<ChallengeDifficulty, { label: string; style: string }> = {
-    BEGINNER: { label: "LVL 1 · BEGINNER", style: "bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/30" },
-    INTERMEDIATE: { label: "LVL 2 · INTERMEDIATE", style: "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/30" },
-    ADVANCED: { label: "LVL 3 · ADVANCED", style: "bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/30" },
+    BEGINNER: { label: "LVL 1 · BEGINNER", style: "bg-blue-500/10 text-blue-800 dark:text-blue-300 border-blue-600/30 dark:border-blue-500/30" },
+    INTERMEDIATE: { label: "LVL 2 · INTERMEDIATE", style: "bg-amber-500/10 text-amber-800 dark:text-amber-300 border-amber-600/30 dark:border-amber-500/30" },
+    ADVANCED: { label: "LVL 3 · ADVANCED", style: "bg-purple-500/10 text-purple-800 dark:text-purple-300 border-purple-600/30 dark:border-purple-500/30" },
   };
 
   const badge = currentChallenge ? difficultyBadges[currentChallenge.difficulty] : difficultyBadges.BEGINNER;
@@ -121,12 +121,12 @@ export function ChallengePanel({ labId, className }: ChallengePanelProps) {
               </div>
 
               <div className="flex items-start justify-between gap-2 pt-0.5">
-                <h4 className="text-xs font-bold text-foreground font-sans leading-snug">
+                <h3 className="text-xs font-bold text-foreground font-sans leading-snug">
                   {currentChallenge.title}
-                </h4>
+                </h3>
                 {activeChallenge?.status === "PASSED" && (
-                  <span className="text-[9px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-1.5 py-0.5 rounded font-mono font-bold shrink-0 flex items-center gap-1">
-                    <CheckCircle2 className="h-3 w-3 text-emerald-400" />
+                  <span className="text-[9px] bg-emerald-500/10 text-emerald-800 dark:text-emerald-300 border border-emerald-600/30 dark:border-emerald-500/30 px-1.5 py-0.5 rounded font-mono font-bold shrink-0 flex items-center gap-1">
+                    <CheckCircle2 className="h-3 w-3 text-emerald-700 dark:text-emerald-400" />
                     VERIFIED
                   </span>
                 )}

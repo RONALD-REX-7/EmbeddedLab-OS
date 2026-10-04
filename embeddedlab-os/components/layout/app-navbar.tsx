@@ -152,13 +152,13 @@ export function AppNavbar() {
 
         {/* Demo Mode / Cloud Sync Indicator */}
         {isDemoMode ? (
-          <span className="hidden sm:inline-flex text-[10px] bg-amber-500/10 text-amber-500 border border-amber-500/30 px-2 py-0.5 rounded-full font-semibold uppercase tracking-wider items-center gap-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-amber-500" aria-hidden="true" />
+          <span className="hidden sm:inline-flex text-[10px] bg-amber-500/10 text-amber-800 dark:text-amber-300 border border-amber-600/30 dark:border-amber-500/30 px-2 py-0.5 rounded-full font-semibold uppercase tracking-wider items-center gap-1">
+            <span className="w-1.5 h-1.5 rounded-full bg-amber-600 dark:bg-amber-400" aria-hidden="true" />
             <span>DEMO MODE</span>
           </span>
         ) : (
-          <span className="hidden sm:inline-flex text-[10px] bg-emerald-500/10 text-emerald-500 border border-emerald-500/30 px-2 py-0.5 rounded-full font-semibold uppercase tracking-wider items-center gap-1">
-            <ShieldCheck className="h-3 w-3 text-emerald-500" aria-hidden="true" />
+          <span className="hidden sm:inline-flex text-[10px] bg-emerald-500/10 text-emerald-800 dark:text-emerald-300 border border-emerald-600/30 dark:border-emerald-500/30 px-2 py-0.5 rounded-full font-semibold uppercase tracking-wider items-center gap-1">
+            <ShieldCheck className="h-3 w-3 text-emerald-700 dark:text-emerald-400" aria-hidden="true" />
             <span>CLOUD SYNC</span>
           </span>
         )}

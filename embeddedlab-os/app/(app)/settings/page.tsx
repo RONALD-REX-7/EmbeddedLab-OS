@@ -243,7 +243,7 @@ export default function SettingsPage() {
             </div>
             <div className="flex justify-between py-1.5 border-b border-border-subtle/50">
               <span className="text-muted-foreground">Core Clock Rate:</span>
-              <span className="text-emerald-400 font-bold">16.0 MHz (Virtual)</span>
+              <span className="text-emerald-800 dark:text-emerald-300 font-bold">16.0 MHz (Virtual)</span>
             </div>
             <div className="flex justify-between py-1.5 border-b border-border-subtle/50">
               <span className="text-muted-foreground">Event Ring Buffer:</span>
@@ -255,10 +255,10 @@ export default function SettingsPage() {
             </div>
           </div>
 
-          <div className="rounded border border-primary/20 bg-primary/5 p-2.5 text-[10px] font-mono text-muted-foreground leading-relaxed flex items-start gap-2">
+          <div className="rounded border border-primary/20 bg-primary/5 p-2.5 text-[10px] font-mono text-foreground/80 dark:text-muted-foreground leading-relaxed flex items-start gap-2">
             <Sparkles className="h-3.5 w-3.5 text-primary shrink-0 mt-0.5" aria-hidden="true" />
             <span>
-              <strong className="text-foreground">Strict Data Sanitization:</strong> AI requests transmit
+              <strong className="text-foreground font-bold">Strict Data Sanitization:</strong> AI requests transmit
               only technical peripheral parameters (voltages, frequencies, pin modes). No student PII is
               ever sent to AI models.
             </span>
@@ -359,8 +359,8 @@ export default function SettingsPage() {
           {/* Action 3: Account & Cloud Deletion */}
           <div className="p-3.5 rounded border border-border-subtle bg-surface-sunken space-y-2 flex flex-col justify-between">
             <div className="space-y-1">
-              <span className="text-xs font-mono font-bold text-red-400 flex items-center gap-1.5">
-                <Trash2 className="h-3.5 w-3.5 text-red-400" aria-hidden="true" />
+              <span className="text-xs font-mono font-bold text-red-700 dark:text-red-400 flex items-center gap-1.5">
+                <Trash2 className="h-3.5 w-3.5 text-red-700 dark:text-red-400" aria-hidden="true" />
                 Account Erasure
               </span>
               <p className="text-[10px] text-muted-foreground font-sans leading-relaxed">
@@ -371,7 +371,7 @@ export default function SettingsPage() {
               variant="outline"
               size="xs"
               onClick={() => setShowDeleteModal(true)}
-              className="w-full font-mono text-[10px] font-bold h-7 border-red-500/40 text-red-400 hover:bg-red-500/10 control-elevated"
+              className="w-full font-mono text-[10px] font-bold h-7 border-red-600/40 text-red-700 dark:text-red-400 hover:bg-red-500/10 control-elevated"
             >
               Request Data Erasure
             </Button>
@@ -404,7 +404,7 @@ export default function SettingsPage() {
           </div>
           <div className="flex justify-between py-1 border-b border-border-subtle/40">
             <span className="text-muted-foreground">Analytics / Ad Trackers:</span>
-            <span className="text-emerald-400 font-bold">None (Zero trackers installed)</span>
+            <span className="text-emerald-800 dark:text-emerald-300 font-bold">None (Zero trackers installed)</span>
           </div>
         </div>
       </div>

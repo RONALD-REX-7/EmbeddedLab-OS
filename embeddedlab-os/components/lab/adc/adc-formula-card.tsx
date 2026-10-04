@@ -34,7 +34,7 @@ export function ADCFormulaCard({ channel, derived }: ADCFormulaCardProps) {
           <span className="text-muted-foreground">Subst.:</span> round( ({inputVoltage.toFixed(2)} / {referenceVoltage.toFixed(1)}) × {maxDigitalValue} )
         </p>
 
-        <p className="text-emerald-400 font-bold text-[11px] pt-1 border-t border-[var(--border-subtle)]/50">
+        <p className="text-emerald-800 dark:text-emerald-300 font-bold text-[11px] pt-1 border-t border-[var(--border-subtle)]/50">
           Result: ADC_raw = {digitalValue} / {maxDigitalValue} ({((digitalValue / maxDigitalValue) * 100).toFixed(1)}%)
         </p>
       </div>
@@ -51,7 +51,7 @@ export function ADCFormulaCard({ channel, derived }: ADCFormulaCardProps) {
         </div>
         <div className="rounded bg-[var(--surface-sunken)] border border-[var(--border-subtle)] p-2 truncate">
           <span className="text-[8px] text-muted-foreground block uppercase tracking-wider font-bold">BIN</span>
-          <span className="font-bold text-emerald-400 text-[9px]">{binVal}</span>
+          <span className="font-bold text-emerald-800 dark:text-emerald-300 text-[9px]">{binVal}</span>
         </div>
       </div>
 

@@ -36,9 +36,9 @@ export function PWMLEDDimmer({ channel }: PWMLEDDimmerProps) {
         </div>
 
         <div>
-          <h4 className="text-[11px] font-mono font-bold text-foreground uppercase tracking-wider">
+          <span className="text-[11px] font-mono font-bold text-foreground uppercase tracking-wider block">
             PWM LED · TIM3_CH1
-          </h4>
+          </span>
           <p className="text-[10px] text-muted-foreground font-mono mt-0.5">
             V_avg = <span className="text-primary font-bold">{avgVoltage}V</span>
           </p>

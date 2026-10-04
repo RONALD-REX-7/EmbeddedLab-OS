@@ -17,16 +17,16 @@ interface PinCardProps {
 }
 
 const MODE_BADGES: Record<PinMode, { label: string; style: string }> = {
-  INPUT:          { label: "IN",  style: "bg-surface-subtle text-muted-foreground border-border/80" },
+  INPUT:          { label: "IN",  style: "bg-surface-subtle text-foreground/75 dark:text-muted-foreground border-border/80" },
   OUTPUT:         { label: "OUT", style: "bg-primary/10 text-primary border-primary/30 font-bold" },
-  INPUT_PULLUP:   { label: "PU",  style: "bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/30" },
-  INPUT_PULLDOWN: { label: "PD",  style: "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/30" },
+  INPUT_PULLUP:   { label: "PU",  style: "bg-blue-500/10 text-blue-800 dark:text-blue-300 border-blue-600/30 dark:border-blue-500/30" },
+  INPUT_PULLDOWN: { label: "PD",  style: "bg-amber-500/10 text-amber-800 dark:text-amber-300 border-amber-600/30 dark:border-amber-500/30" },
 };
 
 const LEVEL_INDICATORS: Record<LogicLevel, { dot: string; label: string; text: string }> = {
-  HIGH:     { dot: "bg-emerald-500 shadow-[0_0_6px_rgba(16,185,129,0.7)]", label: "HIGH (3.3V)", text: "text-emerald-600 dark:text-emerald-400 font-bold" },
+  HIGH:     { dot: "bg-emerald-600 dark:bg-emerald-500 shadow-[0_0_6px_rgba(16,185,129,0.7)]", label: "HIGH (3.3V)", text: "text-emerald-800 dark:text-emerald-300 font-bold" },
   LOW:      { dot: "bg-muted-foreground/60", label: "LOW (0.0V)", text: "text-muted-foreground" },
-  FLOATING: { dot: "bg-amber-500 shadow-[0_0_6px_rgba(245,158,11,0.7)]", label: "FLOAT (Z)", text: "text-amber-600 dark:text-amber-400 font-semibold" },
+  FLOATING: { dot: "bg-amber-600 dark:bg-amber-500 shadow-[0_0_6px_rgba(245,158,11,0.7)]", label: "FLOAT (Z)", text: "text-amber-800 dark:text-amber-300 font-semibold" },
 };
 
 export function PinCard({
@@ -98,7 +98,7 @@ export function PinCard({
             className={cn(
               "px-2 py-0.5 text-[9px] font-mono font-bold rounded border transition-colors cursor-pointer",
               pin.level === "HIGH"
-                ? "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/40 hover:bg-emerald-500/25"
+                ? "bg-emerald-500/15 text-emerald-800 dark:text-emerald-300 border-emerald-500/40 hover:bg-emerald-500/25"
                 : "bg-surface-subtle text-foreground border-border/80 hover:bg-surface-elevated"
             )}
           >

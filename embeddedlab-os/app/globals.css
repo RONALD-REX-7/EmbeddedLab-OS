@@ -131,17 +131,17 @@
   --text-secondary:     oklch(0.38 0.03 250);
   --text-muted:         oklch(0.52 0.025 250);
 
-  /* Signals & Physics */
-  --signal-high:        #059669;   /* Emerald 600 */
-  --signal-low:         #64748B;   /* Slate 500 */
-  --signal-float:       #D97706;   /* Amber 600 */
-  --signal-pulse:       #2563EB;   /* Cobalt 600 */
+  /* Signals & Physics (Calibrated for >= 4.8:1 contrast in light mode) */
+  --signal-high:        #047857;   /* Emerald 700 */
+  --signal-low:         #475569;   /* Slate 600 */
+  --signal-float:       #92400E;   /* Amber 800 */
+  --signal-pulse:       #1D4ED8;   /* Cobalt 700 */
 
   /* Feedback */
-  --feedback-success:   #059669;
-  --feedback-warning:   #D97706;
-  --feedback-error:     #DC2626;
-  --feedback-info:      #2563EB;
+  --feedback-success:   #047857;
+  --feedback-warning:   #92400E;
+  --feedback-error:     #B91C1C;
+  --feedback-info:      #1D4ED8;
 }
 
 /* ─── DARK THEME: REFINED NAVY & BLUE-BLACK ───────────────────────────────── */

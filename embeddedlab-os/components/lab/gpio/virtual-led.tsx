@@ -70,15 +70,15 @@ export function VirtualLED({ pin, label = "Onboard Status LED (PA5)" }: VirtualL
           className={cn(
             "text-[10px] font-mono font-bold px-2 py-0.5 rounded border uppercase tracking-wider flex items-center gap-1",
             isOn
-              ? "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/40 shadow-2xs"
+              ? "bg-emerald-500/15 text-emerald-800 dark:text-emerald-300 border-emerald-600/40 dark:border-emerald-500/40 shadow-2xs"
               : "bg-surface-subtle text-muted-foreground border-border/70"
           )}
         >
-          <span className={cn("w-1.5 h-1.5 rounded-full", isOn ? "bg-emerald-500 animate-pulse" : "bg-muted-foreground/60")} />
+          <span className={cn("w-1.5 h-1.5 rounded-full", isOn ? "bg-emerald-600 dark:bg-emerald-500 animate-pulse" : "bg-muted-foreground/60")} />
           {isOn ? "EMITTING (HIGH)" : "OFF (0V)"}
         </span>
         {!isOutput && (
-          <span className="text-[9px] text-amber-500 font-mono mt-1">
+          <span className="text-[9px] text-amber-800 dark:text-amber-300 font-mono mt-1 font-semibold">
             Pin mode: {pin.mode}
           </span>
         )}

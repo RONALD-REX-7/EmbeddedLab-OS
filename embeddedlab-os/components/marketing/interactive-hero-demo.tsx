@@ -339,9 +339,9 @@ export function InteractiveHeroDemo() {
           {mode === "pwm" && (
             <div className="space-y-4">
               <div>
-                <h3 className="font-mono text-xs font-bold text-foreground uppercase tracking-wider mb-1">
+                <h2 className="font-mono text-xs font-bold text-foreground uppercase tracking-wider mb-1">
                   Waveform Parameters
-                </h3>
+                </h2>
                 <p className="text-[11px] text-muted-foreground font-sans leading-relaxed">
                   Real-time pulse width modulation generator with deterministic period timing.
                 </p>
@@ -414,9 +414,9 @@ export function InteractiveHeroDemo() {
           {mode === "adc" && (
             <div className="space-y-4">
               <div>
-                <h3 className="font-mono text-xs font-bold text-foreground uppercase tracking-wider mb-1">
+                <h2 className="font-mono text-xs font-bold text-foreground uppercase tracking-wider mb-1">
                   SAR Analog Voltage Dial
-                </h3>
+                </h2>
                 <p className="text-[11px] text-muted-foreground font-sans leading-relaxed">
                   Successive approximation register quantizing continuous analog voltage into discrete 12-bit binary codes.
                 </p>
@@ -476,9 +476,9 @@ export function InteractiveHeroDemo() {
           {mode === "gpio" && (
             <div className="space-y-4">
               <div>
-                <h3 className="font-mono text-xs font-bold text-foreground uppercase tracking-wider mb-1">
+                <h2 className="font-mono text-xs font-bold text-foreground uppercase tracking-wider mb-1">
                   Digital Pin Controller
-                </h3>
+                </h2>
                 <p className="text-[11px] text-muted-foreground font-sans leading-relaxed">
                   Direct register manipulation for push-pull outputs and pull-up input sensing.
                 </p>
