@@ -6,7 +6,9 @@
 
 ## 📖 Overview
 
-**EmbeddedLab OS** is an interactive, browser-based virtual laboratory platform designed for undergraduate electrical engineering, computer science, and embedded systems students. It provides a deterministic software simulation of fundamental microcontroller peripherals (**GPIO**, **PWM**, **ADC**, and **UART**) without physical hardware dependencies.
+**EmbeddedLab OS** is an interactive, browser-based virtual educational laboratory platform designed for undergraduate electrical engineering, computer science, and embedded systems students. It provides a deterministic software simulation of fundamental microcontroller peripherals (**GPIO**, **PWM**, **ADC**, and **UART**) without physical hardware dependencies.
+
+> ℹ️ **Educational Virtual Simulation**: EmbeddedLab OS models microcontroller peripheral behavior, register logic, and timing equations for pedagogical concept mastery. It is an educational virtual simulation and is explicitly **not** a full MCU CPU core emulation, **not** an electrical transistor-level SPICE simulation, and **not** intended for real hardware validation or production hardware verification.
 
 ---
 
@@ -133,9 +135,10 @@ EmbeddedLab OS incorporates a scoped, privacy-sanitized AI assistant powered by 
 EmbeddedLab OS/
 ├── embeddedlab-os/
 │   ├── __tests__/                  # Unit & integration test suites
-│   │   ├── ai/                     # AI service tests
-│   │   ├── challenges/             # Challenge validation tests
+│   │   ├── ai/                     # AI route security & service tests
+│   │   ├── challenges/             # Challenge validation test suites
 │   │   ├── education/              # Educational content schema tests
+│   │   ├── legal/                  # Privacy & transparency test suite
 │   │   ├── simulator/              # GPIO, PWM, ADC, UART engine tests
 │   │   ├── stores/                 # Zustand store tests
 │   │   └── supabase/               # Auth & persistence tests
@@ -144,10 +147,10 @@ EmbeddedLab OS/
 │   │   │   ├── dashboard/          # Student dashboard
 │   │   │   ├── labs/               # Lab directory & workspace pages
 │   │   │   ├── progress/           # Student progress analytics
-│   │   │   └── settings/           # User configuration
+│   │   │   └── settings/           # User & storage configuration
 │   │   ├── (auth)/                 # Login & Signup routes
-│   │   ├── (marketing)/            # Landing page
-│   │   └── api/ai/                 # Gemini AI server route handler
+│   │   ├── (marketing)/            # Landing page, privacy, terms, cookies
+│   │   └── api/ai/                 # Gemini AI server route handler with security boundary
 │   ├── components/                 # React UI components
 │   │   ├── lab/                    # Lab-specific visualizers (oscilloscope, gauge, etc.)
 │   │   ├── layout/                 # Navigation bars, sidebars, headers
@@ -165,6 +168,7 @@ EmbeddedLab OS/
 │   ├── utils/                      # Supabase SSR server & middleware helpers
 │   ├── proxy.ts                    # Next.js 16 session refresh proxy
 │   └── package.json                # Project dependencies & scripts
+├── public/screenshots/             # Production application screenshots
 ├── .env.example                    # Environment variable template
 └── README.md                       # Project documentation
 ```
@@ -207,12 +211,16 @@ EmbeddedLab OS/
 
 ## 🔐 Environment Variables
 
-| Variable | Purpose | Local Dev | Production |
-| :--- | :--- | :---: | :---: |
-| `NEXT_PUBLIC_SUPABASE_URL` | Supabase Project URL for authentication and progress sync | Optional (Defaults to Demo Mode) | Required for Cloud Auth |
-| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Supabase Client Key (Public) | Optional | Required for Cloud Auth |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase Anonymous Key (Legacy fallback) | Optional | Optional |
-| `GEMINI_API_KEY` | Google Gemini 2.5 Flash API Key (Server-side secret) | Optional (Defaults to Offline Fallback) | Recommended |
+EmbeddedLab OS strictly separates client-safe public variables from server-only secrets. A template is provided in `.env.example`.
+
+| Variable | Scope | Purpose | Local Dev | Production |
+| :--- | :---: | :--- | :---: | :---: |
+| `NEXT_PUBLIC_SUPABASE_URL` | **Public (Client-Safe)** | Supabase project endpoint for authentication and progress synchronization | Optional *(Enables Local Demo Mode)* | Required for Cloud Auth |
+| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | **Public (Client-Safe)** | Supabase public client API key (anon) | Optional | Required for Cloud Auth |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | **Public (Client-Safe)** | Legacy alias fallback for Supabase client key | Optional | Optional |
+| `GEMINI_API_KEY` | **Secret (Server-Only)** | Google Gemini API key for server-side AI tutoring (`/api/ai`). **Never expose with `NEXT_PUBLIC_` prefix.** | Optional *(Defaults to Offline Generator)* | Recommended |
+
+> 🔒 **Security Notice**: Never prefix server secrets with `NEXT_PUBLIC_`. The application server route (`app/api/ai/route.ts`) validates, bounds, and sanitizes all client prompts before querying Google Gemini, ensuring that API keys and student identifiers are never exposed to the client or external services.
 
 ---
 
@@ -236,8 +244,8 @@ npm run build
 
 ### Test Suite Summary
 ```text
-Test Files  13 passed (13)
-     Tests  117 passed (117)
+Test Files  16 passed (16)
+     Tests  151 passed (151)
 ```
 
 ---
@@ -254,11 +262,12 @@ To deploy EmbeddedLab OS to [Vercel](https://vercel.com/):
 
 ---
 
-## ⚠️ Known Limitations
+## ⚠️ Known Limitations & Scope Boundaries
 
-- **Deterministic Educational Simulation**: EmbeddedLab OS models peripheral behavior, register logic, and timing equations for educational concept mastery. It does not perform transistor-level SPICE modeling or full cycle-accurate MCU CPU core emulation.
-- **Physical Hardware**: The application does not interface with physical microcontroller chips or USB programmer hardware.
-- **Probabilistic AI**: AI responses are generative recommendations intended for learning guidance and should be verified against standard engineering formulas.
+- **Educational Virtual Simulation**: EmbeddedLab OS models peripheral behavior, register logic, and timing equations for educational concept mastery. It is explicitly **not** a full MCU CPU core emulation, **not** an electrical or SPICE circuit simulation, and is not designed for real hardware validation or production hardware verification.
+- **Physical Hardware Interface**: The application runs entirely within modern web browsers and does not interface with physical silicon microcontrollers, JTAG/SWD debuggers, or USB programmer hardware.
+- **Probabilistic AI Guidance**: AI tutoring suggestions (`Explain Concept`, `Progressive Hint`, `Debug Hardware State`) are generative educational aids and should always be verified against standard engineering formulas and microcontroller reference manuals.
+- **Microcontroller Scope**: Currently models standard STM32-style peripheral architectures across 4 foundational domains (GPIO, PWM, ADC, UART). Additional protocols (I²C, SPI, CAN) and hardware interrupt vector controllers (EXTI/NVIC) are planned on the roadmap.
 
 ---
 
@@ -273,7 +282,35 @@ To deploy EmbeddedLab OS to [Vercel](https://vercel.com/):
 
 ## 📸 Screenshots
 
-*(Interface screenshots will be added upon public release)*
+The following screenshots are captured directly from the live production deployment at [https://embeddedlab-os.vercel.app/](https://embeddedlab-os.vercel.app/):
+
+### 1. Platform Landing Page
+*Interactive laboratory launchpad and curriculum overview.*
+![EmbeddedLab OS Landing Page](./public/screenshots/landing.png)
+
+### 2. Student Workstation Dashboard
+*Active laboratory workspaces, recent achievements, and quick navigation.*
+![Student Workstation Dashboard](./public/screenshots/dashboard.png)
+
+### 3. General Purpose Input / Output (GPIO) Lab
+*16-pin MCU matrix (`PA0`..`PB7`), push-button stimulus, and virtual LED logic indicators.*
+![GPIO Digital I/O Lab](./public/screenshots/gpio-lab.png)
+
+### 4. Pulse-Width Modulation (PWM) Lab
+*Adjustable frequency carrier (100 Hz – 10 kHz), duty cycle modulation, and live SVG oscilloscope waveform visualizer.*
+![PWM Waveform Generator & Oscilloscope](./public/screenshots/pwm-lab.png)
+
+### 5. Analog-to-Digital Converter (ADC) Lab
+*Quantization calculations, multi-resolution selection (8/10/12/16-bit), potentiometer voltage divider, and analog voltmeter dial.*
+![ADC Input & Voltmeter Gauge](./public/screenshots/adc-lab.png)
+
+### 6. Universal Asynchronous Receiver-Transmitter (UART) Lab
+*Asynchronous dual-terminal transceiver, baud rate negotiation (300 to 115,200 bps), parity checks, and framing error diagnostics.*
+![UART Serial Protocol Analyzer](./public/screenshots/uart-lab.png)
+
+### 7. Student Learning Achievements & Analytics
+*Challenge verification milestones, score distribution, and learning progress tracking.*
+![Student Progress & Analytics](./public/screenshots/progress.png)
 
 ---
 

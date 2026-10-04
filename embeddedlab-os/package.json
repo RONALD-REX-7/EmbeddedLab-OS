@@ -10,6 +10,9 @@
     "url": "https://github.com/RONALD-REX-7/EmbeddedLab-OS.git"
   },
   "homepage": "https://embeddedlab-os.vercel.app/",
+  "bugs": {
+    "url": "https://github.com/RONALD-REX-7/EmbeddedLab-OS/issues"
+  },
   "keywords": [
     "embedded-systems",
     "microcontroller",

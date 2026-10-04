@@ -58,7 +58,7 @@ export default function ProgressPage() {
             Student Learning Achievements
           </h1>
           <p className="mt-1 text-xs font-mono text-muted-foreground max-w-xl">
-            Real-time tracking of challenge completions, score averages, and hardware verification records.
+            Real-time tracking of challenge completions, score averages, and simulation verification records.
           </p>
         </div>
 
