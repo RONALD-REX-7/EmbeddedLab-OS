@@ -273,7 +273,20 @@ To deploy EmbeddedLab OS to [Vercel](https://vercel.com/):
 
 ## 📸 Screenshots
 
-*(Interface screenshots will be added upon public release)*
+### Student Dashboard & Progress Telemetry
+![EmbeddedLab OS Student Dashboard](./public/screenshots/dashboard.png)
+
+### GPIO Workbench & Tactile Actuation
+![GPIO Workbench and Pin Visualizer](./public/screenshots/gpio-workbench.png)
+
+### PWM Signal Generator & Real-Time Oscilloscope
+![PWM Waveform Generator and Oscilloscope](./public/screenshots/pwm-oscilloscope.png)
+
+### ADC Analog Input & Voltmeter Dial
+![ADC Input and Voltmeter Display](./public/screenshots/adc-dial.png)
+
+### UART Serial Frame Analyzer
+![UART Serial Packet Protocol Analyzer](./public/screenshots/uart-analyzer.png)
 
 ---
 

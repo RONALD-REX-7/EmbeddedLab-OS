@@ -17,9 +17,9 @@ export const LEGAL_CONFIG = {
   repositoryUrl: "https://github.com/RONALD-REX-7/EmbeddedLab-OS",
   websiteUrl: "https://github.com/RONALD-REX-7/EmbeddedLab-OS",
 
-  /** Placeholders for formal legal/business entities if officially registered */
-  legalEntityName: "[BUSINESS_NAME]",
-  legalAddress: "[LEGAL_ADDRESS]",
+  /** Legal / Entity classification */
+  legalEntityName: "Independent Educational Open-Source Project (Ronald Rex)",
+  legalAddress: "Non-corporate open-source initiative — Contact: ronaldrexch@gmail.com",
   effectiveDate: "October 4, 2026",
   lastUpdated: "October 4, 2026",
 

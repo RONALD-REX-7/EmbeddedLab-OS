@@ -8,7 +8,7 @@
 import { NextResponse } from "next/server";
 import { GoogleGenAI } from "@google/genai";
 import { generateOfflineFallback, type AIActionType } from "@/lib/ai/fallback";
-import type { SanitizedAIContext } from "@/lib/ai/sanitizer";
+import { type SanitizedAIContext, sanitizeConceptQuery } from "@/lib/ai/sanitizer";
 
 export async function POST(req: Request) {
   try {
@@ -50,7 +50,9 @@ ${JSON.stringify(context.recentEvents, null, 2)}
 `;
 
     if (action === "explain") {
-      prompt += `\nTASK: Explain the core embedded engineering concept of "${conceptQuery || context.labId.toUpperCase()}" using the active lab context and state provided above. Highlight practical embedded microcontroller principles.`;
+      const sanitizedQuery = sanitizeConceptQuery(conceptQuery);
+      const targetConcept = sanitizedQuery || context.labId.toUpperCase();
+      prompt += `\nTASK: Explain the core embedded engineering concept of "${targetConcept}" using the active lab context and state provided above. Highlight practical embedded microcontroller principles.`;
     } else if (action === "hint") {
       prompt += `\nTASK: Provide a progressive, step-by-step hint for the active challenge (ID: ${context.challengeId || "General"}). Do NOT directly disclose the exact numerical code or configuration answer. Guide the student's thinking towards observing the hardware parameters.`;
     } else if (action === "debug") {

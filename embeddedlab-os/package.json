@@ -3,6 +3,25 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "description": "Browser-based virtual embedded systems laboratory for interactive microcontrollers, signals, and hardware protocol education.",
+  "author": "Ronald Rex <ronaldrexch@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RONALD-REX-7/EmbeddedLab-OS.git"
+  },
+  "homepage": "https://embeddedlab-os.vercel.app/",
+  "keywords": [
+    "embedded-systems",
+    "microcontroller",
+    "simulation",
+    "gpio",
+    "pwm",
+    "adc",
+    "uart",
+    "nextjs",
+    "react",
+    "vitest"
+  ],
   "scripts": {
     "dev": "next dev",
     "build": "next build",

@@ -84,3 +84,16 @@ export function sanitizeStateForAI(
     recentEvents,
   };
 }
+
+/**
+ * Clamps and strips non-safe characters from student concept queries
+ * to prevent prompt injection and unbounded token consumption.
+ */
+export function sanitizeConceptQuery(query?: unknown, maxLength = 80): string {
+  if (typeof query !== "string") return "";
+  return query
+    .slice(0, maxLength)
+    .replace(/[^\w\s\-#+.]/g, "")
+    .trim();
+}
+

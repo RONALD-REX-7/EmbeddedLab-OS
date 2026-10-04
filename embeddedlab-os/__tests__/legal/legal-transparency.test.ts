@@ -25,9 +25,11 @@ describe("Trust, Privacy & Data Management Suite", () => {
       expect(LEGAL_CONFIG.repositoryUrl).toContain("RONALD-REX-7/EmbeddedLab-OS");
     });
 
-    it("explicitly marks unavailable corporate information with designated placeholders", () => {
-      expect(LEGAL_CONFIG.legalEntityName).toBe("[BUSINESS_NAME]");
-      expect(LEGAL_CONFIG.legalAddress).toBe("[LEGAL_ADDRESS]");
+    it("declares authentic non-corporate open-source project status without template placeholders", () => {
+      expect(LEGAL_CONFIG.legalEntityName).not.toContain("[BUSINESS_NAME]");
+      expect(LEGAL_CONFIG.legalAddress).not.toContain("[LEGAL_ADDRESS]");
+      expect(LEGAL_CONFIG.legalEntityName).toContain("Ronald Rex");
+      expect(LEGAL_CONFIG.legalAddress).toContain("ronaldrexch@gmail.com");
     });
 
     it("accurately declares operational nature: zero commercial charging and zero third-party tracking", () => {
