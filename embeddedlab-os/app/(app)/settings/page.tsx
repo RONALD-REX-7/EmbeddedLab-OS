@@ -255,7 +255,7 @@ export default function SettingsPage() {
             </div>
           </div>
 
-          <div className="rounded border border-primary/20 bg-primary/5 p-2.5 text-[10px] font-mono text-foreground/80 dark:text-muted-foreground leading-relaxed flex items-start gap-2">
+          <div className="rounded border border-primary/20 bg-surface-sunken p-2.5 text-[10px] font-mono text-foreground/80 dark:text-muted-foreground leading-relaxed flex items-start gap-2">
             <Sparkles className="h-3.5 w-3.5 text-primary shrink-0 mt-0.5" aria-hidden="true" />
             <span>
               <strong className="text-foreground font-bold">Strict Data Sanitization:</strong> AI requests transmit

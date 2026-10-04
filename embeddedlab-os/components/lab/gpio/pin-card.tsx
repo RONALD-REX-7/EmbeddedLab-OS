@@ -45,7 +45,7 @@ export function PinCard({
       className={cn(
         "rounded-lg border p-2.5 flex flex-col justify-between transition-all cursor-pointer select-none relative",
         isSelected
-          ? "border-primary bg-primary/5 shadow-2xs ring-1 ring-primary"
+          ? "border-primary bg-surface-elevated shadow-2xs ring-2 ring-primary"
           : "border-border/80 bg-surface-panel hover:border-primary/40 hover:bg-surface-elevated/60"
       )}
     >
