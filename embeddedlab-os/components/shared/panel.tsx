@@ -34,10 +34,10 @@ export function Panel({
 }: PanelProps) {
   const HeadingTag = headingLevel;
   const variantStyles = {
-    default:    "bg-card border-border shadow-sm",
-    instrument: "bg-[var(--surface-panel)] border-[var(--border-default)] shadow-[0_2px_8px_rgba(0,0,0,0.3)]",
-    sunken:     "bg-[var(--surface-sunken)] border-[var(--border-subtle)] shadow-[inset_0_2px_6px_rgba(0,0,0,0.4)]",
-    elevated:   "bg-[var(--surface-elevated)] border-[var(--border-default)] shadow-[0_4px_12px_rgba(0,0,0,0.35)]",
+    default:    "bg-card border-border/80 shadow-2xs",
+    instrument: "bg-surface-panel border-border/80 shadow-xs dark:shadow-[0_2px_8px_rgba(0,0,0,0.3)]",
+    sunken:     "bg-surface-sunken border-border/60 shadow-inner",
+    elevated:   "bg-surface-elevated border-border shadow-sm dark:shadow-[0_4px_12px_rgba(0,0,0,0.35)]",
   };
 
   return (

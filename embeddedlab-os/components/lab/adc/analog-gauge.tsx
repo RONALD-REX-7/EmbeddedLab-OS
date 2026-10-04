@@ -1,6 +1,7 @@
 /**
  * EmbeddedLab OS — components/lab/adc/analog-gauge.tsx
  * Precision Analog Voltmeter Gauge — SVG arc gauge with needle indicator.
+ * Dual-theme light and dark mode calibration.
  */
 import { cn } from "@/lib/utils";
 
@@ -29,7 +30,7 @@ export function AnalogGauge({
       aria-valuemax={maxVoltage}
       aria-valuetext={`${voltage.toFixed(2)} Volts (${percentage.toFixed(1)}% full scale)`}
       className={cn(
-        "rounded border border-[var(--border-default)] bg-[var(--surface-sunken)] p-4 flex flex-col items-center justify-between font-mono shadow-[inset_0_2px_6px_rgba(0,0,0,0.3)] select-none",
+        "rounded-lg border border-border/80 bg-surface-sunken p-4 flex flex-col items-center justify-between font-mono shadow-2xs select-none transition-colors",
         className
       )}
     >
@@ -41,7 +42,7 @@ export function AnalogGauge({
       {/* Gauge Dial Arc */}
       <div className="relative w-44 h-24 flex items-end justify-center overflow-hidden my-2">
         {/* Outer Arc */}
-        <div className="absolute inset-0 rounded-t-full border-4 border-[var(--border-subtle)] border-b-0" />
+        <div className="absolute inset-0 rounded-t-full border-4 border-border/80 border-b-0" />
 
         {/* Progress Arc */}
         <div
@@ -58,10 +59,10 @@ export function AnalogGauge({
 
         {/* Pivot Needle */}
         <div
-          className="w-0.5 bg-red-400 h-16 origin-bottom rounded-full transition-transform duration-200 shadow-[0_0_6px_rgba(239,68,68,0.6)]"
+          className="w-0.5 bg-red-500 h-16 origin-bottom rounded-full transition-transform duration-200 shadow-[0_0_6px_rgba(239,68,68,0.6)]"
           style={{ transform: `rotate(${angle}deg)` }}
         />
-        <div className="w-3 h-3 rounded-full bg-slate-300 border-2 border-red-400 z-10 -mb-1.5" />
+        <div className="w-3 h-3 rounded-full bg-surface-elevated border-2 border-red-500 z-10 -mb-1.5" />
       </div>
 
       <div className="text-[9px] text-muted-foreground text-center font-bold uppercase tracking-wider">

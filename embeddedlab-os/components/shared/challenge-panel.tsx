@@ -50,9 +50,9 @@ export function ChallengePanel({ labId, className }: ChallengePanelProps) {
   };
 
   const difficultyBadges: Record<ChallengeDifficulty, { label: string; style: string }> = {
-    BEGINNER: { label: "LVL 1 · BEGINNER", style: "bg-blue-500/10 text-blue-400 border-blue-500/30" },
-    INTERMEDIATE: { label: "LVL 2 · INTERMEDIATE", style: "bg-amber-500/10 text-amber-400 border-amber-500/30" },
-    ADVANCED: { label: "LVL 3 · ADVANCED", style: "bg-purple-500/10 text-purple-400 border-purple-500/30" },
+    BEGINNER: { label: "LVL 1 · BEGINNER", style: "bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/30" },
+    INTERMEDIATE: { label: "LVL 2 · INTERMEDIATE", style: "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/30" },
+    ADVANCED: { label: "LVL 3 · ADVANCED", style: "bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/30" },
   };
 
   const badge = currentChallenge ? difficultyBadges[currentChallenge.difficulty] : difficultyBadges.BEGINNER;

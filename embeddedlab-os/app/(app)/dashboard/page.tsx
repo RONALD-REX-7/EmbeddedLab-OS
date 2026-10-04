@@ -96,7 +96,7 @@ export default function DashboardPage() {
       {/* Recommended Next Lab Banner */}
       <section
         aria-labelledby="recommended-lab-heading"
-        className="rounded border border-border-default bg-surface-panel p-4 flex flex-col md:flex-row md:items-center justify-between gap-3 shadow-[0_2px_8px_rgba(0,0,0,0.2)]"
+        className="rounded-xl border border-border/80 bg-surface-panel p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-2xs"
       >
         <div className="space-y-1">
           <div className="flex items-center gap-1.5 text-[10px] font-mono text-primary font-bold uppercase tracking-wider">
@@ -157,12 +157,12 @@ export default function DashboardPage() {
 
                   <span
                     className={cn(
-                      "text-[9px] font-mono px-1.5 py-0.5 rounded border font-bold shrink-0 uppercase tracking-wider",
+                      "text-[9px] font-mono px-2 py-0.5 rounded-full border font-bold shrink-0 uppercase tracking-wider",
                       lab.status === "COMPLETED"
-                        ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30"
+                        ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30"
                         : lab.status === "IN_PROGRESS"
-                        ? "bg-amber-500/10 text-amber-400 border-amber-500/30"
-                        : "bg-slate-900/50 text-slate-400 border-slate-700"
+                        ? "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/30"
+                        : "bg-surface-subtle text-muted-foreground border-border/80"
                     )}
                   >
                     {lab.status.replace("_", " ")}

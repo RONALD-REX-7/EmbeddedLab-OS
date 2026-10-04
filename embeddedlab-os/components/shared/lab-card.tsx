@@ -41,9 +41,9 @@ export function LabCard({
   const card = (
     <div
       className={cn(
-        "group relative rounded border border-border-default bg-surface-panel",
-        "p-4 transition-all duration-200 shadow-[0_1px_4px_rgba(0,0,0,0.15)]",
-        isAvailable && "hover:border-primary/30 hover:shadow-[0_2px_12px_rgba(0,0,0,0.25)] cursor-pointer",
+        "group relative rounded-xl border border-border/80 bg-surface-panel",
+        "p-5 transition-all duration-200 shadow-2xs",
+        isAvailable && "hover:border-primary/50 hover:bg-surface-elevated/40 cursor-pointer",
         !isAvailable && "opacity-60 cursor-not-allowed",
         className
       )}

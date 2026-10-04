@@ -20,6 +20,7 @@ import {
   Settings,
   Sliders,
   Sparkles,
+  Sun,
   Trash2,
   User,
 } from "lucide-react";
@@ -27,6 +28,7 @@ import { GithubIcon } from "@/components/shared/icons";
 
 import { Button } from "@/components/ui/button";
 import { StatusBadge } from "@/components/shared/status-badge";
+import { ThemeToggle } from "@/components/layout/theme-toggle";
 import { useAuth } from "@/lib/supabase/auth-context";
 import {
   wipeLocalStorageData,
@@ -264,8 +266,35 @@ export default function SettingsPage() {
         </div>
       </div>
 
+      {/* Visual Theme & Laboratory Display Settings */}
+      <div className="rounded-xl border border-border/80 bg-surface-panel p-5 space-y-4 shadow-2xs">
+        <div className="flex items-center justify-between border-b border-border/70 pb-3">
+          <div className="flex items-center gap-2">
+            <Sun className="h-4 w-4 text-amber-500" aria-hidden="true" />
+            <h2 className="text-xs font-mono font-bold text-foreground uppercase tracking-wider">
+              Display & Color Palette Theme
+            </h2>
+          </div>
+          <span className="text-[9px] font-mono text-muted-foreground uppercase">
+            Persistent Preference
+          </span>
+        </div>
+
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="space-y-1">
+            <span className="text-xs font-mono font-semibold text-foreground">
+              Laboratory Visual Theme
+            </span>
+            <p className="text-[11px] text-muted-foreground font-sans leading-relaxed max-w-md">
+              Switch between Light Mode (crisp porcelain surfaces with cobalt & lavender accents) and Dark Mode (refined navy & blue-black surfaces with phosphor traces).
+            </p>
+          </div>
+          <ThemeToggle variant="pill" />
+        </div>
+      </div>
+
       {/* Data & Privacy Management Section */}
-      <div className="rounded border border-border-default bg-surface-panel p-5 space-y-4 shadow-[0_2px_8px_rgba(0,0,0,0.2)]">
+      <div className="rounded-xl border border-border/80 bg-surface-panel p-5 space-y-4 shadow-2xs">
         <div className="flex items-center justify-between border-b border-border-subtle pb-3">
           <div className="flex items-center gap-2">
             <Database className="h-4 w-4 text-primary" aria-hidden="true" />

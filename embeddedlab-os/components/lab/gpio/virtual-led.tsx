@@ -1,6 +1,7 @@
 /**
  * EmbeddedLab OS — components/lab/gpio/virtual-led.tsx
  * Precision Virtual 5mm LED Component with Optical Lens Diffusion and Diode Anode/Cathode Schematics.
+ * Dual-theme light and dark mode support.
  */
 import { cn } from "@/lib/utils";
 import type { DigitalPin } from "@/types/simulator";
@@ -15,7 +16,7 @@ export function VirtualLED({ pin, label = "Onboard Status LED (PA5)" }: VirtualL
   const isOn = isOutput && pin.level === "HIGH";
 
   return (
-    <div className="rounded border border-border-default bg-surface-sunken p-3.5 flex items-center justify-between shadow-inner select-none">
+    <div className="rounded-lg border border-border/80 bg-surface-sunken p-3.5 flex items-center justify-between shadow-2xs select-none transition-colors">
       <div className="flex items-center gap-3.5">
         {/* Optical 5mm LED Package Visualizer */}
         <div className="relative flex items-center justify-center shrink-0">
@@ -29,8 +30,8 @@ export function VirtualLED({ pin, label = "Onboard Status LED (PA5)" }: VirtualL
             className={cn(
               "w-9 h-9 rounded-full border-2 transition-all duration-150 flex items-center justify-center relative overflow-hidden",
               isOn
-                ? "bg-emerald-500 border-emerald-300 shadow-[0_0_16px_rgba(16,185,129,0.85)]"
-                : "bg-slate-900 border-slate-700/80"
+                ? "bg-emerald-500 border-emerald-300 shadow-[0_0_14px_rgba(16,185,129,0.85)]"
+                : "bg-surface-elevated border-border/80"
             )}
           >
             {/* Internal LED Die Anvil & Wirebond */}
@@ -38,20 +39,20 @@ export function VirtualLED({ pin, label = "Onboard Status LED (PA5)" }: VirtualL
               className={cn(
                 "w-4 h-4 rounded-sm border transition-colors",
                 isOn
-                  ? "bg-emerald-200/90 border-white shadow-[0_0_8px_#ffffff]"
-                  : "bg-slate-800 border-slate-700"
+                  ? "bg-emerald-200/95 border-white shadow-[0_0_6px_#ffffff]"
+                  : "bg-surface-sunken border-border/60"
               )}
             />
 
             {/* Specular Highlight */}
-            <div className="absolute top-1.5 left-2 w-2 h-1.5 rounded-full bg-white/40 blur-[0.5px]" />
+            <div className="absolute top-1.5 left-2 w-2 h-1.5 rounded-full bg-white/50 blur-[0.5px]" />
           </div>
         </div>
 
         <div>
           <div className="flex items-center gap-1.5">
             <span className="text-xs font-bold text-foreground font-sans">{label}</span>
-            <span className="text-[9px] font-mono font-semibold px-1 py-0.2 rounded bg-muted/40 text-muted-foreground border border-border">
+            <span className="text-[9px] font-mono font-semibold px-1 py-0.2 rounded bg-surface-subtle text-muted-foreground border border-border/70">
               ANODE → PA5
             </span>
           </div>
@@ -69,15 +70,15 @@ export function VirtualLED({ pin, label = "Onboard Status LED (PA5)" }: VirtualL
           className={cn(
             "text-[10px] font-mono font-bold px-2 py-0.5 rounded border uppercase tracking-wider flex items-center gap-1",
             isOn
-              ? "bg-emerald-500/15 text-emerald-400 border-emerald-500/40 shadow-[0_0_8px_rgba(16,185,129,0.3)]"
-              : "bg-slate-800/60 text-slate-400 border-slate-700"
+              ? "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/40 shadow-2xs"
+              : "bg-surface-subtle text-muted-foreground border-border/70"
           )}
         >
-          <span className={cn("w-1.5 h-1.5 rounded-full", isOn ? "bg-emerald-400 animate-pulse" : "bg-slate-600")} />
+          <span className={cn("w-1.5 h-1.5 rounded-full", isOn ? "bg-emerald-500 animate-pulse" : "bg-muted-foreground/60")} />
           {isOn ? "EMITTING (HIGH)" : "OFF (0V)"}
         </span>
         {!isOutput && (
-          <span className="text-[9px] text-amber-400 font-mono mt-1">
+          <span className="text-[9px] text-amber-500 font-mono mt-1">
             Pin mode: {pin.mode}
           </span>
         )}

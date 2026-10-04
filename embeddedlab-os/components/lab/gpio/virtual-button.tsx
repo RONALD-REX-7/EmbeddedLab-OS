@@ -1,6 +1,7 @@
 /**
  * EmbeddedLab OS — components/lab/gpio/virtual-button.tsx
  * Precision Virtual Tactile Push Button with Mechanical Spring-Travel Simulation.
+ * Dual-theme light and dark mode support.
  */
 "use client";
 
@@ -33,21 +34,21 @@ export function VirtualButton({
   };
 
   return (
-    <div className="rounded border border-border-default bg-surface-sunken p-3.5 flex items-center justify-between shadow-inner select-none">
+    <div className="rounded-lg border border-border/80 bg-surface-sunken p-3.5 flex items-center justify-between shadow-2xs select-none transition-colors">
       <div className="flex items-center gap-3.5">
         {/* Tactile Switch Package Bezel */}
         <div
           className={cn(
-            "w-9 h-9 rounded border flex items-center justify-center transition-all duration-100 shrink-0",
+            "w-9 h-9 rounded-lg border flex items-center justify-center transition-all duration-100 shrink-0",
             isPressed
-              ? "bg-primary/20 border-primary shadow-[inset_0_2px_4px_rgba(0,0,0,0.6)]"
-              : "bg-slate-900 border-slate-700 shadow-[0_2px_4px_rgba(0,0,0,0.4)]"
+              ? "bg-primary/20 border-primary shadow-inner"
+              : "bg-surface-elevated border-border shadow-2xs"
           )}
         >
           <CircleDot
             className={cn(
               "h-5 w-5 transition-transform duration-75",
-              isPressed ? "text-primary scale-75" : "text-slate-400"
+              isPressed ? "text-primary scale-75" : "text-muted-foreground"
             )}
           />
         </div>
@@ -55,7 +56,7 @@ export function VirtualButton({
         <div>
           <div className="flex items-center gap-1.5">
             <span className="text-xs font-bold text-foreground font-sans">{label}</span>
-            <span className="text-[9px] font-mono font-semibold px-1 py-0.2 rounded bg-muted/40 text-muted-foreground border border-border">
+            <span className="text-[9px] font-mono font-semibold px-1 py-0.2 rounded bg-surface-subtle text-muted-foreground border border-border/70">
               SPST-NO TACTILE
             </span>
           </div>
@@ -94,10 +95,10 @@ export function VirtualButton({
             }
           }}
           className={cn(
-            "px-3.5 py-1.5 text-xs font-mono font-bold rounded border transition-all select-none cursor-pointer focus-visible:outline-2 focus-visible:outline-primary",
+            "px-3.5 py-1.5 text-xs font-mono font-bold rounded-md border transition-all select-none cursor-pointer focus-visible:outline-2 focus-visible:outline-primary",
             isPressed
-              ? "bg-primary text-primary-foreground border-primary shadow-[inset_0_2px_6px_rgba(0,0,0,0.6)] translate-y-px"
-              : "bg-surface-elevated text-foreground border-border-default hover:border-primary/50 hover:bg-muted shadow-[0_2px_4px_rgba(0,0,0,0.3)]"
+              ? "bg-primary text-primary-foreground border-primary shadow-inner translate-y-px"
+              : "bg-surface-elevated text-foreground border-border hover:border-primary/50 hover:bg-surface-subtle shadow-2xs"
           )}
         >
           {isPressed ? "CONTACT CLOSED (0Ω)" : "ACTUATE SWITCH"}

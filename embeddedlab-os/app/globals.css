@@ -3,15 +3,15 @@
 @import "shadcn/tailwind.css";
 
 /* ────────────────────────────────────────────────────────────────────────────
-   EmbeddedLab OS — Engineering Design System & Precision Instrumentation Tokens
-   Dark-first, high-density hardware laboratory aesthetic
+   EmbeddedLab OS — Modern Engineering Lab & Educational Technology Design System
+   Dual-Theme: Light Mode (Default Porcelain) & Dark Mode (Refined Navy)
+   Disciplined Glassmorphism · Precision Instrumentation · Accessible WCAG AAA/AA
    ──────────────────────────────────────────────────────────────────────────── */
 
 @custom-variant dark (&:is(.dark *));
 
-/* ─── Tailwind v4 theme tokens ────────────────────────────────────────────── */
+/* ─── Tailwind v4 theme token mappings ────────────────────────────────────── */
 @theme inline {
-  /* Core shadcn/ui base tokens */
   --color-background:          var(--background);
   --color-foreground:          var(--foreground);
   --color-card:                var(--card);
@@ -27,176 +27,187 @@
   --color-accent:              var(--accent);
   --color-accent-foreground:   var(--accent-foreground);
   --color-destructive:         var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
   --color-border:              var(--border);
   --color-input:               var(--input);
   --color-ring:                var(--ring);
-  --color-sidebar-ring:        var(--sidebar-ring);
-  --color-sidebar-border:      var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent:      var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary:     var(--sidebar-primary);
-  --color-sidebar-foreground:  var(--sidebar-foreground);
-  --color-sidebar:             var(--sidebar);
 
-  /* Radius scale (crisp engineering radii) */
-  --radius-sm:  calc(var(--radius) * 0.5);
-  --radius-md:  calc(var(--radius) * 0.75);
-  --radius-lg:  var(--radius);
-  --radius-xl:  calc(var(--radius) * 1.25);
+  /* Radius scale (crisp, disciplined technical corners) */
+  --radius-xs: calc(var(--radius) * 0.4);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) * 1.4);
+  --radius-xl: calc(var(--radius) * 1.8);
 
   /* Typography */
   --font-sans: var(--font-inter);
   --font-mono: var(--font-jetbrains-mono);
   --font-heading: var(--font-inter);
 
-  /* Signal and instrumentation semantic tokens */
-  --color-signal-high:      var(--signal-high);
-  --color-signal-low:       var(--signal-low);
-  --color-signal-float:     var(--signal-float);
-  --color-signal-pulse:     var(--signal-pulse);
+  /* Semantic Signal Tokens */
+  --color-signal-high:  var(--signal-high);
+  --color-signal-low:   var(--signal-low);
+  --color-signal-float: var(--signal-float);
+  --color-signal-pulse: var(--signal-pulse);
 
-  /* Multi-morphism surface layer tokens */
+  /* Multi-Morphism Surface Layers */
   --color-surface-base:       var(--surface-base);
   --color-surface-panel:      var(--surface-panel);
+  --color-surface-glass:      var(--surface-glass);
   --color-surface-instrument: var(--surface-instrument);
   --color-surface-elevated:   var(--surface-elevated);
   --color-surface-sunken:     var(--surface-sunken);
   --color-surface-console:    var(--surface-console);
 
-  /* Precision border tokens */
-  --color-border-subtle:      var(--border-subtle);
-  --color-border-default:     var(--border-default);
-  --color-border-strong:      var(--border-strong);
-  --color-border-accent:      var(--border-accent);
+  /* Precision Border Layers */
+  --color-border-subtle:  var(--border-subtle);
+  --color-border-default: var(--border-default);
+  --color-border-strong:  var(--border-strong);
+  --color-border-accent:  var(--border-accent);
 
-  /* Text tokens */
-  --color-text-primary:       var(--text-primary);
-  --color-text-secondary:     var(--text-secondary);
-  --color-text-muted:         var(--text-muted);
+  /* Text Hierarchy */
+  --color-text-primary:   var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted:     var(--text-muted);
 
-  /* Semantic feedback */
-  --color-feedback-success:   var(--feedback-success);
-  --color-feedback-warning:   var(--feedback-warning);
-  --color-feedback-error:     var(--feedback-error);
-  --color-feedback-info:      var(--feedback-info);
+  /* Semantic Feedback */
+  --color-feedback-success: var(--feedback-success);
+  --color-feedback-warning: var(--feedback-warning);
+  --color-feedback-error:   var(--feedback-error);
+  --color-feedback-info:    var(--feedback-info);
 }
 
-/* ─── Dark Mode Palette (Engineering Default) ─────────────────────────────── */
+/* ─── DEFAULT THEME: LIGHT (Crisp Porcelain & Soft Cobalt) ───────────────── */
 :root {
-  /* Base graphite & carbon tones */
-  --background: oklch(0.11 0.012 255);        /* #0e1117 graphite base */
-  --foreground: oklch(0.94 0.01 250);         /* #e2e8f0 clean bright text */
-  --card: oklch(0.14 0.015 255);              /* #141822 instrument card */
-  --card-foreground: oklch(0.94 0.01 250);
-  --popover: oklch(0.15 0.016 255);
-  --popover-foreground: oklch(0.94 0.01 250);
-  --primary: oklch(0.68 0.18 230);            /* #0284c7 / #38bdf8 precision cyan */
-  --primary-foreground: oklch(0.09 0.01 250);
-  --secondary: oklch(0.18 0.018 255);
-  --secondary-foreground: oklch(0.88 0.01 250);
-  --muted: oklch(0.17 0.015 255);
-  --muted-foreground: oklch(0.68 0.02 250);
-  --accent: oklch(0.20 0.02 255);
-  --accent-foreground: oklch(0.92 0.01 250);
-  --destructive: oklch(0.62 0.22 25);
-  --border: oklch(0.22 0.02 255);             /* #222938 precision divider */
-  --input: oklch(0.18 0.018 255);
-  --ring: oklch(0.68 0.18 230);
-  --radius: 0.375rem;                         /* 6px tight technical corners */
+  color-scheme: light;
 
-  /* Sidebar Tokens */
-  --sidebar: oklch(0.12 0.014 255);           /* #10141c */
-  --sidebar-foreground: oklch(0.88 0.01 250);
-  --sidebar-primary: oklch(0.68 0.18 230);
-  --sidebar-primary-foreground: oklch(0.09 0.01 250);
-  --sidebar-accent: oklch(0.17 0.018 255);
-  --sidebar-accent-foreground: oklch(0.92 0.01 250);
-  --sidebar-border: oklch(0.19 0.018 255);
-  --sidebar-ring: oklch(0.68 0.18 230);
+  /* Surfaces & Base */
+  --background: oklch(0.985 0.003 245);       /* #F9FAFB crisp clean porcelain */
+  --foreground: oklch(0.18 0.025 255);        /* #0F172A deep technical navy/slate */
+  --card: oklch(1.0 0 0);                     /* #FFFFFF pure white instrument cards */
+  --card-foreground: oklch(0.18 0.025 255);
+  --popover: oklch(1.0 0 0);
+  --popover-foreground: oklch(0.18 0.025 255);
+
+  /* Primary Accent: Precision Cobalt */
+  --primary: oklch(0.52 0.20 250);            /* #1D4ED8 sharp engineering blue */
+  --primary-foreground: oklch(0.99 0 0);
+  
+  /* Secondary: Soft Lavender / Slate */
+  --secondary: oklch(0.94 0.02 280);          /* #F3F4F8 subtle warm tech tint */
+  --secondary-foreground: oklch(0.32 0.06 280);
+  --muted: oklch(0.95 0.006 245);             /* #F1F5F9 */
+  --muted-foreground: oklch(0.48 0.03 250);   /* #64748B */
+  
+  --accent: oklch(0.93 0.03 280);             /* #EBE8F8 soft lavender callout */
+  --accent-foreground: oklch(0.28 0.08 280);  /* #4C1D95 */
+  
+  --destructive: oklch(0.58 0.22 25);
+  --destructive-foreground: oklch(0.99 0 0);
+
+  /* Dividers & Borders */
+  --border: oklch(0.89 0.008 245);            /* #E2E8F0 hairline divider */
+  --input: oklch(0.89 0.008 245);
+  --ring: oklch(0.52 0.20 250);
+  --radius: 0.5rem;                           /* 8px modern radius */
 
   /* Multi-Morphism Surface Layers */
-  --surface-base:       oklch(0.11 0.012 255);
-  --surface-panel:      oklch(0.14 0.015 255);
-  --surface-instrument: oklch(0.13 0.014 255);
-  --surface-elevated:   oklch(0.18 0.018 255);
-  --surface-sunken:     oklch(0.08 0.01 255);  /* #090c10 deep scope well */
-  --surface-console:    oklch(0.07 0.008 255); /* #07090d terminal well */
+  --surface-base:       oklch(0.985 0.003 245);
+  --surface-panel:      oklch(1.0 0 0);
+  --surface-glass:      rgba(255, 255, 255, 0.82);
+  --surface-instrument: oklch(0.995 0.002 245);
+  --surface-elevated:   oklch(1.0 0 0);
+  --surface-sunken:     oklch(0.955 0.006 245); /* #F1F3F8 deep screen well */
+  --surface-console:    oklch(0.935 0.008 245); /* #E8ECF2 terminal well */
 
   /* Precision Border Layers */
-  --border-subtle:      oklch(0.18 0.016 255);
-  --border-default:     oklch(0.22 0.02 255);
-  --border-strong:      oklch(0.32 0.025 255);
-  --border-accent:      oklch(0.68 0.18 230);
+  --border-subtle:      oklch(0.92 0.006 245);  /* #E5E9F0 */
+  --border-default:     oklch(0.87 0.009 245);  /* #D6DBE5 */
+  --border-strong:      oklch(0.72 0.015 245);  /* #9AA4B5 */
+  --border-accent:      oklch(0.52 0.20 250);
 
-  /* Text Hierarchy (Calibrated for WCAG AA 4.5:1 contrast against dark background) */
-  --text-primary:       oklch(0.94 0.01 250);
-  --text-secondary:     oklch(0.74 0.02 250);
-  --text-muted:         oklch(0.64 0.02 250);
+  /* Text Hierarchy */
+  --text-primary:       oklch(0.18 0.025 255);
+  --text-secondary:     oklch(0.38 0.03 250);
+  --text-muted:         oklch(0.52 0.025 250);
 
-  /* Electrical & Signal State Colors */
-  --signal-high:        #10b981;   /* Emerald 500 — Logic HIGH, active output */
-  --signal-low:         #475569;   /* Slate 600   — Logic LOW, grounded */
-  --signal-float:       #f59e0b;   /* Amber 500   — High-Z Floating / Warning */
-  --signal-pulse:       #38bdf8;   /* Sky 400     — Dynamic carrier pulse */
+  /* Signals & Physics */
+  --signal-high:        #059669;   /* Emerald 600 */
+  --signal-low:         #64748B;   /* Slate 500 */
+  --signal-float:       #D97706;   /* Amber 600 */
+  --signal-pulse:       #2563EB;   /* Cobalt 600 */
 
-  /* Feedback Colors */
-  --feedback-success:   #10b981;
-  --feedback-warning:   #f59e0b;
-  --feedback-error:     #ef4444;
-  --feedback-info:      #0ea5e9;
+  /* Feedback */
+  --feedback-success:   #059669;
+  --feedback-warning:   #D97706;
+  --feedback-error:     #DC2626;
+  --feedback-info:      #2563EB;
 }
 
-/* Light Mode Fallback */
-.light {
-  --background: oklch(0.98 0 0);
-  --foreground: oklch(0.12 0 0);
-  --card: oklch(0.96 0 0);
-  --card-foreground: oklch(0.12 0 0);
-  --popover: oklch(0.99 0 0);
-  --popover-foreground: oklch(0.12 0 0);
-  --primary: oklch(0.52 0.18 230);
-  --primary-foreground: oklch(0.99 0 0);
-  --secondary: oklch(0.92 0 0);
-  --secondary-foreground: oklch(0.22 0 0);
-  --muted: oklch(0.92 0 0);
-  --muted-foreground: oklch(0.48 0 0);
-  --accent: oklch(0.92 0 0);
-  --accent-foreground: oklch(0.22 0 0);
-  --destructive: oklch(0.58 0.22 25);
-  --border: oklch(0.85 0 0);
-  --input: oklch(0.85 0 0);
-  --ring: oklch(0.52 0.18 230);
-  --sidebar: oklch(0.95 0 0);
-  --sidebar-foreground: oklch(0.22 0 0);
-  --sidebar-primary: oklch(0.52 0.18 230);
-  --sidebar-primary-foreground: oklch(0.99 0 0);
-  --sidebar-accent: oklch(0.90 0 0);
-  --sidebar-accent-foreground: oklch(0.22 0 0);
-  --sidebar-border: oklch(0.85 0 0);
-  --sidebar-ring: oklch(0.52 0.18 230);
+/* ─── DARK THEME: REFINED NAVY & BLUE-BLACK ───────────────────────────────── */
+.dark {
+  color-scheme: dark;
 
-  --surface-base:       oklch(0.98 0 0);
-  --surface-panel:      oklch(0.96 0 0);
-  --surface-instrument: oklch(0.95 0 0);
-  --surface-elevated:   oklch(0.93 0 0);
-  --surface-sunken:     oklch(0.91 0 0);
-  --surface-console:    oklch(0.89 0 0);
-  --border-subtle:      oklch(0.90 0 0);
-  --border-default:     oklch(0.85 0 0);
-  --border-strong:      oklch(0.75 0 0);
-  --border-accent:      oklch(0.52 0.18 230);
-  --text-primary:       oklch(0.12 0 0);
-  --text-secondary:     oklch(0.38 0 0);
-  --text-muted:         oklch(0.55 0 0);
-  --signal-high:        #059669;
-  --signal-low:         #94a3b8;
-  --signal-float:       #d97706;
-  --signal-pulse:       #0284c7;
-  --feedback-success:   #059669;
-  --feedback-warning:   #d97706;
-  --feedback-error:     #dc2626;
-  --feedback-info:      #0284c7;
+  /* Surfaces & Base */
+  --background: oklch(0.12 0.015 255);        /* #0B0F17 deep navy slate base */
+  --foreground: oklch(0.96 0.008 250);        /* #F8FAFC crisp white text */
+  --card: oklch(0.16 0.018 255);              /* #111827 refined navy instrument card */
+  --card-foreground: oklch(0.96 0.008 250);
+  --popover: oklch(0.17 0.02 255);
+  --popover-foreground: oklch(0.96 0.008 250);
+
+  /* Primary Accent: Precision Sky Cyan */
+  --primary: oklch(0.70 0.16 230);            /* #38BDF8 precision cyan */
+  --primary-foreground: oklch(0.12 0.02 255);
+  
+  /* Secondary: Deep Navy / Soft Lavender */
+  --secondary: oklch(0.20 0.022 255);         /* #1E293B */
+  --secondary-foreground: oklch(0.90 0.01 250);
+  --muted: oklch(0.18 0.018 255);             /* #161F2E */
+  --muted-foreground: oklch(0.68 0.02 250);   /* #94A3B8 */
+  
+  --accent: oklch(0.22 0.035 280);            /* #251B3B dark lavender */
+  --accent-foreground: oklch(0.88 0.08 280);  /* #DDD6FE */
+  
+  --destructive: oklch(0.62 0.22 25);
+  --destructive-foreground: oklch(0.99 0 0);
+
+  /* Dividers & Borders */
+  --border: oklch(0.24 0.02 255);             /* #222C3D hairline divider */
+  --input: oklch(0.22 0.02 255);
+  --ring: oklch(0.70 0.16 230);
+
+  /* Multi-Morphism Surface Layers */
+  --surface-base:       oklch(0.12 0.015 255);
+  --surface-panel:      oklch(0.16 0.018 255);
+  --surface-glass:      rgba(17, 24, 39, 0.82);
+  --surface-instrument: oklch(0.15 0.017 255);
+  --surface-elevated:   oklch(0.20 0.022 255);  /* #1E293B */
+  --surface-sunken:     oklch(0.09 0.012 255);  /* #070A0F scope well */
+  --surface-console:    oklch(0.08 0.010 255);  /* #06080D terminal well */
+
+  /* Precision Border Layers */
+  --border-subtle:      oklch(0.20 0.018 255);
+  --border-default:     oklch(0.26 0.022 255);
+  --border-strong:      oklch(0.36 0.025 255);
+  --border-accent:      oklch(0.70 0.16 230);
+
+  /* Text Hierarchy */
+  --text-primary:       oklch(0.96 0.008 250);
+  --text-secondary:     oklch(0.76 0.02 250);
+  --text-muted:         oklch(0.62 0.02 250);
+
+  /* Signals & Physics */
+  --signal-high:        #10B981;   /* Emerald 500 */
+  --signal-low:         #475569;   /* Slate 600 */
+  --signal-float:       #F59E0B;   /* Amber 500 */
+  --signal-pulse:       #38BDF8;   /* Sky 400 */
+
+  /* Feedback */
+  --feedback-success:   #10B981;
+  --feedback-warning:   #F59E0B;
+  --feedback-error:     #EF4444;
+  --feedback-info:      #38BDF8;
 }
 
 /* ─── Base Layer ──────────────────────────────────────────────────────────── */
@@ -206,27 +217,28 @@
     box-sizing: border-box;
   }
 
-  /* Universal high-visibility keyboard focus indicators for accessibility */
+  /* Universal high-visibility keyboard focus indicators */
   :focus-visible {
     outline: 2px solid var(--primary);
     outline-offset: 2px;
   }
 
   html {
-    color-scheme: dark;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     height: 100%;
+    scroll-behavior: smooth;
   }
 
   body {
     @apply bg-background text-foreground;
-    font-family: var(--font-inter), ui-sans-serif, system-ui, -apple-system, sans-serif;
+    font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     min-height: 100%;
-    line-height: 1.5;
+    line-height: 1.6;
+    letter-spacing: -0.011em;
   }
 
-  /* Monospace typography for hardware data, addresses, registers, metrics */
+  /* Precision Monospace Typography */
   code, kbd, pre, samp, .font-mono {
     font-family: var(--font-jetbrains-mono), ui-monospace, "JetBrains Mono",
       "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
@@ -236,86 +248,107 @@
   h1, h2, h3, h4, h5, h6 {
     font-weight: 600;
     line-height: 1.25;
-    letter-spacing: -0.015em;
+    letter-spacing: -0.022em;
+    color: var(--text-primary);
   }
 
-  /* Thin precision scrollbar */
+  /* Precision Minimal Scrollbar */
   ::-webkit-scrollbar {
-    width: 5px;
-    height: 5px;
+    width: 6px;
+    height: 6px;
   }
   ::-webkit-scrollbar-track {
     background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    background: oklch(0.25 0.02 255);
-    border-radius: 2px;
+    background: var(--border-default);
+    border-radius: 3px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: oklch(0.35 0.025 255);
+    background: var(--border-strong);
   }
 }
 
-/* ─── Precision Material Morphisms & Utilities ────────────────────────────── */
+/* ─── Disciplined Material Morphisms & Engineering Classes ───────────────── */
 @layer utilities {
-  /* 1. Instrument Panel Morphism (Dense technical casing) */
+  /* 1. Disciplined Glass Panel */
+  .glass-panel {
+    background-color: var(--surface-glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border-subtle);
+    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+  }
+
+  /* 2. Glass Instrument Ribbon / Header */
+  .glass-ribbon {
+    background-color: var(--surface-glass);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  /* 3. Instrument Frame (Precision laboratory hardware container) */
   .panel-instrument {
     background-color: var(--surface-panel);
     border: 1px solid var(--border-default);
-    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.04), 0 2px 4px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.04);
+  }
+  .dark .panel-instrument {
+    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.04), 0 2px 8px rgba(0, 0, 0, 0.35);
   }
 
-  /* 2. Recessed Console Morphism (Deep sunken screen/terminal well) */
+  /* 4. Recessed Console & Screen Well (For oscilloscopes, terminals, meters) */
   .panel-sunken {
     background-color: var(--surface-sunken);
     border: 1px solid var(--border-subtle);
-    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06);
+  }
+  .dark .panel-sunken {
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.45);
   }
 
-  /* 3. Elevated Control Morphism (Tactile mechanical interactive button/switch) */
+  /* 5. Tactile Mechanical Control (Depressable buttons, stepped switches) */
   .control-elevated {
     background-color: var(--surface-elevated);
     color: var(--foreground);
     border: 1px solid var(--border-default);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
     transition: all 120ms cubic-bezier(0.16, 1, 0.3, 1);
   }
   .control-elevated:hover {
     border-color: var(--border-strong);
-    background-color: oklch(0.20 0.02 255);
+    background-color: var(--surface-elevated);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
   }
   .control-elevated:active {
     transform: translateY(1px);
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.12);
   }
 
-  /* 4. Technical Blueprint Pattern (Subtle background grid) */
+  /* 6. Subtle Technical Alignment Grid */
   .bg-blueprint {
-    background-image: 
-      linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-    background-size: 20px 20px;
+    background-image:
+      linear-gradient(to right, var(--border-subtle) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--border-subtle) 1px, transparent 1px);
+    background-size: 24px 24px;
+    background-position: center center;
   }
 
+  /* 7. Oscilloscope Screen Grid (Phosphor calibrated) */
   .bg-oscilloscope-grid {
     background-image:
-      linear-gradient(to right, rgba(56, 189, 248, 0.08) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(56, 189, 248, 0.08) 1px, transparent 1px);
+      linear-gradient(to right, rgba(37, 99, 235, 0.08) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(37, 99, 235, 0.08) 1px, transparent 1px);
     background-size: 24px 24px;
   }
-
-  /* Signal Glow Effects */
-  .glow-signal-high {
-    box-shadow: 0 0 12px rgba(16, 185, 129, 0.45);
-  }
-  .glow-signal-pulse {
-    box-shadow: 0 0 12px rgba(56, 189, 248, 0.45);
-  }
-  .glow-signal-warn {
-    box-shadow: 0 0 12px rgba(245, 158, 11, 0.45);
+  .dark .bg-oscilloscope-grid {
+    background-image:
+      linear-gradient(to right, rgba(56, 189, 248, 0.12) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(56, 189, 248, 0.12) 1px, transparent 1px);
   }
 
-  /* Signal Indicators */
+  /* Signal and Surface Utilities */
   .signal-high    { color: var(--signal-high); }
   .signal-low     { color: var(--signal-low); }
   .signal-float   { color: var(--signal-float); }
@@ -326,7 +359,6 @@
   .bg-signal-float { background-color: var(--signal-float); }
   .bg-signal-pulse { background-color: var(--signal-pulse); }
 
-  /* Surface classes */
   .bg-surface-base       { background-color: var(--surface-base); }
   .bg-surface-panel      { background-color: var(--surface-panel); }
   .bg-surface-instrument { background-color: var(--surface-instrument); }
@@ -334,25 +366,13 @@
   .bg-surface-sunken     { background-color: var(--surface-sunken); }
   .bg-surface-console    { background-color: var(--surface-console); }
 
-  /* Border classes */
   .border-subtle  { border-color: var(--border-subtle); }
   .border-default { border-color: var(--border-default); }
   .border-strong  { border-color: var(--border-strong); }
   .border-accent  { border-color: var(--border-accent); }
-
-  /* Text hierarchy classes */
-  .text-primary-fg   { color: var(--text-primary); }
-  .text-secondary-fg { color: var(--text-secondary); }
-  .text-muted-fg     { color: var(--text-muted); }
-
-  /* Feedback text classes */
-  .text-success { color: var(--feedback-success); }
-  .text-warning { color: var(--feedback-warning); }
-  .text-error   { color: var(--feedback-error); }
-  .text-info    { color: var(--feedback-info); }
 }
 
-/* ─── Reduced Motion Support ──────────────────────────────────────────────── */
+/* ─── Reduced Motion Support (Universal Accessibility Standard) ───────────── */
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {
     animation-duration: 0.01ms !important;

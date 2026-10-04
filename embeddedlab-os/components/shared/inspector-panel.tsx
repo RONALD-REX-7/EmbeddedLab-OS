@@ -45,7 +45,7 @@ export function InspectorPanel({
   return (
     <div
       className={cn(
-        "rounded-md border border-border-default bg-surface-panel p-3.5 space-y-3 flex flex-col shadow-[0_2px_8px_rgba(0,0,0,0.3)]",
+        "rounded-xl border border-border/80 bg-surface-panel p-3.5 space-y-3 flex flex-col shadow-2xs transition-colors",
         className
       )}
     >

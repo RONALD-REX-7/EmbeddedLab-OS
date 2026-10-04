@@ -1,7 +1,7 @@
 /**
  * EmbeddedLab OS — components/lab/pwm/waveform-visualizer.tsx
  * Dynamic oscilloscope-style SVG waveform visualizer for PWM pulse train.
- * Precision engineering oscilloscope frame with voltage reference markers.
+ * Precision engineering oscilloscope frame with dual-theme light/dark calibration.
  */
 import { cn } from "@/lib/utils";
 import type { PWMChannel, PWMDerivedValues } from "@/types/simulator";
@@ -62,44 +62,46 @@ export function WaveformVisualizer({
   return (
     <div
       className={cn(
-        "rounded border border-[var(--border-default)] bg-[var(--surface-sunken)] p-3 font-mono shadow-[inset_0_2px_6px_rgba(0,0,0,0.4)] select-none",
+        "rounded-lg border border-border/80 bg-surface-sunken p-3.5 font-mono shadow-2xs select-none transition-colors",
         className
       )}
     >
       {/* Oscilloscope Header Telemetry Strip */}
       <div className="flex flex-wrap items-center justify-between gap-2 text-[10px] text-muted-foreground mb-2 px-0.5">
         <div className="flex items-center gap-2">
-          <span className={cn(
-            "w-2 h-2 rounded-full shrink-0",
-            enabled ? "bg-emerald-400 shadow-[0_0_8px_rgba(16,185,129,0.7)] animate-pulse" : "bg-slate-600"
-          )} />
+          <span
+            className={cn(
+              "w-2 h-2 rounded-full shrink-0",
+              enabled ? "bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.7)] animate-pulse" : "bg-muted-foreground/60"
+            )}
+          />
           <span className="font-bold text-foreground uppercase tracking-wider">OSCILLOSCOPE · CH1</span>
-          <span className="text-muted-foreground/70">
+          <span className="text-muted-foreground">
             {frequencyHz.toLocaleString()} Hz · {periodMs.toFixed(2)} ms · {cycles} cyc
           </span>
         </div>
         <div className="flex items-center gap-3 text-[10px]">
-          <span className="text-emerald-400 font-bold">
-            t_HIGH {highTimeMs.toFixed(3)} ms
+          <span className="text-emerald-600 dark:text-emerald-400 font-bold">
+            t_HIGH: {highTimeMs.toFixed(3)} ms
           </span>
-          <span className="text-muted-foreground/70">
-            t_LOW {lowTimeMs.toFixed(3)} ms
+          <span className="text-muted-foreground">
+            t_LOW: {lowTimeMs.toFixed(3)} ms
           </span>
         </div>
       </div>
 
       {/* SVG Waveform Scope Well */}
-      <div className="relative border border-[var(--border-subtle)] rounded bg-[var(--surface-console)] overflow-hidden">
+      <div className="relative border border-border/80 rounded-md bg-surface-console overflow-hidden">
         {/* Voltage Reference Labels */}
-        <div className="absolute left-1.5 top-1.5 text-[8px] font-mono font-bold text-emerald-400/70 z-10">
+        <div className="absolute left-2 top-1.5 text-[8px] font-mono font-bold text-emerald-600 dark:text-emerald-400 z-10">
           3.3V
         </div>
-        <div className="absolute left-1.5 bottom-1.5 text-[8px] font-mono font-bold text-slate-500 z-10">
+        <div className="absolute left-2 bottom-1.5 text-[8px] font-mono font-bold text-muted-foreground z-10">
           GND
         </div>
 
         {/* Engineering Oscilloscope Grid */}
-        <div className="absolute inset-0 bg-oscilloscope-grid pointer-events-none" />
+        <div className="absolute inset-0 bg-oscilloscope-grid opacity-35 pointer-events-none" />
 
         <svg
           role="img"
@@ -110,41 +112,59 @@ export function WaveformVisualizer({
         >
           {/* Center Voltage Baseline */}
           <line
-            x1="0" y1={height / 2} x2={width} y2={height / 2}
-            stroke="rgba(56,189,248,0.12)" strokeDasharray="4 4" strokeWidth="1"
+            x1="0"
+            y1={height / 2}
+            x2={width}
+            y2={height / 2}
+            stroke="var(--primary)"
+            strokeDasharray="4 4"
+            strokeWidth="1"
+            opacity="0.25"
           />
 
           {/* 3.3V Reference Line */}
           <line
-            x1="0" y1={yHigh} x2={width} y2={yHigh}
-            stroke="#10b981" strokeDasharray="2 4" strokeWidth="0.75" opacity="0.25"
+            x1="0"
+            y1={yHigh}
+            x2={width}
+            y2={yHigh}
+            stroke="var(--signal-high)"
+            strokeDasharray="2 4"
+            strokeWidth="0.75"
+            opacity="0.3"
           />
 
           {/* GND Reference Line */}
           <line
-            x1="0" y1={yLow} x2={width} y2={yLow}
-            stroke="#475569" strokeDasharray="2 4" strokeWidth="0.75" opacity="0.25"
+            x1="0"
+            y1={yLow}
+            x2={width}
+            y2={yLow}
+            stroke="var(--signal-low)"
+            strokeDasharray="2 4"
+            strokeWidth="0.75"
+            opacity="0.3"
           />
 
           {/* Signal Waveform Path */}
           <path
             d={pathD}
             fill="none"
-            stroke={enabled && dutyCyclePercent > 0 ? "#10b981" : "#475569"}
-            strokeWidth="2"
+            stroke={enabled && dutyCyclePercent > 0 ? "var(--signal-high)" : "var(--signal-low)"}
+            strokeWidth="2.5"
             strokeLinejoin="round"
-            strokeLinecap="square"
-            className="transition-all duration-200"
+            strokeLinecap="round"
+            className="transition-all duration-150"
           />
         </svg>
       </div>
 
       {/* Scope Measurement Footer */}
-      <div className="flex items-center justify-between text-[9px] text-muted-foreground mt-1.5 px-0.5 font-bold uppercase tracking-wider">
+      <div className="flex items-center justify-between text-[9px] text-muted-foreground mt-2 px-0.5 font-bold uppercase tracking-wider">
         <span>D = <span className="text-foreground">{dutyCyclePercent}%</span></span>
         <span>f = <span className="text-foreground">{frequencyHz.toLocaleString()} Hz</span></span>
         <span>V_avg = <span className="text-foreground">{(3.3 * dutyCyclePercent / 100).toFixed(2)}V</span></span>
-        <span className={enabled ? "text-emerald-400" : "text-slate-500"}>
+        <span className={enabled ? "text-emerald-600 dark:text-emerald-400" : "text-muted-foreground"}>
           {enabled ? "● ACTIVE" : "○ DISABLED"}
         </span>
       </div>

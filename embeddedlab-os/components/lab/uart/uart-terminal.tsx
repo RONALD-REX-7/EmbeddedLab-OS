@@ -1,6 +1,7 @@
 /**
  * EmbeddedLab OS — components/lab/uart/uart-terminal.tsx
- * Serial TX/RX Terminal Console — engineering scope-style terminal.
+ * Serial TX/RX Terminal Console — precision engineering terminal.
+ * Dual-theme light and dark mode calibration.
  */
 import { Terminal } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -26,19 +27,23 @@ export function UARTTerminal({
   return (
     <div
       className={cn(
-        "rounded border border-[var(--border-default)] bg-[var(--surface-console)] flex flex-col overflow-hidden font-mono text-xs",
+        "rounded-lg border border-border/80 bg-surface-console flex flex-col overflow-hidden font-mono text-xs shadow-2xs transition-colors",
         className
       )}
     >
       {/* Terminal Title Bar */}
-      <div className="flex items-center justify-between px-2.5 py-1.5 border-b border-[var(--border-subtle)] bg-[var(--surface-panel)] select-none">
+      <div className="flex items-center justify-between px-3 py-1.5 border-b border-border/70 bg-surface-subtle select-none">
         <div className="flex items-center gap-1.5">
-          <span className={cn(
-            "w-1.5 h-1.5 rounded-full shrink-0",
-            type === "TX" ? "bg-sky-400 shadow-[0_0_4px_rgba(56,189,248,0.7)]" : "bg-emerald-400 shadow-[0_0_4px_rgba(16,185,129,0.7)]"
-          )} />
+          <span
+            className={cn(
+              "w-1.5 h-1.5 rounded-full shrink-0",
+              type === "TX"
+                ? "bg-primary shadow-[0_0_4px_rgba(29,78,216,0.7)]"
+                : "bg-emerald-500 shadow-[0_0_4px_rgba(16,185,129,0.7)]"
+            )}
+          />
           <Terminal
-            className={cn("h-3 w-3", type === "TX" ? "text-sky-400" : "text-emerald-400")}
+            className={cn("h-3 w-3", type === "TX" ? "text-primary" : "text-emerald-500")}
             aria-hidden="true"
           />
           <span className="font-bold text-foreground text-[10px] uppercase tracking-wider">
@@ -54,7 +59,7 @@ export function UARTTerminal({
       </div>
 
       {/* Terminal Buffer */}
-      <ScrollArea className="p-2.5 h-36">
+      <ScrollArea className="p-3 h-36">
         {buffer.length === 0 ? (
           <div className="py-4 text-center text-muted-foreground text-[10px] font-mono">
             {type === "TX"
@@ -62,13 +67,17 @@ export function UARTTerminal({
               : "RX buffer idle. Awaiting data."}
           </div>
         ) : (
-          <div className="space-y-0.5 text-[10px] leading-relaxed">
+          <div className="space-y-1 text-[10px] leading-relaxed">
             {buffer.map((msg, i) => (
               <div key={i} className="flex items-start gap-1.5">
                 <span
                   className={cn(
                     "font-bold shrink-0 select-none text-[9px]",
-                    type === "TX" ? "text-sky-400" : compatible ? "text-emerald-400" : "text-red-400"
+                    type === "TX"
+                      ? "text-primary"
+                      : compatible
+                      ? "text-emerald-600 dark:text-emerald-400"
+                      : "text-red-500"
                   )}
                 >
                   {type}&gt;
@@ -77,7 +86,7 @@ export function UARTTerminal({
                   className={cn(
                     "break-all",
                     !compatible && type === "RX"
-                      ? "text-red-400 line-through opacity-60"
+                      ? "text-red-500 line-through opacity-70"
                       : "text-foreground"
                   )}
                 >

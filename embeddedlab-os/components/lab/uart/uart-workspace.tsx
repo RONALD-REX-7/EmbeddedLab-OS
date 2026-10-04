@@ -1,6 +1,6 @@
 /**
  * EmbeddedLab OS — components/lab/uart/uart-workspace.tsx
- * Full UART Laboratory Workspace — Engineering Layout.
+ * Precision UART Laboratory Workspace with panoramic desktop layout & mobile 1-tap view switcher.
  */
 "use client";
 
@@ -8,9 +8,13 @@ import { useState } from "react";
 import {
   AlertTriangle,
   ArrowLeft,
+  BookOpen,
+  Cpu,
+  ListFilter,
   Radio,
   RotateCcw,
   Send,
+  Terminal,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -29,10 +33,14 @@ import { useUARTState } from "@/hooks/use-uart-state";
 import { useEventLog } from "@/hooks/use-event-log";
 import { useChallenge } from "@/hooks/use-challenge";
 import { useSimulatorStore } from "@/store/simulator-store";
+import { cn } from "@/lib/utils";
 
 import type { Parity } from "@/types/simulator";
 
+type MobileViewTab = "workbench" | "worksheet" | "inspector" | "telemetry";
+
 export function UARTWorkspace() {
+  const [mobileTab, setMobileTab] = useState<MobileViewTab>("workbench");
   const [messageInput, setMessageInput] = useState<string>("HELLO EMBEDDED WORLD");
 
   const {
@@ -62,12 +70,13 @@ export function UARTWorkspace() {
     resetChallenge();
   };
 
-  const selectClasses = "w-full text-[9px] font-mono font-bold bg-[var(--surface-sunken)] border border-[var(--border-subtle)] rounded px-1.5 py-1 text-foreground focus:outline-none focus:border-primary cursor-pointer";
+  const selectClasses =
+    "w-full text-[9px] font-mono font-bold bg-surface-sunken border border-border/80 rounded px-1.5 py-1 text-foreground focus:outline-none focus:border-primary cursor-pointer";
 
   return (
-    <div className="p-4 max-w-7xl mx-auto space-y-4">
+    <div className="p-3 sm:p-5 max-w-7xl mx-auto space-y-4">
       {/* Instrumentation Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[var(--border-default)]">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-border/80">
         <div>
           <div className="flex items-center gap-1.5 text-muted-foreground mb-0.5 font-mono text-[10px] uppercase tracking-wider">
             <Radio className="h-3.5 w-3.5 text-primary" />
@@ -82,28 +91,107 @@ export function UARTWorkspace() {
 
         <div className="flex items-center gap-2">
           <StatusBadge status={compatible ? "running" : "error"} />
-          <Button variant="outline" size="xs" onClick={handleReset} className="h-7 text-xs font-mono control-elevated">
+          <Button
+            variant="outline"
+            size="xs"
+            onClick={handleReset}
+            className="h-7 text-xs font-mono bg-surface-panel hover:bg-surface-elevated"
+            aria-label="Reset MCU UART Registers"
+          >
             <RotateCcw className="mr-1 h-3 w-3" />
             Reset MCU
           </Button>
-          <Link href="/labs" className={buttonVariants({ variant: "outline", size: "sm", className: "h-7 text-xs font-mono" })}>
+          <Link
+            href="/labs"
+            className={buttonVariants({
+              variant: "outline",
+              size: "sm",
+              className: "h-7 text-xs font-mono bg-surface-panel hover:bg-surface-elevated",
+            })}
+          >
             <ArrowLeft className="mr-1 h-3 w-3" />
             Directory
           </Link>
         </div>
       </div>
 
-      {/* 3-Column Engineering Layout */}
+      {/* Mobile 1-Tap Segmented View Switcher (< lg) */}
+      <div className="lg:hidden flex items-center p-1 rounded-lg bg-surface-subtle border border-border/80 font-mono text-xs">
+        <button
+          type="button"
+          onClick={() => setMobileTab("workbench")}
+          className={cn(
+            "flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-md transition-colors font-medium",
+            mobileTab === "workbench"
+              ? "bg-surface-panel text-primary font-bold shadow-2xs border border-border/70"
+              : "text-muted-foreground hover:text-foreground"
+          )}
+        >
+          <Cpu className="h-3.5 w-3.5" />
+          <span>Workbench</span>
+        </button>
+        <button
+          type="button"
+          onClick={() => setMobileTab("worksheet")}
+          className={cn(
+            "flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-md transition-colors font-medium",
+            mobileTab === "worksheet"
+              ? "bg-surface-panel text-primary font-bold shadow-2xs border border-border/70"
+              : "text-muted-foreground hover:text-foreground"
+          )}
+        >
+          <BookOpen className="h-3.5 w-3.5" />
+          <span>Worksheet</span>
+        </button>
+        <button
+          type="button"
+          onClick={() => setMobileTab("inspector")}
+          className={cn(
+            "flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-md transition-colors font-medium",
+            mobileTab === "inspector"
+              ? "bg-surface-panel text-primary font-bold shadow-2xs border border-border/70"
+              : "text-muted-foreground hover:text-foreground"
+          )}
+        >
+          <ListFilter className="h-3.5 w-3.5" />
+          <span>Registers</span>
+        </button>
+        <button
+          type="button"
+          onClick={() => setMobileTab("telemetry")}
+          className={cn(
+            "flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-md transition-colors font-medium",
+            mobileTab === "telemetry"
+              ? "bg-surface-panel text-primary font-bold shadow-2xs border border-border/70"
+              : "text-muted-foreground hover:text-foreground"
+          )}
+        >
+          <Terminal className="h-3.5 w-3.5" />
+          <span>Log</span>
+        </button>
+      </div>
+
+      {/* Panoramic Engineering Grid (Desktop: 3 cols, Mobile: filtered by mobileTab) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
-        {/* Left Column */}
-        <div className="lg:col-span-4 space-y-3.5">
+        {/* Left Column: Worksheet, Challenges & AI (4 cols on desktop) */}
+        <div
+          className={cn(
+            "lg:col-span-4 space-y-3.5",
+            mobileTab !== "worksheet" && "hidden lg:block"
+          )}
+        >
           <LabEducationCard labId="uart" currentState={mcuState} />
           <ChallengePanel labId="uart" />
           <AIAssistantPanel labId="uart" state={mcuState} />
         </div>
 
-        {/* Center Column: Serial Terminals */}
-        <div className="lg:col-span-5 space-y-3.5">
+        {/* Center Column: Serial Terminals (5 cols on desktop) */}
+        <div
+          className={cn(
+            "lg:col-span-5 space-y-3.5",
+            mobileTab !== "workbench" && "hidden lg:block"
+          )}
+        >
           <Panel
             title="Serial Transceiver"
             subtitle="TX/RX Terminals & Data Transmission"
@@ -114,13 +202,13 @@ export function UARTWorkspace() {
             <div className="space-y-3">
               {/* Mismatch Warning */}
               {!compatible && (
-                <div className="rounded border border-red-500/30 bg-red-500/10 p-2.5 flex items-start gap-2 text-[10px] font-mono">
-                  <AlertTriangle className="h-3.5 w-3.5 text-red-400 shrink-0 mt-0.5" />
+                <div className="rounded-lg border border-red-500/30 bg-red-500/10 p-3 flex items-start gap-2.5 text-[10px] font-mono">
+                  <AlertTriangle className="h-4 w-4 text-red-500 shrink-0 mt-0.5" />
                   <div className="space-y-0.5">
-                    <span className="font-bold text-red-400 block uppercase tracking-wider">
+                    <span className="font-bold text-red-500 block uppercase tracking-wider">
                       LINK MISMATCH DETECTED
                     </span>
-                    <p className="text-muted-foreground text-[9px]">
+                    <p className="text-muted-foreground text-[10px] leading-relaxed">
                       {compatibilityNote || "TX/RX framing configuration mismatch."}
                     </p>
                   </div>
@@ -146,7 +234,7 @@ export function UARTWorkspace() {
               </div>
 
               {/* Message Input */}
-              <form onSubmit={handleSend} className="space-y-1.5 pt-2.5 border-t border-[var(--border-subtle)]">
+              <form onSubmit={handleSend} className="space-y-1.5 pt-2.5 border-t border-border/80">
                 <span className="text-[9px] font-mono text-muted-foreground uppercase tracking-wider font-bold">
                   Transmit Serial Data (ASCII)
                 </span>
@@ -158,9 +246,9 @@ export function UARTWorkspace() {
                     value={messageInput}
                     onChange={(e) => setMessageInput(e.target.value)}
                     placeholder="Enter ASCII data (e.g. HELLO)..."
-                    className="flex-1 bg-[var(--surface-console)] border border-[var(--border-subtle)] rounded px-2.5 py-1.5 text-[10px] font-mono text-foreground focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary placeholder:text-muted-foreground/60"
+                    className="flex-1 bg-surface-console border border-border/80 rounded-md px-3 py-1.5 text-[10px] font-mono text-foreground focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary placeholder:text-muted-foreground/60"
                   />
-                  <Button type="submit" size="xs" className="font-mono text-[10px] h-7 font-bold">
+                  <Button type="submit" size="xs" className="font-mono text-[10px] h-7 font-bold shadow-2xs">
                     <Send className="mr-1 h-3 w-3" aria-hidden="true" />
                     TX
                   </Button>
@@ -177,21 +265,26 @@ export function UARTWorkspace() {
           </Panel>
         </div>
 
-        {/* Right Column: TX/RX Config Inspector */}
-        <div className="lg:col-span-3 space-y-3.5">
+        {/* Right Column: TX/RX Config Inspector (3 cols on desktop) */}
+        <div
+          className={cn(
+            "lg:col-span-3 space-y-3.5",
+            mobileTab !== "inspector" && "hidden lg:block"
+          )}
+        >
           <InspectorPanel
             title="UART Configuration"
             subtitle="TX & RX Parameters"
           >
             {/* TX Config */}
-            <div className="space-y-1.5 pb-3 border-b border-[var(--border-subtle)]">
-              <span className="text-[9px] font-mono text-sky-400 font-bold uppercase tracking-wider block">
+            <div className="space-y-1.5 pb-3 border-b border-border/80">
+              <span className="text-[9px] font-mono text-primary font-bold uppercase tracking-wider block">
                 Transmitter (TX)
               </span>
               <InspectorRow label="Baud Rate" value={`${transmitter.baudRate}`} unit="bps" />
               <InspectorRow label="Frame" value={`${transmitter.dataBits}-${transmitter.parity.charAt(0)}-${transmitter.stopBits}`} />
 
-              <div className="grid grid-cols-2 gap-1 pt-1">
+              <div className="grid grid-cols-2 gap-1.5 pt-1">
                 <div>
                   <span className="text-[8px] text-muted-foreground block mb-0.5 font-mono font-bold uppercase tracking-wider">Baud</span>
                   <select
@@ -221,13 +314,13 @@ export function UARTWorkspace() {
 
             {/* RX Config */}
             <div className="space-y-1.5 pt-2">
-              <span className="text-[9px] font-mono text-emerald-400 font-bold uppercase tracking-wider block">
+              <span className="text-[9px] font-mono text-emerald-600 dark:text-emerald-400 font-bold uppercase tracking-wider block">
                 Receiver (RX)
               </span>
               <InspectorRow label="Baud Rate" value={`${receiver.baudRate}`} unit="bps" />
               <InspectorRow label="Frame" value={`${receiver.dataBits}-${receiver.parity.charAt(0)}-${receiver.stopBits}`} />
 
-              <div className="grid grid-cols-2 gap-1 pt-1">
+              <div className="grid grid-cols-2 gap-1.5 pt-1">
                 <div>
                   <span className="text-[8px] text-muted-foreground block mb-0.5 font-mono font-bold uppercase tracking-wider">Baud</span>
                   <select
@@ -258,8 +351,10 @@ export function UARTWorkspace() {
         </div>
       </div>
 
-      {/* Bottom Diagnostic Console */}
-      <EventLogView events={events} onClear={() => resetStore("uart")} maxHeight="h-36" />
+      {/* Bottom Diagnostic Console / Telemetry tab on mobile */}
+      <div className={cn(mobileTab !== "telemetry" && "hidden lg:block")}>
+        <EventLogView events={events} onClear={() => resetStore("uart")} maxHeight="h-36" />
+      </div>
     </div>
   );
 }

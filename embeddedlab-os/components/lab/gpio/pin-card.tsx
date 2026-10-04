@@ -1,6 +1,7 @@
 /**
  * EmbeddedLab OS — components/lab/gpio/pin-card.tsx
  * Precision Virtual Microcontroller Pin Component with Port Addressing and Logic Meters.
+ * Dual-theme light and dark mode support.
  */
 "use client";
 
@@ -16,16 +17,16 @@ interface PinCardProps {
 }
 
 const MODE_BADGES: Record<PinMode, { label: string; style: string }> = {
-  INPUT:          { label: "IN",  style: "bg-slate-800 text-slate-300 border-slate-700" },
-  OUTPUT:         { label: "OUT", style: "bg-sky-500/15 text-sky-400 border-sky-500/30 font-bold" },
-  INPUT_PULLUP:   { label: "PU",  style: "bg-blue-500/15 text-blue-400 border-blue-500/30" },
-  INPUT_PULLDOWN: { label: "PD",  style: "bg-amber-500/15 text-amber-400 border-amber-500/30" },
+  INPUT:          { label: "IN",  style: "bg-surface-subtle text-muted-foreground border-border/80" },
+  OUTPUT:         { label: "OUT", style: "bg-primary/10 text-primary border-primary/30 font-bold" },
+  INPUT_PULLUP:   { label: "PU",  style: "bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/30" },
+  INPUT_PULLDOWN: { label: "PD",  style: "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/30" },
 };
 
 const LEVEL_INDICATORS: Record<LogicLevel, { dot: string; label: string; text: string }> = {
-  HIGH:     { dot: "bg-emerald-400 shadow-[0_0_6px_rgba(16,185,129,0.7)]", label: "HIGH (3.3V)", text: "text-emerald-400 font-bold" },
-  LOW:      { dot: "bg-slate-600", label: "LOW (0.0V)", text: "text-slate-400" },
-  FLOATING: { dot: "bg-amber-400 shadow-[0_0_6px_rgba(245,158,11,0.7)]", label: "FLOAT (Z)", text: "text-amber-400 font-semibold" },
+  HIGH:     { dot: "bg-emerald-500 shadow-[0_0_6px_rgba(16,185,129,0.7)]", label: "HIGH (3.3V)", text: "text-emerald-600 dark:text-emerald-400 font-bold" },
+  LOW:      { dot: "bg-muted-foreground/60", label: "LOW (0.0V)", text: "text-muted-foreground" },
+  FLOATING: { dot: "bg-amber-500 shadow-[0_0_6px_rgba(245,158,11,0.7)]", label: "FLOAT (Z)", text: "text-amber-600 dark:text-amber-400 font-semibold" },
 };
 
 export function PinCard({
@@ -42,10 +43,10 @@ export function PinCard({
     <div
       onClick={() => onSelect(pin.id)}
       className={cn(
-        "rounded border p-2.5 flex flex-col justify-between transition-all cursor-pointer select-none relative",
+        "rounded-lg border p-2.5 flex flex-col justify-between transition-all cursor-pointer select-none relative",
         isSelected
-          ? "border-primary bg-surface-panel shadow-[0_0_12px_rgba(56,189,248,0.2)] ring-1 ring-primary"
-          : "border-border-default bg-surface-panel hover:border-primary/40 hover:bg-surface-elevated"
+          ? "border-primary bg-primary/5 shadow-2xs ring-1 ring-primary"
+          : "border-border/80 bg-surface-panel hover:border-primary/40 hover:bg-surface-elevated/60"
       )}
     >
       {/* Port Label & Mode Badge */}
@@ -63,7 +64,7 @@ export function PinCard({
           <span className="font-mono text-xs font-bold text-foreground">
             {pin.label}
           </span>
-          <span className="text-[9px] font-mono text-muted-foreground/70">
+          <span className="text-[9px] font-mono text-muted-foreground">
             #{pin.id}
           </span>
         </button>
@@ -78,7 +79,7 @@ export function PinCard({
       </div>
 
       {/* Logic State & Drive Control */}
-      <div className="flex items-center justify-between mt-1 pt-1.5 border-t border-border-subtle">
+      <div className="flex items-center justify-between mt-1 pt-1.5 border-t border-border/60">
         <div className="flex items-center gap-1.5">
           <span className={cn("w-1.5 h-1.5 rounded-full shrink-0", levelInfo.dot)} />
           <span className={cn("text-[10px] font-mono", levelInfo.text)}>
@@ -95,10 +96,10 @@ export function PinCard({
               onToggleLevel(pin.id);
             }}
             className={cn(
-              "px-1.5 py-0.5 text-[9px] font-mono font-bold rounded border transition-colors cursor-pointer",
+              "px-2 py-0.5 text-[9px] font-mono font-bold rounded border transition-colors cursor-pointer",
               pin.level === "HIGH"
-                ? "bg-emerald-500/20 text-emerald-400 border-emerald-500/40 hover:bg-emerald-500/30"
-                : "bg-slate-800 text-slate-300 border-slate-700 hover:bg-slate-700"
+                ? "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/40 hover:bg-emerald-500/25"
+                : "bg-surface-subtle text-foreground border-border/80 hover:bg-surface-elevated"
             )}
           >
             {pin.level === "HIGH" ? "SET LOW" : "SET HIGH"}
@@ -109,7 +110,7 @@ export function PinCard({
             aria-label={`Mode for pin ${pin.label}`}
             onClick={(e) => e.stopPropagation()}
             onChange={(e) => onModeChange(pin.id, e.target.value as PinMode)}
-            className="text-[9px] font-mono bg-surface-sunken border border-border-subtle rounded px-1 py-0.5 text-foreground focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary cursor-pointer"
+            className="text-[9px] font-mono bg-surface-sunken border border-border/80 rounded px-1 py-0.5 text-foreground focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary cursor-pointer"
           >
             <option value="INPUT">INPUT</option>
             <option value="OUTPUT">OUTPUT</option>

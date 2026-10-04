@@ -5,6 +5,7 @@
  */
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
+import { ThemeProvider } from "@/components/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { AuthProvider } from "@/lib/supabase/auth-context";
 import "./globals.css";
@@ -49,13 +50,15 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${jetbrainsMono.variable} dark h-full`}
+      className={`${inter.variable} ${jetbrainsMono.variable} h-full`}
       suppressHydrationWarning
     >
-      <body className="min-h-full antialiased bg-background text-foreground">
-        <AuthProvider>
-          <TooltipProvider delay={300}>{children}</TooltipProvider>
-        </AuthProvider>
+      <body className="min-h-full antialiased bg-background text-foreground transition-colors duration-200">
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
+          <AuthProvider>
+            <TooltipProvider delay={300}>{children}</TooltipProvider>
+          </AuthProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -1,6 +1,7 @@
 /**
  * EmbeddedLab OS — components/lab/adc/potentiometer.tsx
  * Virtual Potentiometer — precision rotary input control.
+ * Dual-theme light and dark mode calibration.
  */
 import { cn } from "@/lib/utils";
 
@@ -18,7 +19,7 @@ export function Potentiometer({
   label = "POTENTIOMETER (Vin)",
 }: PotentiometerProps) {
   return (
-    <div className="rounded border border-[var(--border-default)] bg-[var(--surface-panel)] p-3 space-y-2.5 select-none">
+    <div className="rounded-lg border border-border/80 bg-surface-panel p-3.5 space-y-2.5 select-none shadow-2xs transition-colors">
       <div className="flex items-center justify-between">
         <h4 className="text-[10px] font-mono font-bold text-foreground uppercase tracking-wider">{label}</h4>
         <span className="font-mono text-xs font-bold text-primary">
@@ -38,7 +39,7 @@ export function Potentiometer({
         aria-valuenow={voltage}
         aria-valuetext={`${voltage.toFixed(2)} Volts`}
         onChange={(e) => onChange(Number(e.target.value))}
-        className="w-full accent-primary cursor-pointer h-1.5 bg-[var(--surface-sunken)] rounded-sm border border-[var(--border-subtle)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+        className="w-full accent-primary cursor-pointer h-1.5 bg-surface-sunken rounded-md border border-border/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
       />
 
       <div className="flex gap-1">
@@ -51,10 +52,10 @@ export function Potentiometer({
               aria-label={`Set potentiometer to ${val} Volts`}
               onClick={() => onChange(val)}
               className={cn(
-                "flex-1 text-[9px] font-mono py-0.5 rounded border transition-colors font-bold control-elevated focus-visible:outline-2 focus-visible:outline-primary",
+                "flex-1 text-[9px] font-mono py-1 rounded-md border transition-colors font-bold cursor-pointer focus-visible:outline-2 focus-visible:outline-primary",
                 Math.abs(voltage - val) < 0.02
-                  ? "bg-primary text-primary-foreground border-primary"
-                  : "bg-[var(--surface-panel)] border-[var(--border-subtle)] text-muted-foreground hover:text-foreground hover:border-[var(--border-default)]"
+                  ? "bg-primary text-primary-foreground border-primary shadow-2xs"
+                  : "bg-surface-subtle border-border/80 text-muted-foreground hover:text-foreground hover:bg-surface-elevated"
               )}
             >
               {val}V
