@@ -1,12 +1,12 @@
 /**
  * EmbeddedLab OS — lib/constants/legal.ts
  *
- * Source of truth for verified project information, contact endpoints,
- * privacy disclosures, and cookie/storage classifications.
+ * Source of truth for verified project information, maintainer contact endpoints,
+ * privacy disclosures, and browser storage classifications.
  *
- * NOTE: Only verified information from the project repository is used.
- * Where formal corporate registry details do not exist, clear placeholders
- * ([BUSINESS_NAME], [LEGAL_ADDRESS], etc.) are defined.
+ * NOTE: Strictly grounded in verified project repository facts.
+ * As an independent educational software project by Ronald Rex, formal corporate
+ * registry details are not applicable and are not invented.
  */
 
 export const LEGAL_CONFIG = {
@@ -15,11 +15,11 @@ export const LEGAL_CONFIG = {
   developerHandle: "@RONALD-REX-7",
   verifiedContactEmail: "ronaldrexch@gmail.com",
   repositoryUrl: "https://github.com/RONALD-REX-7/EmbeddedLab-OS",
-  websiteUrl: "https://github.com/RONALD-REX-7/EmbeddedLab-OS",
+  websiteUrl: "https://embeddedlab-os.vercel.app",
 
-  /** Legal / Entity classification */
-  legalEntityName: "Independent Educational Open-Source Project (Ronald Rex)",
-  legalAddress: "Non-corporate open-source initiative — Contact: ronaldrexch@gmail.com",
+  /** Project Classification & Status */
+  projectType: "Independent Educational Software Project",
+  projectStatus: "Free Educational Software (Non-commercial)",
   effectiveDate: "October 4, 2026",
   lastUpdated: "October 4, 2026",
 
@@ -64,6 +64,15 @@ export const LEGAL_CONFIG = {
       purpose:
         "Persists the active challenge index and working state across page refreshes.",
       retention: "Persistent until student clears local storage",
+      provider: "EmbeddedLab OS (Client-Side)",
+    },
+    {
+      name: "theme",
+      type: "LocalStorage (next-themes)",
+      category: "Functional Preference",
+      purpose:
+        "Preserves the student's selected display theme (Porcelain Light or Refined Navy Dark) across browser sessions.",
+      retention: "Persistent until student resets theme or clears browser storage",
       provider: "EmbeddedLab OS (Client-Side)",
     },
   ],

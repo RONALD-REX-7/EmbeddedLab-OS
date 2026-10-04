@@ -25,11 +25,10 @@ describe("Trust, Privacy & Data Management Suite", () => {
       expect(LEGAL_CONFIG.repositoryUrl).toContain("RONALD-REX-7/EmbeddedLab-OS");
     });
 
-    it("declares authentic non-corporate open-source project status without template placeholders", () => {
-      expect(LEGAL_CONFIG.legalEntityName).not.toContain("[BUSINESS_NAME]");
-      expect(LEGAL_CONFIG.legalAddress).not.toContain("[LEGAL_ADDRESS]");
-      expect(LEGAL_CONFIG.legalEntityName).toContain("Ronald Rex");
-      expect(LEGAL_CONFIG.legalAddress).toContain("ronaldrexch@gmail.com");
+    it("declares authentic educational project status without template placeholders", () => {
+      expect(LEGAL_CONFIG.projectType).toBe("Independent Educational Software Project");
+      expect(LEGAL_CONFIG.authorName).toBe("Ronald Rex");
+      expect(LEGAL_CONFIG.verifiedContactEmail).toBe("ronaldrexch@gmail.com");
     });
 
     it("accurately declares operational nature: zero commercial charging and zero third-party tracking", () => {
@@ -38,13 +37,14 @@ describe("Trust, Privacy & Data Management Suite", () => {
       expect(LEGAL_CONFIG.hasMarketingEmails).toBe(false);
     });
 
-    it("documents all four strictly necessary storage items", () => {
-      expect(LEGAL_CONFIG.storageItems.length).toBeGreaterThanOrEqual(4);
+    it("documents all five strictly necessary and functional storage items including theme preference", () => {
+      expect(LEGAL_CONFIG.storageItems.length).toBeGreaterThanOrEqual(5);
       const storageNames = LEGAL_CONFIG.storageItems.map((s) => s.name);
       expect(storageNames).toContain("sb-*-auth-token");
       expect(storageNames).toContain("embeddedlab_challenge_progress_*");
       expect(storageNames).toContain("embeddedlab_attempts_*");
       expect(storageNames).toContain("embeddedlab_ch_*");
+      expect(storageNames).toContain("theme");
     });
 
     it("documents third-party service providers with strict data minimization terms", () => {

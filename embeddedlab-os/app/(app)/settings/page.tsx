@@ -467,8 +467,8 @@ export default function SettingsPage() {
             </a>
           </div>
           <div className="flex items-center justify-between pt-1 border-t border-border-subtle/50 text-[10px]">
-            <span className="text-muted-foreground">Legal Entity / Registered Address:</span>
-            <span className="text-muted-foreground italic">{LEGAL_CONFIG.legalEntityName}, {LEGAL_CONFIG.legalAddress}</span>
+            <span className="text-muted-foreground">Project Status:</span>
+            <span className="text-muted-foreground">{LEGAL_CONFIG.projectType}</span>
           </div>
         </div>
       </div>

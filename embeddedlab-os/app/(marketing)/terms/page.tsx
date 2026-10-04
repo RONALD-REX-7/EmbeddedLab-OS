@@ -184,9 +184,15 @@ export default function TermsOfServicePage() {
                 {LEGAL_CONFIG.verifiedContactEmail}
               </a>
             </div>
+            <div className="flex justify-between py-1 border-b border-border-subtle">
+              <span className="text-muted-foreground">Source Repository:</span>
+              <a href={LEGAL_CONFIG.repositoryUrl} target="_blank" rel="noreferrer noopener" className="text-primary hover:underline">
+                {LEGAL_CONFIG.repositoryUrl}
+              </a>
+            </div>
             <div className="flex justify-between py-1">
-              <span className="text-muted-foreground">Organization Placeholder:</span>
-              <span className="text-muted-foreground italic">{LEGAL_CONFIG.legalEntityName}, {LEGAL_CONFIG.legalAddress}</span>
+              <span className="text-muted-foreground">Project Status:</span>
+              <span className="text-foreground">{LEGAL_CONFIG.projectType}</span>
             </div>
           </div>
         </section>

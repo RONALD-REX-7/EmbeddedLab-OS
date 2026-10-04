@@ -300,8 +300,8 @@ export default function PrivacyPolicyPage() {
               </a>
             </div>
             <div className="flex justify-between py-1">
-              <span className="text-muted-foreground">Legal Entity / Registered Address:</span>
-              <span className="text-muted-foreground italic">{LEGAL_CONFIG.legalEntityName}, {LEGAL_CONFIG.legalAddress}</span>
+              <span className="text-muted-foreground">Project Status:</span>
+              <span className="text-foreground">{LEGAL_CONFIG.projectType}</span>
             </div>
           </div>
         </section>
