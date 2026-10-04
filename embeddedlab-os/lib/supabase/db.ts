@@ -140,6 +140,9 @@ export function wipeLocalStorageData(): { success: boolean; clearedKeysCount: nu
     }
   }
   keysToRemove.forEach((k) => localStorage.removeItem(k));
+  if (typeof window !== "undefined") {
+    window.dispatchEvent(new Event("embeddedlab-progress-update"));
+  }
   return { success: true, clearedKeysCount: keysToRemove.length };
 }
 

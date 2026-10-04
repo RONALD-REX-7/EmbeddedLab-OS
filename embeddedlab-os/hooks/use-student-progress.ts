@@ -4,7 +4,7 @@
  */
 "use client";
 
-import { useMemo } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { LAB_CHALLENGES } from "@/lib/challenges";
 import type { ChallengeState, LabId } from "@/types/simulator";
 
@@ -69,7 +69,45 @@ const LAB_TITLES: Record<LabId, { title: string; desc: string; difficulty: "BEGI
 };
 
 export function useStudentProgress(): StudentProgressSummary {
+  const [mounted, setMounted] = useState(false);
+  const [tick, setTick] = useState(0);
+
+  useEffect(() => {
+    setMounted(true);
+    const handleUpdate = () => setTick((t) => t + 1);
+    window.addEventListener("storage", handleUpdate);
+    window.addEventListener("embeddedlab-progress-update", handleUpdate);
+    return () => {
+      window.removeEventListener("storage", handleUpdate);
+      window.removeEventListener("embeddedlab-progress-update", handleUpdate);
+    };
+  }, []);
+
   return useMemo(() => {
+    if (!mounted || typeof window === "undefined") {
+      const initialStats: Record<LabId, LabSummaryStats> = {
+        gpio: { labId: "gpio", title: LAB_TITLES.gpio.title, description: LAB_TITLES.gpio.desc, difficulty: "BEGINNER", completedCount: 0, totalChallenges: 3, progressPercent: 0, status: "NOT_STARTED", totalScore: 0 },
+        pwm: { labId: "pwm", title: LAB_TITLES.pwm.title, description: LAB_TITLES.pwm.desc, difficulty: "INTERMEDIATE", completedCount: 0, totalChallenges: 3, progressPercent: 0, status: "NOT_STARTED", totalScore: 0 },
+        adc: { labId: "adc", title: LAB_TITLES.adc.title, description: LAB_TITLES.adc.desc, difficulty: "BEGINNER", completedCount: 0, totalChallenges: 3, progressPercent: 0, status: "NOT_STARTED", totalScore: 0 },
+        uart: { labId: "uart", title: LAB_TITLES.uart.title, description: LAB_TITLES.uart.desc, difficulty: "ADVANCED", completedCount: 0, totalChallenges: 3, progressPercent: 0, status: "NOT_STARTED", totalScore: 0 },
+      };
+      return {
+        isLoading: false,
+        labsCompletedCount: 0,
+        labsInProgressCount: 0,
+        totalChallengesCompleted: 0,
+        totalScore: 0,
+        averageScore: 0,
+        overallCompletionPercent: 0,
+        totalAttempts: 0,
+        totalHintsUsed: 0,
+        strongestLab: null,
+        nextRecommendedLab: { labId: "gpio", title: LAB_TITLES.gpio.title, href: "/labs/gpio" },
+        labStats: initialStats,
+        recentActivity: [],
+      };
+    }
+
     const labIds: LabId[] = ["gpio", "pwm", "adc", "uart"];
     const labStats: Record<LabId, LabSummaryStats> = {} as Record<LabId, LabSummaryStats>;
     const activity: ActivityItem[] = [];
@@ -201,5 +239,5 @@ export function useStudentProgress(): StudentProgressSummary {
       labStats,
       recentActivity: activity.slice(0, 7),
     };
-  }, []);
+  }, [mounted, tick]);
 }

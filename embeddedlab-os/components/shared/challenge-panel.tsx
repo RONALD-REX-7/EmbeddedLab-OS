@@ -4,7 +4,7 @@
  */
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { CheckCircle2, ChevronRight, ShieldCheck, Target, XCircle } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -35,6 +35,13 @@ export function ChallengePanel({ labId, className }: ChallengePanelProps) {
     revealNextHint,
   } = useChallenge();
 
+  // Initialize or synchronize active challenge on mount and when active challenge changes
+  useEffect(() => {
+    if (currentChallenge) {
+      startChallenge(currentChallenge.id, labId);
+    }
+  }, [currentChallenge, labId, startChallenge]);
+
   const handleSelectChallenge = (idx: number) => {
     setActiveIdx(idx);
     const chal = challenges[idx];
@@ -45,6 +52,9 @@ export function ChallengePanel({ labId, className }: ChallengePanelProps) {
 
   const handleValidate = () => {
     if (!currentChallenge) return;
+    if (!activeChallenge || activeChallenge.challengeId !== currentChallenge.id) {
+      startChallenge(currentChallenge.id, labId);
+    }
     const result = runChallengeValidator(currentChallenge.validatorKey, mcuState);
     recordAttempt(result, currentChallenge.scoringRules.attemptPenalty);
   };

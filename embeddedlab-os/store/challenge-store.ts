@@ -23,6 +23,7 @@ function saveChallengeState(state: ChallengeState): void {
   if (typeof window === "undefined") return;
   try {
     localStorage.setItem(`${STORAGE_KEY_PREFIX}${state.challengeId}`, JSON.stringify(state));
+    window.dispatchEvent(new Event("embeddedlab-progress-update"));
   } catch {
     // Ignore storage quota errors
   }
@@ -63,7 +64,10 @@ export const useChallengeStore = create<ChallengeStoreState>((set, get) => ({
 
   recordAttempt: (result, attemptPenalty = 15) => {
     const { activeChallenge } = get();
-    if (!activeChallenge) return;
+    if (!activeChallenge) {
+      set({ lastValidationResult: result });
+      return;
+    }
 
     const newAttempts = activeChallenge.attempts + 1;
     const penalty = result.passed ? 0 : attemptPenalty;
