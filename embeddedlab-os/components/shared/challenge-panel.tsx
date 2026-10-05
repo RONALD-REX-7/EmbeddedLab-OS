@@ -48,9 +48,9 @@ export function ChallengePanel({ labId, className }: ChallengePanelProps) {
 
   const handleSelectChallenge = (idx: number) => {
     setActiveIdx(idx);
-    const chal = challenges[idx];
-    if (chal) {
-      startChallenge(chal.id, labId);
+    const selectedChallenge = challenges[idx];
+    if (selectedChallenge) {
+      startChallenge(selectedChallenge.id, labId);
     }
   };
 

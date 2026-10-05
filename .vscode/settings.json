@@ -18,6 +18,8 @@
     "potentiometer",
     "pulldown",
     "pullup",
+    "pwm",
+    "pwmled",
     "recharts",
     "shadcn",
     "stm32",
