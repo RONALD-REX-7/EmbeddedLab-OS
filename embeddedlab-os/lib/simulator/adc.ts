@@ -4,10 +4,10 @@
  * ADC simulation logic. Pure TypeScript — no React, no UI dependencies.
  *
  * Core formula:
- *   digital_value = floor((Vin / Vref) × (2^N − 1))
+ *   digital_value = round((clamp(Vin, 0, Vref) / Vref) × (2^N − 1))
  *
  * Where:
- *   Vin  = input voltage (volts)
+ *   Vin  = input voltage (volts, clamped to [0, Vref])
  *   Vref = reference voltage (volts)
  *   N    = resolution in bits
  */
@@ -56,8 +56,8 @@ export function createDefaultADCState(): ADCState {
 /**
  * Calculate all ADC derived values from channel configuration.
  *
- * Throws if Vin > Vref (over-range input — would saturate the ADC).
- * Throws if Vref ≤ 0 (invalid reference voltage).
+ * Clamps inputVoltage to [0, referenceVoltage] range (over-range values saturate at maxDigitalValue).
+ * Throws if referenceVoltage <= 0 (invalid reference voltage).
  */
 export function calculateADCDerivedValues(
   inputVoltage: number,

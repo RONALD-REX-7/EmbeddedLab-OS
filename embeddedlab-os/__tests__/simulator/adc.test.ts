@@ -14,7 +14,7 @@ import {
 } from "@/lib/simulator/adc";
 
 describe("calculateADCDerivedValues", () => {
-  describe("core formula: ADC = floor((Vin / Vref) × (2^N - 1))", () => {
+  describe("core formula: ADC = round((clamp(Vin, 0, Vref) / Vref) × (2^N - 1))", () => {
     it("produces 0 when Vin = 0V", () => {
       const result = calculateADCDerivedValues(0, 3.3, 12);
       expect(result.digitalValue).toBe(0);
@@ -72,15 +72,39 @@ describe("calculateADCDerivedValues", () => {
     });
   });
 
-  describe("boundary validation", () => {
-    it("clamps Vin when Vin > Vref", () => {
+  describe("boundary and rounding validation", () => {
+    it("clamps Vin when Vin > Vref (e.g. 3.4V > 3.3V -> 4095)", () => {
       const result = calculateADCDerivedValues(3.4, 3.3, 12);
       expect(result.digitalValue).toBe(4095);
     });
 
-    it("clamps Vin when Vin is negative", () => {
+    it("clamps extreme over-range voltages (e.g. 10.0V > 3.3V -> 4095)", () => {
+      const result = calculateADCDerivedValues(10.0, 3.3, 12);
+      expect(result.digitalValue).toBe(4095);
+    });
+
+    it("clamps Vin when Vin is negative (e.g. -0.1V -> 0)", () => {
       const result = calculateADCDerivedValues(-0.1, 3.3, 12);
       expect(result.digitalValue).toBe(0);
+    });
+
+    it("rounds up when quantization fraction is >= 0.5 count", () => {
+      // 1 LSB for 12-bit 3.3V = 3.3 / 4095 ≈ 0.00080586 V
+      // 0.5 LSB = 0.00040293 V -> (0.00040293 / 3.3) * 4095 = 0.5 -> round = 1
+      const result = calculateADCDerivedValues(0.000403, 3.3, 12);
+      expect(result.digitalValue).toBe(1);
+    });
+
+    it("rounds down when quantization fraction is < 0.5 count", () => {
+      // 0.4 LSB = 0.0003223 V -> (0.0003223 / 3.3) * 4095 = 0.4 -> round = 0
+      const result = calculateADCDerivedValues(0.00032, 3.3, 12);
+      expect(result.digitalValue).toBe(0);
+    });
+
+    it("evaluates correctly near Vref boundary (Vref - 1 LSB)", () => {
+      const oneLsb = 3.3 / 4095;
+      const result = calculateADCDerivedValues(3.3 - oneLsb, 3.3, 12);
+      expect(result.digitalValue).toBe(4094);
     });
 
     it("throws when Vref is zero", () => {

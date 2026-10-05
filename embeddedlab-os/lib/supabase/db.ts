@@ -59,28 +59,129 @@ export async function saveChallengeAttemptToSupabase(params: {
       hints_revealed: params.hintsRevealed,
     });
 
-    // 2. Upsert lab_progress summary record
+    // 2. Idempotently compute true lab progress summary from unique passed challenges
     if (params.result.passed) {
-      const { data: existingProgress } = await supabase
-        .from("lab_progress")
-        .select("*")
+      const { data: passedAttempts } = await supabase
+        .from("challenge_attempts")
+        .select("challenge_id, score")
         .eq("user_id", params.userId)
         .eq("lab_id", params.labId)
-        .single();
+        .eq("passed", true);
 
-      const newCompletedCount = (existingProgress?.completed_challenges_count || 0) + 1;
-      const newTotalScore = (existingProgress?.total_score || 0) + params.result.score;
+      const challengeBestScore: Record<string, number> = {};
+      if (passedAttempts) {
+        for (const att of passedAttempts) {
+          challengeBestScore[att.challenge_id] = Math.max(
+            challengeBestScore[att.challenge_id] || 0,
+            att.score
+          );
+        }
+      }
+
+      const completedCount = Object.keys(challengeBestScore).length;
+      const totalScore = Object.values(challengeBestScore).reduce((a, b) => a + b, 0);
 
       await supabase.from("lab_progress").upsert({
         user_id: params.userId,
         lab_id: params.labId,
-        completed_challenges_count: newCompletedCount,
-        total_score: newTotalScore,
+        completed_challenges_count: completedCount,
+        total_score: totalScore,
         last_accessed_at: new Date().toISOString(),
       });
     }
   } catch {
     // Graceful error handling — fallback without crashing UI
+  }
+}
+
+/**
+ * Hydrates cloud challenge completion records into local storage cache upon sign-in.
+ */
+export async function hydrateUserProgressFromSupabase(userId: string): Promise<boolean> {
+  const { isConfigured } = getSupabaseEnv();
+  const supabase = createClient();
+
+  if (!isConfigured || !supabase || !userId || userId === "demo-user-id") {
+    return false;
+  }
+
+  try {
+    const { data: attempts } = await supabase
+      .from("challenge_attempts")
+      .select("challenge_id, lab_id, passed, score, attempts_count, hints_revealed")
+      .eq("user_id", userId);
+
+    if (!attempts || attempts.length === 0) return true;
+
+    if (typeof localStorage !== "undefined") {
+      const bestByChallenge: Record<string, {
+        challengeId: string;
+        labId: LabId;
+        status: "PASSED" | "FAILED";
+        score: number;
+        attempts: number;
+        hintsRevealed: number;
+        completedAt: number | null;
+      }> = {};
+
+      for (const att of attempts) {
+        const existing = bestByChallenge[att.challenge_id];
+        if (!existing) {
+          bestByChallenge[att.challenge_id] = {
+            challengeId: att.challenge_id,
+            labId: att.lab_id as LabId,
+            status: att.passed ? "PASSED" : "FAILED",
+            score: att.score,
+            attempts: att.attempts_count,
+            hintsRevealed: att.hints_revealed,
+            completedAt: att.passed ? Date.now() : null,
+          };
+        } else {
+          existing.attempts = Math.max(existing.attempts, att.attempts_count);
+          existing.hintsRevealed = Math.max(existing.hintsRevealed, att.hints_revealed);
+          if (att.passed) {
+            existing.status = "PASSED";
+            existing.score = Math.max(existing.score, att.score);
+            if (!existing.completedAt) existing.completedAt = Date.now();
+          }
+        }
+      }
+
+      for (const [chId, data] of Object.entries(bestByChallenge)) {
+        const key = `embeddedlab_challenge_progress_${chId}`;
+        const existingRaw = localStorage.getItem(key);
+        let shouldWrite = true;
+        if (existingRaw) {
+          try {
+            const parsed = JSON.parse(existingRaw);
+            if (parsed.status === "PASSED" && parsed.score >= data.score) {
+              shouldWrite = false;
+            }
+          } catch {
+            shouldWrite = true;
+          }
+        }
+        if (shouldWrite) {
+          localStorage.setItem(key, JSON.stringify({
+            challengeId: data.challengeId,
+            labId: data.labId,
+            status: data.status,
+            attempts: data.attempts,
+            score: data.score,
+            hintsRevealed: data.hintsRevealed,
+            completedAt: data.completedAt,
+            attempts_log: [],
+          }));
+        }
+      }
+
+      if (typeof window !== "undefined") {
+        window.dispatchEvent(new Event("embeddedlab-progress-update"));
+      }
+    }
+    return true;
+  } catch {
+    return false;
   }
 }
 
@@ -148,16 +249,44 @@ export function wipeLocalStorageData(): { success: boolean; clearedKeysCount: nu
 
 /**
  * Permanently deletes user records from Supabase tables (challenge_attempts, lab_progress)
- * and purges local storage caches.
+ * and purges local storage caches. For authenticated users, calls the server-side deletion API.
  */
 export async function deleteUserAccountData(
   userId: string
-): Promise<{ success: boolean; error?: string }> {
+): Promise<{ success: boolean; authDeleted?: boolean; message?: string; error?: string }> {
   wipeLocalStorageData();
   const { isConfigured } = getSupabaseEnv();
-  const supabase = createClient();
 
-  if (!isConfigured || !supabase || userId === "demo-user-id") {
+  if (!isConfigured || userId === "demo-user-id") {
+    return {
+      success: true,
+      authDeleted: false,
+      message: "Local simulation caches and offline progress have been cleared.",
+    };
+  }
+
+  // If in browser and authenticated, call server-side deletion endpoint
+  if (typeof window !== "undefined") {
+    try {
+      const res = await fetch("/api/account/delete", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      });
+      if (res.ok) {
+        const data = await res.json();
+        return {
+          success: true,
+          authDeleted: Boolean(data.authDeleted),
+          message: data.message,
+        };
+      }
+    } catch {
+      // Fallback to direct client table deletion below
+    }
+  }
+
+  const supabase = createClient();
+  if (!supabase) {
     return { success: true };
   }
 
@@ -165,7 +294,11 @@ export async function deleteUserAccountData(
     await supabase.from("challenge_attempts").delete().eq("user_id", userId);
     await supabase.from("lab_progress").delete().eq("user_id", userId);
     await supabase.from("simulation_sessions").delete().eq("user_id", userId);
-    return { success: true };
+    return {
+      success: true,
+      authDeleted: false,
+      message: "Cloud learning progress and challenge attempts have been erased.",
+    };
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : "Failed to erase cloud records";
     return { success: false, error: message };

@@ -171,7 +171,7 @@ export function PWMWorkspace() {
             subtitle="Real-Time Oscilloscope & Load Visualization"
             icon={Activity}
             variant="instrument"
-            telemetryTag="TIM3 CH1"
+            telemetryTag={channel.label}
           >
             <div className="space-y-3.5">
               <WaveformVisualizer channel={channel} derived={activeDerived} />

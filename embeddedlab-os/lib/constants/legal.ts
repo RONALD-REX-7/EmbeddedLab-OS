@@ -90,7 +90,7 @@ export const LEGAL_CONFIG = {
       purpose:
         "Contextual embedded-systems tutoring assistance (Explain, Hint, Debug).",
       dataShared:
-        "Technical hardware state parameters only (pin voltage, frequency, duty cycle, UART baud rate, error logs). No personal names, emails, or user IDs are transmitted.",
+        "Technical hardware state parameters only (pin voltage, frequency, duty cycle, UART baud rate, error logs) and the student's technical concept query where applicable. No personal names, emails, or user IDs are transmitted.",
       privacyUrl: "https://policies.google.com/privacy",
     },
     {

@@ -38,6 +38,37 @@ export async function requestAIGuidance(
     });
 
     if (!res.ok) {
+      let errorMessage = "";
+      try {
+        const errJson = await res.json();
+        errorMessage = errJson.error;
+      } catch {
+        // Non-JSON error body
+      }
+
+      if (res.status === 429) {
+        return {
+          action: params.action,
+          content:
+            errorMessage ||
+            "AI guidance rate limit reached. Please wait a moment before sending another request.",
+          isFallback: false,
+          isError: true,
+          error: errorMessage,
+        };
+      }
+
+      if (res.status === 400 || res.status === 413) {
+        return {
+          action: params.action,
+          content:
+            errorMessage || "Invalid or oversized request parameters sent to AI assistant.",
+          isFallback: false,
+          isError: true,
+          error: errorMessage,
+        };
+      }
+
       return generateOfflineFallback(params.action, sanitizedContext);
     }
 

@@ -18,7 +18,7 @@ export default function LoginPage() {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const { signIn, isConfigured } = useAuth();
+  const { signIn, enterDemoMode, isConfigured } = useAuth();
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -42,6 +42,7 @@ export default function LoginPage() {
   };
 
   const handleDemoMode = () => {
+    enterDemoMode();
     router.push("/dashboard");
   };
 

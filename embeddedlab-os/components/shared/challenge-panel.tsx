@@ -10,7 +10,10 @@ import { CheckCircle2, ChevronRight, ShieldCheck, Target, XCircle } from "lucide
 import { Button } from "@/components/ui/button";
 import { Panel } from "@/components/shared/panel";
 import { useChallenge } from "@/hooks/use-challenge";
+import { useChallengeStore } from "@/store/challenge-store";
 import { useSimulatorStore } from "@/store/simulator-store";
+import { useAuth } from "@/lib/supabase/auth-context";
+import { saveChallengeAttemptToSupabase } from "@/lib/supabase/db";
 import { runChallengeValidator, LAB_CHALLENGES } from "@/lib/challenges";
 import { cn } from "@/lib/utils";
 import type { ChallengeDifficulty, LabId } from "@/types/simulator";
@@ -26,6 +29,7 @@ export function ChallengePanel({ labId, className }: ChallengePanelProps) {
   const currentChallenge = challenges[activeIdx] || challenges[0];
 
   const mcuState = useSimulatorStore((state) => state.mcuState);
+  const { user, isDemoMode } = useAuth();
 
   const {
     activeChallenge,
@@ -57,6 +61,21 @@ export function ChallengePanel({ labId, className }: ChallengePanelProps) {
     }
     const result = runChallengeValidator(currentChallenge.validatorKey, mcuState);
     recordAttempt(result, currentChallenge.scoringRules.attemptPenalty);
+
+    // Persist authenticated student progress to Supabase
+    if (!isDemoMode && user && user.id && user.id !== "demo-user-id") {
+      const stateNow = useChallengeStore.getState().activeChallenge;
+      saveChallengeAttemptToSupabase({
+        userId: user.id,
+        labId,
+        challengeId: currentChallenge.id,
+        result,
+        attemptsCount: stateNow?.attempts ?? 1,
+        hintsRevealed: stateNow?.hintsRevealed ?? 0,
+      }).catch(() => {
+        // Non-blocking catch for transient network or Supabase errors
+      });
+    }
   };
 
   const difficultyBadges: Record<ChallengeDifficulty, { label: string; style: string }> = {

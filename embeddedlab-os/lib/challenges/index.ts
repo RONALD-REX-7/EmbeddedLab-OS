@@ -46,6 +46,20 @@ export const LAB_CHALLENGES: Record<LabId, ChallengeDefinition[]> = {
   uart: UART_CHALLENGES,
 };
 
+/** Number of challenges per lab (strictly 3 in canonical curriculum) */
+export const CHALLENGES_PER_LAB_COUNT = 3;
+
+/** Total challenges across all laboratories (strictly 12 in canonical curriculum) */
+export const TOTAL_CHALLENGES_COUNT = Object.values(LAB_CHALLENGES).reduce(
+  (acc, list) => acc + list.length,
+  0
+);
+
+/** Helper to retrieve challenges for a given lab ID */
+export function getChallengesForLab(labId: LabId): ChallengeDefinition[] {
+  return LAB_CHALLENGES[labId] ?? [];
+}
+
 /** Validator function registry */
 const VALIDATOR_MAP: Record<string, (state: MicrocontrollerState) => ValidationResult> = {
   validateGPIOChallenge1,

@@ -20,8 +20,9 @@ export default function SignupPage() {
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isCheckEmail, setIsCheckEmail] = useState(false);
 
-  const { signUp } = useAuth();
+  const { signUp, enterDemoMode } = useAuth();
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -42,17 +43,21 @@ export default function SignupPage() {
     setIsSubmitting(true);
     setErrorMsg(null);
 
-    const { error } = await signUp(email, password, fullName);
+    const { data, error } = await signUp(email, password, fullName);
     setIsSubmitting(false);
 
     if (error) {
       setErrorMsg(error.message);
-    } else {
+    } else if (data?.session) {
       router.push("/dashboard");
+    } else {
+      // Email confirmation required or unconfirmed registration
+      setIsCheckEmail(true);
     }
   };
 
   const handleDemoMode = () => {
+    enterDemoMode();
     router.push("/dashboard");
   };
 
@@ -77,12 +82,47 @@ export default function SignupPage() {
           </p>
         </div>
 
-        {/* Signup Panel */}
-        <div className="rounded border border-border-default bg-surface-panel p-5 space-y-4 shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
-          <div className="border-b border-border-subtle pb-2.5">
-            <h2 className="text-[10px] font-bold text-foreground uppercase tracking-wider font-mono">
-              Account Registration
-            </h2>
+        {/* Signup or Email Confirmation Panel */}
+        {isCheckEmail ? (
+          <div className="rounded border border-primary/40 bg-surface-panel p-6 space-y-4 shadow-[0_4px_20px_rgba(0,0,0,0.4)] text-center font-mono">
+            <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 border border-primary/30 text-primary mx-auto">
+              <Mail className="h-6 w-6" aria-hidden="true" />
+            </div>
+            <div className="space-y-1">
+              <h2 className="text-sm font-bold text-foreground uppercase tracking-wider">
+                Check Your Inbox
+              </h2>
+              <p className="text-xs text-muted-foreground font-sans">
+                A confirmation email has been sent to{" "}
+                <strong className="text-foreground font-mono">{email}</strong>.
+                Please click the link in your email to verify your address and sign in.
+              </p>
+            </div>
+            <div className="pt-2 flex flex-col gap-2">
+              <Button
+                type="button"
+                onClick={() => router.push("/login")}
+                className="w-full font-mono text-xs font-bold"
+              >
+                Proceed to Sign In
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                size="xs"
+                onClick={handleDemoMode}
+                className="w-full font-mono text-[10px]"
+              >
+                Continue in Offline Demo Mode
+              </Button>
+            </div>
+          </div>
+        ) : (
+          <div className="rounded border border-border-default bg-surface-panel p-5 space-y-4 shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
+            <div className="border-b border-border-subtle pb-2.5">
+              <h2 className="text-[10px] font-bold text-foreground uppercase tracking-wider font-mono">
+                Account Registration
+              </h2>
             <p className="text-[9px] text-muted-foreground mt-0.5 font-mono">
               Register to save progress and track challenge scores across sessions.
             </p>
@@ -255,6 +295,7 @@ export default function SignupPage() {
             </div>
           </div>
         </div>
+        )}
       </div>
     </div>
   );

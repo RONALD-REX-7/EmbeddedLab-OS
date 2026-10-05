@@ -69,7 +69,34 @@ export const useChallengeStore = create<ChallengeStoreState>((set, get) => ({
       return;
     }
 
+    const wasPassed = activeChallenge.status === "PASSED";
     const newAttempts = activeChallenge.attempts + 1;
+
+    // Preserve completion status and score if already achieved
+    if (wasPassed) {
+      const updated: ChallengeState = {
+        ...activeChallenge,
+        attempts: newAttempts,
+        status: "PASSED",
+        completedAt: activeChallenge.completedAt || Date.now(),
+        attempts_log: [
+          ...activeChallenge.attempts_log,
+          {
+            timestamp: Date.now(),
+            passed: result.passed,
+            stateSnapshot: {},
+          },
+        ],
+      };
+
+      saveChallengeState(updated);
+      set({
+        lastValidationResult: result,
+        activeChallenge: updated,
+      });
+      return;
+    }
+
     const penalty = result.passed ? 0 : attemptPenalty;
     const newScore = Math.max(0, activeChallenge.score - penalty);
     const completedAt = result.passed ? Date.now() : activeChallenge.completedAt || null;
@@ -102,7 +129,9 @@ export const useChallengeStore = create<ChallengeStoreState>((set, get) => ({
     const { activeChallenge } = get();
     if (!activeChallenge) return;
 
-    const newScore = Math.max(0, activeChallenge.score - hintPenalty);
+    // Do not penalize score if challenge has already been completed
+    const penalty = activeChallenge.status === "PASSED" ? 0 : hintPenalty;
+    const newScore = Math.max(0, activeChallenge.score - penalty);
     const updated: ChallengeState = {
       ...activeChallenge,
       hintsRevealed: activeChallenge.hintsRevealed + 1,

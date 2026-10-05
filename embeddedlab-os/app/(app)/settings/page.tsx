@@ -39,7 +39,7 @@ import { LEGAL_CONFIG } from "@/lib/constants/legal";
 
 export default function SettingsPage() {
   const router = useRouter();
-  const { user, isDemoMode, isConfigured, signOut } = useAuth();
+  const { user, isDemoMode, signOut } = useAuth();
 
   const [notification, setNotification] = useState<{
     type: "success" | "error" | "info";
@@ -102,6 +102,7 @@ export default function SettingsPage() {
       setNotification({
         type: "success",
         message:
+          result.message ||
           "All challenge records and local simulation data have been permanently deleted.",
       });
       if (user && !isDemoMode) {
@@ -186,13 +187,15 @@ export default function SettingsPage() {
             <div className="flex justify-between py-1.5 border-b border-border-subtle/50">
               <span className="text-muted-foreground">Account Identifier:</span>
               <span className="text-foreground truncate max-w-48 font-medium">
-                {user?.email || "Guest Student (demo@embeddedlab.org)"}
+                {!isDemoMode && user?.email ? user.email : "Guest Student / Demo account"}
               </span>
             </div>
             <div className="flex justify-between py-1.5 border-b border-border-subtle/50">
               <span className="text-muted-foreground">Display Name:</span>
               <span className="text-foreground font-medium">
-                {user?.user_metadata?.full_name || "Student Engineer"}
+                {!isDemoMode && user?.user_metadata?.full_name
+                  ? user.user_metadata.full_name
+                  : "Guest Student"}
               </span>
             </div>
             <div className="flex justify-between py-1.5 border-b border-border-subtle/50">
@@ -202,9 +205,9 @@ export default function SettingsPage() {
           </div>
 
           <p className="text-[10px] text-muted-foreground font-sans leading-relaxed">
-            {isConfigured
+            {!isDemoMode && user
               ? "Your progress synchronizes securely with Supabase cloud storage."
-              : "Supabase credentials are not configured. Running fully offline with local browser storage."}
+              : "Running in Offline Demo mode with local browser storage. Demo progress is stored on this device."}
           </p>
 
           <div className="pt-2 flex items-center gap-2">
@@ -498,8 +501,14 @@ export default function SettingsPage() {
               <p className="text-foreground font-bold">What will be purged:</p>
               <ul className="list-disc list-inside text-muted-foreground space-y-0.5">
                 <li>Browser localStorage simulation keys (<code className="text-primary">embeddedlab_*</code>)</li>
-                <li>Supabase challenge attempt logs & scores</li>
-                <li>Authentication session credentials</li>
+                {isDemoMode ? (
+                  <li>Local challenge attempt records and scores</li>
+                ) : (
+                  <>
+                    <li>Cloud challenge attempt logs & progress in Supabase</li>
+                    <li>Active authentication session credentials</li>
+                  </>
+                )}
               </ul>
             </div>
 

@@ -162,10 +162,10 @@ export default function PrivacyPolicyPage() {
             <p className="text-muted-foreground font-sans text-xs">
               Our sanitization layer (<code className="text-primary font-mono text-[11px]">lib/ai/sanitizer.ts</code>)
               strips all student identifiers before sending context to the AI model. Gemini receives
-              only numeric peripheral values (e.g. <code className="text-foreground">voltage: 2.5V</code>,{" "}
-              <code className="text-foreground">baud: 9600</code>, <code className="text-foreground">dutyCycle: 50%</code>)
-              and recent simulator console errors. Your name, email, IP address, and student ID are{" "}
-              <strong>never transmitted</strong> to Google AI.
+              only sanitized technical peripheral values (e.g. <code className="text-foreground">voltage: 2.5V</code>,{" "}
+              <code className="text-foreground">baud: 9600</code>, <code className="text-foreground">dutyCycle: 50%</code>),
+              recent simulator console errors, and the user&apos;s technical concept query where applicable. Your name, email,
+              IP address, and student ID are <strong>never transmitted</strong> to Google AI.
             </p>
           </div>
         </section>

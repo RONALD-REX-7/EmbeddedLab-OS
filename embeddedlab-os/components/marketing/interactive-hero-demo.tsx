@@ -34,7 +34,7 @@ export function InteractiveHeroDemo() {
 
   // ADC: 12-bit, Vref = 3.30V
   const adcMaxCode = 4095;
-  const rawCode = Math.min(adcMaxCode, Math.floor((voltage / 3.3) * adcMaxCode));
+  const rawCode = Math.min(adcMaxCode, Math.round((Math.max(0, voltage) / 3.3) * adcMaxCode));
   const hexCode = "0x" + rawCode.toString(16).toUpperCase().padStart(3, "0");
   const stepSizeMv = ((3.3 / adcMaxCode) * 1000).toFixed(2);
   const reconstructedV = ((rawCode / adcMaxCode) * 3.3).toFixed(3);
@@ -116,7 +116,7 @@ export function InteractiveHeroDemo() {
               <div className="flex items-center justify-between text-[11px] font-mono">
                 <span className="text-muted-foreground flex items-center gap-1">
                   <span className="w-2 h-2 rounded-full bg-signal-pulse animate-pulse" />
-                  CH1: TIM2_CH1 (SQUARE WAVE)
+                  DEMO SIGNAL · TIM1_CH1 (SYNTHETIC SQUARE WAVE)
                 </span>
                 <span className="text-primary font-bold">{frequencyHz.toLocaleString()} Hz</span>
               </div>

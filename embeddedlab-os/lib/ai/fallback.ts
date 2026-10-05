@@ -12,6 +12,8 @@ export interface AIResponsePayload {
   action: AIActionType;
   content: string;
   isFallback: boolean;
+  isError?: boolean;
+  error?: string;
 }
 
 export function generateOfflineFallback(

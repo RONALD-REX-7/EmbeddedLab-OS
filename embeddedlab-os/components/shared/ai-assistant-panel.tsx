@@ -122,15 +122,39 @@ export function AIAssistantPanel({
 
       {/* Response Display Box */}
       {activeResponse && (
-        <div className="rounded border border-[var(--border-default)] bg-[var(--surface-sunken)] p-3 space-y-2 font-mono text-xs shadow-inner">
+        <div
+          className={cn(
+            "rounded border p-3 space-y-2 font-mono text-xs shadow-inner",
+            activeResponse.isError
+              ? "border-amber-500/40 bg-amber-500/5 text-amber-200"
+              : "border-[var(--border-default)] bg-[var(--surface-sunken)]"
+          )}
+        >
           <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-1.5 text-[10px] text-muted-foreground">
             <span className="flex items-center gap-1 uppercase font-bold text-foreground">
-              <Sparkles className="h-3 w-3 text-primary" aria-hidden="true" />
-              {activeResponse.action} Analysis
+              {activeResponse.isError ? (
+                <>
+                  <AlertTriangle className="h-3 w-3 text-amber-400" aria-hidden="true" />
+                  Service Notice
+                </>
+              ) : (
+                <>
+                  <Sparkles className="h-3 w-3 text-primary" aria-hidden="true" />
+                  {activeResponse.action} Analysis
+                </>
+              )}
             </span>
-            {activeResponse.isFallback && (
-              <span className="text-[9px] bg-muted/40 px-1 py-0.2 rounded text-muted-foreground border border-border">
+            {activeResponse.isError ? (
+              <span className="text-[9px] bg-amber-500/20 px-1.5 py-0.5 rounded text-amber-300 border border-amber-500/30">
+                Notice
+              </span>
+            ) : activeResponse.isFallback ? (
+              <span className="text-[9px] bg-muted/40 px-1.5 py-0.5 rounded text-muted-foreground border border-border">
                 Local Fallback
+              </span>
+            ) : (
+              <span className="text-[9px] bg-primary/20 px-1.5 py-0.5 rounded text-primary border border-primary/30">
+                Gemini 2.5 Live
               </span>
             )}
           </div>

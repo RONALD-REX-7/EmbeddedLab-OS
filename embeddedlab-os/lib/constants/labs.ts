@@ -7,6 +7,7 @@
  */
 
 import type { LabId } from "@/types/simulator";
+import { LAB_CHALLENGES } from "@/lib/challenges";
 
 export interface LabDefinition {
   id: LabId;
@@ -41,7 +42,7 @@ export const LABS: LabDefinition[] = [
     ],
     icon: "Zap",
     route: "/labs/gpio",
-    challengeCount: 3,
+    challengeCount: LAB_CHALLENGES.gpio.length,
   },
   {
     id: "pwm",
@@ -59,7 +60,7 @@ export const LABS: LabDefinition[] = [
     ],
     icon: "Activity",
     route: "/labs/pwm",
-    challengeCount: 3,
+    challengeCount: LAB_CHALLENGES.pwm.length,
   },
   {
     id: "adc",
@@ -68,7 +69,7 @@ export const LABS: LabDefinition[] = [
     description:
       "Adjust a virtual input voltage and observe the digital conversion using the real ADC formula across multiple resolutions.",
     objectives: [
-      "Understand the ADC formula: ADC = (Vin / Vref) × (2^N − 1)",
+      "Understand the ADC formula: ADC = round((Vin / Vref) × (2^N − 1))",
       "Adjust input voltage with a virtual potentiometer",
       "Change ADC resolution (8, 10, 12, 16-bit)",
       "Read digital output in decimal, hex, and binary",
@@ -77,7 +78,7 @@ export const LABS: LabDefinition[] = [
     ],
     icon: "BarChart2",
     route: "/labs/adc",
-    challengeCount: 3,
+    challengeCount: LAB_CHALLENGES.adc.length,
   },
   {
     id: "uart",
@@ -95,7 +96,7 @@ export const LABS: LabDefinition[] = [
     ],
     icon: "Radio",
     route: "/labs/uart",
-    challengeCount: 3,
+    challengeCount: LAB_CHALLENGES.uart.length,
   },
 ];
 

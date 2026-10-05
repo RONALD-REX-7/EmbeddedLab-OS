@@ -296,7 +296,7 @@ export default function LandingPage() {
 
                   <div className="pt-4 border-t border-border/60 flex items-center justify-between">
                     <span className="text-[10px] font-mono text-muted-foreground">
-                      4 Guided Challenges Available
+                      {lab.challengeCount} Guided Challenges Available
                     </span>
                     <Link
                       href={lab.route}
