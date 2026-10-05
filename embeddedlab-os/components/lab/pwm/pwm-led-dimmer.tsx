@@ -16,7 +16,7 @@ export function PWMLEDDimmer({ channel }: PWMLEDDimmerProps) {
   const avgVoltage = ((dutyCyclePercent / 100) * 3.3).toFixed(2);
 
   return (
-    <div className="rounded border border-[var(--border-default)] bg-[var(--surface-panel)] p-3 flex items-center justify-between select-none">
+    <div className="rounded border border-border-default bg-surface-panel p-3 flex items-center justify-between select-none">
       <div className="flex items-center gap-3">
         {/* Dimmable LED Element */}
         <div className="relative flex items-center justify-center">
@@ -49,7 +49,7 @@ export function PWMLEDDimmer({ channel }: PWMLEDDimmerProps) {
         <span className="text-[10px] font-bold text-foreground block">
           {enabled ? `${dutyCyclePercent}%` : "OFF"}
         </span>
-        <div className="h-1 w-16 bg-[var(--surface-sunken)] rounded-sm overflow-hidden border border-[var(--border-subtle)]">
+        <div className="h-1 w-16 bg-surface-sunken rounded-sm overflow-hidden border border-border-subtle">
           <div
             className="h-full bg-emerald-500 transition-[width] duration-200"
             style={{ width: `${enabled ? dutyCyclePercent : 0}%` }}

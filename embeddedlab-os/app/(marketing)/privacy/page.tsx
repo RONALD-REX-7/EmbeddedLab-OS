@@ -75,7 +75,7 @@ export default function PrivacyPolicyPage() {
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 font-mono text-[11px]">
             <div className="p-3.5 rounded border border-border-subtle bg-surface-panel space-y-1.5">
-              <strong className="text-foreground uppercase block text-[10px] tracking-wider text-primary">
+              <strong className="text-primary uppercase block text-[10px] tracking-wider">
                 A. Student Account Data (Optional)
               </strong>
               <p className="text-muted-foreground font-sans text-xs">
@@ -86,7 +86,7 @@ export default function PrivacyPolicyPage() {
             </div>
 
             <div className="p-3.5 rounded border border-border-subtle bg-surface-panel space-y-1.5">
-              <strong className="text-foreground uppercase block text-[10px] tracking-wider text-primary">
+              <strong className="text-primary uppercase block text-[10px] tracking-wider">
                 B. Learning Progress & Challenge Scores
               </strong>
               <p className="text-muted-foreground font-sans text-xs">
@@ -96,7 +96,7 @@ export default function PrivacyPolicyPage() {
             </div>
 
             <div className="p-3.5 rounded border border-border-subtle bg-surface-panel space-y-1.5">
-              <strong className="text-foreground uppercase block text-[10px] tracking-wider text-primary">
+              <strong className="text-primary uppercase block text-[10px] tracking-wider">
                 C. Microcontroller Simulation State
               </strong>
               <p className="text-muted-foreground font-sans text-xs">
@@ -107,7 +107,7 @@ export default function PrivacyPolicyPage() {
             </div>
 
             <div className="p-3.5 rounded border border-border-subtle bg-surface-panel space-y-1.5">
-              <strong className="text-foreground uppercase block text-[10px] tracking-wider text-primary">
+              <strong className="text-primary uppercase block text-[10px] tracking-wider">
                 D. Technical Telemetry & Diagnostic Logs
               </strong>
               <p className="text-muted-foreground font-sans text-xs">
@@ -242,7 +242,7 @@ export default function PrivacyPolicyPage() {
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
             <div className="p-3.5 rounded border border-border-subtle bg-surface-panel space-y-2">
-              <strong className="font-mono text-foreground uppercase block text-[10px] text-primary">
+              <strong className="font-mono text-primary uppercase block text-[10px]">
                 Immediate Browser Data Wipe
               </strong>
               <p className="text-muted-foreground font-sans leading-relaxed text-[11px]">
@@ -253,7 +253,7 @@ export default function PrivacyPolicyPage() {
             </div>
 
             <div className="p-3.5 rounded border border-border-subtle bg-surface-panel space-y-2">
-              <strong className="font-mono text-foreground uppercase block text-[10px] text-primary">
+              <strong className="font-mono text-primary uppercase block text-[10px]">
                 Cloud Account Deletion Request
               </strong>
               <p className="text-muted-foreground font-sans leading-relaxed text-[11px]">

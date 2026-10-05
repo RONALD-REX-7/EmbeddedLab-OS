@@ -81,8 +81,8 @@ export default function LoginPage() {
         )}
 
         {/* Login Panel */}
-        <div className="rounded border border-[var(--border-default)] bg-[var(--surface-panel)] p-5 space-y-4 shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
-          <div className="border-b border-[var(--border-subtle)] pb-2.5">
+        <div className="rounded border border-border-default bg-surface-panel p-5 space-y-4 shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
+          <div className="border-b border-border-subtle pb-2.5">
             <h2 className="text-[10px] font-bold text-foreground uppercase tracking-wider font-mono">
               Account Authentication
             </h2>
@@ -151,7 +151,7 @@ export default function LoginPage() {
             </Button>
           </form>
 
-          <div className="pt-3 border-t border-[var(--border-subtle)] flex flex-col gap-2">
+          <div className="pt-3 border-t border-border-subtle flex flex-col gap-2">
             <Button
               type="button"
               variant="outline"

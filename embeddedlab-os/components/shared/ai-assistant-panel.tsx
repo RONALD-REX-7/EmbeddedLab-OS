@@ -127,10 +127,10 @@ export function AIAssistantPanel({
             "rounded border p-3 space-y-2 font-mono text-xs shadow-inner",
             activeResponse.isError
               ? "border-amber-500/40 bg-amber-500/5 text-amber-200"
-              : "border-[var(--border-default)] bg-[var(--surface-sunken)]"
+              : "border-border-default bg-surface-sunken"
           )}
         >
-          <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-1.5 text-[10px] text-muted-foreground">
+          <div className="flex items-center justify-between border-b border-border-subtle pb-1.5 text-[10px] text-muted-foreground">
             <span className="flex items-center gap-1 uppercase font-bold text-foreground">
               {activeResponse.isError ? (
                 <>
@@ -163,7 +163,7 @@ export function AIAssistantPanel({
             {activeResponse.content.split("\n").map((line, idx) => {
               if (line.startsWith("### ")) {
                 return (
-                  <h4 key={idx} className="font-bold text-xs text-foreground pt-1 font-mono text-primary">
+                  <h4 key={idx} className="font-bold text-xs text-primary pt-1 font-mono">
                     {line.replace("### ", "")}
                   </h4>
                 );

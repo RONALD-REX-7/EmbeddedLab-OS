@@ -98,7 +98,7 @@ export function ChallengePanel({ labId, className }: ChallengePanelProps) {
         <div
           role="tablist"
           aria-label="Laboratory challenge tasks"
-          className="grid grid-cols-3 gap-1 bg-[var(--surface-sunken)] p-1 rounded border border-[var(--border-default)] select-none"
+          className="grid grid-cols-3 gap-1 bg-surface-sunken p-1 rounded border border-border-default select-none"
         >
           {challenges.map((ch, idx) => {
             const isCurrent = activeIdx === idx;
@@ -130,10 +130,10 @@ export function ChallengePanel({ labId, className }: ChallengePanelProps) {
             role="tabpanel"
             id={`task-panel-${activeIdx}`}
             aria-labelledby={`task-tab-${activeIdx}`}
-            className="space-y-3 bg-[var(--surface-sunken)]/60 border border-[var(--border-default)] rounded p-3.5"
+            className="space-y-3 bg-(--surface-sunken)/60 border border-border-default rounded p-3.5"
           >
             {/* Header: Title, Level Badge, and Score Box */}
-            <div className="space-y-2 pb-2.5 border-b border-[var(--border-default)]/70">
+            <div className="space-y-2 pb-2.5 border-b border-(--border-default)/70">
               <div className="flex items-center justify-between gap-2">
                 <span className={cn("text-[9px] px-1.5 py-0.5 rounded border font-mono font-bold tracking-wider", badge.style)}>
                   {badge.label}
@@ -173,7 +173,7 @@ export function ChallengePanel({ labId, className }: ChallengePanelProps) {
                   <ShieldCheck className="h-3 w-3 text-primary" />
                   Engineering Requirements
                 </span>
-                <div className="space-y-1 bg-[var(--surface-base)] border border-[var(--border-subtle)] rounded p-2 text-[11px] font-sans">
+                <div className="space-y-1 bg-surface-base border border-border-subtle rounded p-2 text-[11px] font-sans">
                   {currentChallenge.objectives.map((obj, idx) => (
                     <div key={idx} className="flex items-start gap-1.5 text-foreground/90">
                       <span className="text-primary font-mono font-bold text-xs">›</span>
@@ -185,7 +185,7 @@ export function ChallengePanel({ labId, className }: ChallengePanelProps) {
             )}
 
             {/* Progressive Hints Section */}
-            <div className="pt-1.5 border-t border-[var(--border-default)]/50 space-y-2">
+            <div className="pt-1.5 border-t border-(--border-default)/50 space-y-2">
               <div className="flex items-center justify-between text-[10px]">
                 <span className="text-muted-foreground">
                   Hints ({activeChallenge?.hintsRevealed || 0} / {currentChallenge.hints.length})
@@ -203,7 +203,7 @@ export function ChallengePanel({ labId, className }: ChallengePanelProps) {
               </div>
 
               {activeChallenge && activeChallenge.hintsRevealed > 0 && (
-                <div className="space-y-1 bg-[var(--surface-base)] border border-[var(--border-subtle)] rounded p-2 text-[11px] font-sans">
+                <div className="space-y-1 bg-surface-base border border-border-subtle rounded p-2 text-[11px] font-sans">
                   {currentChallenge.hints.slice(0, activeChallenge.hintsRevealed).map((h) => (
                     <div key={h.order} className="text-muted-foreground flex gap-1.5 leading-snug">
                       <span className="text-amber-400 font-mono font-bold shrink-0">{h.order}.</span>
