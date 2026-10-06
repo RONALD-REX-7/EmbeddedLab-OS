@@ -40,7 +40,14 @@ jobs:
         run: npm run type-check
 
       - name: Run Vitest test suite
-        run: npm test
+        run: |
+          npx vitest run --reporter=verbose 2>&1 | tee vitest_output.txt || {
+            echo "### Vitest Test Suite Output" >> $GITHUB_STEP_SUMMARY
+            echo "```" >> $GITHUB_STEP_SUMMARY
+            tail -n 80 vitest_output.txt >> $GITHUB_STEP_SUMMARY
+            echo "```" >> $GITHUB_STEP_SUMMARY
+            exit 1
+          }
 
       - name: Run Next.js production build
         run: npm run build
