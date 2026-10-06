@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "description": "Browser-based virtual embedded systems laboratory for interactive microcontrollers, signals, and hardware protocol education.",
+  "license": "Apache-2.0",
   "author": "Ronald Rex <ronaldrexch@gmail.com>",
   "repository": {
     "type": "git",

@@ -316,7 +316,7 @@ The following screenshots are captured directly from the live production deploym
 
 ## 📄 License
 
-This repository does not currently include a formal open-source license. All rights reserved.
+Licensed under the Apache License, Version 2.0. See the [`../LICENSE`](../LICENSE) file for the full license text.
 
 ---
 

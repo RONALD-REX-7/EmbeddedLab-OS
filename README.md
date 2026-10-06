@@ -316,7 +316,8 @@ The following screenshots are captured directly from the live production deploym
 
 ## 📄 License
 
-This project is licensed under the [MIT License](./LICENSE). Copyright (c) 2026 Ronald Rex C H.
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
+See the [`LICENSE`](./LICENSE) file for the full license text.
 
 ---
 
