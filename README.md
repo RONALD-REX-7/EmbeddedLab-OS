@@ -316,7 +316,7 @@ The following screenshots are captured directly from the live production deploym
 
 ## 📄 License
 
-This repository does not currently include a formal open-source license. All rights reserved.
+This project is licensed under the [MIT License](./LICENSE). Copyright (c) 2026 Ronald Rex C H.
 
 ---
 
