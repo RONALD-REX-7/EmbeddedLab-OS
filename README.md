@@ -87,6 +87,9 @@ EmbeddedLab OS incorporates a scoped, privacy-sanitized AI assistant powered by 
 
 ## 🏗️ System Architecture
 
+*For detailed architectural specifications, state machine definitions, and simulation boundaries, refer to [`ARCHITECTURE.md`](./ARCHITECTURE.md).*
+
+
 ```text
 ┌────────────────────────────────────────────────────────┐
 │               User Interface (App Router)              │
@@ -244,8 +247,8 @@ npm run build
 
 ### Test Suite Summary
 ```text
-Test Files  16 passed (16)
-     Tests  151 passed (151)
+Test Files  17 passed (17)
+     Tests  169 passed (169)
 ```
 
 ---
@@ -325,5 +328,5 @@ See the [`LICENSE`](./LICENSE) file for the full license text.
 
 **Ronald Rex**  
 - **GitHub**: [@RONALD-REX-7](https://github.com/RONALD-REX-7)  
-- **Email**: `ronaldrexch@gmail.com`  
+- **Inquiries & Security**: Please report issues via GitHub Issues or private security advisories.
 - **Repository**: [https://github.com/RONALD-REX-7/EmbeddedLab-OS](https://github.com/RONALD-REX-7/EmbeddedLab-OS)
