@@ -13,6 +13,11 @@ jobs:
     defaults:
       run:
         working-directory: embeddedlab-os
+    env:
+      NEXT_PUBLIC_SUPABASE_URL: https://example.supabase.co
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: dummy-anon-key-for-ci-build
+      GEMINI_API_KEY: dummy-gemini-key-for-ci-build
+      CI: true
 
     steps:
       - name: Check out repository
@@ -21,7 +26,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: 'npm'
           cache-dependency-path: embeddedlab-os/package-lock.json
 
@@ -31,12 +36,11 @@ jobs:
       - name: Run ESLint
         run: npm run lint
 
+      - name: TypeScript Typecheck
+        run: npm run type-check
+
       - name: Run Vitest test suite
-        run: npm test -- --run
+        run: npm test
 
       - name: Run Next.js production build
         run: npm run build
-        env:
-          NEXT_PUBLIC_SUPABASE_URL: https://example.supabase.co
-          NEXT_PUBLIC_SUPABASE_ANON_KEY: dummy-anon-key-for-ci-build
-          GEMINI_API_KEY: dummy-gemini-key-for-ci-build
