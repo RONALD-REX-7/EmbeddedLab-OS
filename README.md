@@ -2,6 +2,30 @@
 
 > **A browser-based virtual embedded-systems laboratory designed to help students learn and experiment with fundamental embedded concepts without physical hardware.**
 
+[![CI](https://github.com/RONALD-REX-7/EmbeddedLab-OS/actions/workflows/ci.yml/badge.svg)](https://github.com/RONALD-REX-7/EmbeddedLab-OS/actions/workflows/ci.yml)
+[![Tests](https://img.shields.io/badge/Vitest-169_Passing-238636?style=flat&logo=vitest)](./embeddedlab-os)
+[![Next.js](https://img.shields.io/badge/Next.js-16.3.3-000000?style=flat&logo=nextdotjs)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-19.2.8-61DAFB?style=flat&logo=react)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?style=flat&logo=typescript)](https://www.typescriptlang.org/)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
+[![Live System](https://img.shields.io/badge/Live_System-embeddedlab--os.vercel.app-007ACC?style=flat)](https://embeddedlab-os.vercel.app/)
+
+> [!NOTE]
+> **Working Directory Notice for Developers**:
+> This repository is structured as a dedicated Next.js application workspace located in [embeddedlab-os/](./embeddedlab-os/). All npm CLI commands (
+pm ci, 
+pm run dev, 
+pm run lint, 
+pm run type-check, 
+pm test, 
+pm run build) must be executed from within the embeddedlab-os/ subdirectory:
+> `ash
+> cd embeddedlab-os
+> npm ci
+> npm test
+> `
+> For detailed local setup, package scripts, and environment configuration, refer to the [embeddedlab-os/README.md](./embeddedlab-os/README.md) application guide.
+
 ---
 
 ## 📖 Overview

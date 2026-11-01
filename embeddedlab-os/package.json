@@ -5,7 +5,7 @@
   "type": "module",
   "description": "Browser-based virtual embedded systems laboratory for interactive microcontrollers, signals, and hardware protocol education.",
   "license": "Apache-2.0",
-  "author": "Ronald Rex <ronaldrexch@gmail.com>",
+  "author": "Ronald Rex <211186833+RONALD-REX-7@users.noreply.github.com>",
   "repository": {
     "type": "git",
     "url": "https://github.com/RONALD-REX-7/EmbeddedLab-OS.git"
