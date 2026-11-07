@@ -150,6 +150,11 @@ export function setInputPinLevel(
   if (!pin) {
     throw new Error(`GPIO: Invalid pin id ${pinId}`);
   }
+  if (pin.mode === "OUTPUT") {
+    throw new Error(
+      `GPIO: Cannot apply external input stimulus to pin ${pin.label} — it is configured as OUTPUT`
+    );
+  }
 
   const newPins = state.pins.map((p) =>
     p.id === pinId ? { ...p, level } : p
