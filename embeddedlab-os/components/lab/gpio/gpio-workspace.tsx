@@ -48,7 +48,7 @@ export function GPIOWorkspace() {
 
   const handleButtonPressStateChange = (pressed: boolean) => {
     const pa0 = pins[0];
-    if (!pa0) return;
+    if (!pa0 || pa0.mode === "OUTPUT") return;
     if (pa0.mode === "INPUT_PULLUP") {
       setInputLevel(0, pressed ? "LOW" : "HIGH");
     } else if (pa0.mode === "INPUT_PULLDOWN") {

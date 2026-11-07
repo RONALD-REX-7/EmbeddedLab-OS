@@ -123,6 +123,17 @@ describe("GPIO state transitions", () => {
       expect(event.severity).toBe("INFO");
     });
 
+    it("rejects external stimulus on OUTPUT pins without mutating state", () => {
+      let state = createDefaultGPIOState();
+      ({ state } = setPinMode(state, 0, "OUTPUT"));
+
+      expect(() => setInputPinLevel(state, 0, "HIGH")).toThrow(
+        /configured as OUTPUT/
+      );
+      expect(state.pins[0]!.mode).toBe("OUTPUT");
+      expect(state.pins[0]!.level).toBe("LOW");
+    });
+
     it("throws on invalid pin id", () => {
       const state = createDefaultGPIOState();
       expect(() => setInputPinLevel(state, 100, "LOW")).toThrow(/Invalid pin id/);
