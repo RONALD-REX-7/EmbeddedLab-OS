@@ -1,3 +1,13 @@
+<div align="center">
+
+<img src="portfolio-identity.svg" alt="EmbeddedLab OS — project portfolio banner" width="100%">
+
+[← Back to Ronald Rex's engineering portfolio](https://github.com/RONALD-REX-7)
+
+</div>
+
+---
+
 # EmbeddedLab OS
 
 > **A browser-based virtual embedded-systems laboratory designed to help students learn and experiment with fundamental embedded concepts without physical hardware.**
