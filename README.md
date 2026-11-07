@@ -362,5 +362,6 @@ See the [`LICENSE`](./LICENSE) file for the full license text.
 
 **Ronald Rex**  
 - **GitHub**: [@RONALD-REX-7](https://github.com/RONALD-REX-7)  
+- **Role**: Architecture, simulation engine, interactive peripherals & curriculum design.
 - **Inquiries & Security**: Please report issues via GitHub Issues or private security advisories.
 - **Repository**: [https://github.com/RONALD-REX-7/EmbeddedLab-OS](https://github.com/RONALD-REX-7/EmbeddedLab-OS)
