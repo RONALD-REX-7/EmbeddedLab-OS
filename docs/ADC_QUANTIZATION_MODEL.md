@@ -27,3 +27,4 @@ The virtual ADC status and control register `ADMUX` selects reference voltage so
 - `REFS[1:0] = 00`: External `AREF` pin reference.
 - `REFS[1:0] = 01`: Default $V_{CC}$ with external capacitor on `AREF`.
 - `REFS[1:0] = 11`: Internal $1.1\,\text{V}$ bandgap voltage reference.
+
